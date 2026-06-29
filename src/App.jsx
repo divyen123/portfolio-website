@@ -1,0 +1,365 @@
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import AOS from 'aos';
+import { Helmet } from 'react-helmet-async';
+import { AnimatePresence, motion } from 'framer-motion';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import IntroOverlay from './components/IntroOverlay';
+import LetterboxReveal from './components/LetterboxReveal';
+import { personalInfo } from './data/portfolioData';
+
+const About = lazy(() => import('./components/About'));
+const Education = lazy(() => import('./components/Education'));
+const Skills = lazy(() => import('./components/Skills'));
+const Projects = lazy(() => import('./components/Projects'));
+const Certificates = lazy(() => import('./components/Certificates'));
+const Contact = lazy(() => import('./components/Contact'));
+
+function SectionFallback() {
+  return (
+    <div className="mx-auto min-h-48 w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8" aria-label="Loading section">
+      <div className="h-40 animate-pulse rounded-3xl border border-white/10 bg-white/[0.04]" />
+    </div>
+  );
+}
+
+const SECTIONS = ['home', 'about', 'education', 'skills', 'projects', 'certificates', 'contact'];
+
+const getTransitionVariants = (direction, activeIndex) => {
+  const isForward = direction === 'forward';
+
+  switch (activeIndex) {
+    case 1: // home <-> about: Zoom
+      return {
+        initial: { scale: isForward ? 0.35 : 2.5, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        exit: { scale: isForward ? 2.5 : 0.35, opacity: 0 }
+      };
+    case 2: // about <-> education: Horizontal slide right-to-left
+      return {
+        initial: { x: isForward ? '100%' : '-100%', opacity: 1 },
+        animate: { x: 0, opacity: 1 },
+        exit: { x: isForward ? '-100%' : '100%', opacity: 1 }
+      };
+    case 3: // education <-> skills: Vertical slide bottom-to-top
+      return {
+        initial: { y: isForward ? '100%' : '-100%', opacity: 1 },
+        animate: { y: 0, opacity: 1 },
+        exit: { y: isForward ? '-100%' : '100%', opacity: 1 }
+      };
+    case 4: // skills <-> projects: Horizontal slide left-to-right
+      return {
+        initial: { x: isForward ? '-100%' : '100%', opacity: 1 },
+        animate: { x: 0, opacity: 1 },
+        exit: { x: isForward ? '100%' : '-100%', opacity: 1 }
+      };
+    case 5: // projects <-> certificates: 3D Flip
+      return {
+        initial: { rotateY: isForward ? 90 : -90, opacity: 0, scale: 0.8 },
+        animate: { rotateY: 0, opacity: 1, scale: 1 },
+        exit: { rotateY: isForward ? -90 : 90, opacity: 0, scale: 0.8 }
+      };
+    case 6: // certificates <-> contact: Diagonal slide
+      return {
+        initial: { x: isForward ? '100%' : '-100%', y: isForward ? '100%' : '-100%', opacity: 1 },
+        animate: { x: 0, y: 0, opacity: 1 },
+        exit: { x: isForward ? '-100%' : '100%', y: isForward ? '-100%' : '100%', opacity: 1 }
+      };
+    default:
+      return {
+        initial: { scale: isForward ? 0.35 : 2.5, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        exit: { scale: isForward ? 2.5 : 0.35, opacity: 0 }
+      };
+  }
+};
+
+export default function App() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showLetterbox, setShowLetterbox] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState('forward');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const touchStartY = useRef(0);
+  const touchStartX = useRef(0);
+  const activeIndexRef = useRef(0);
+  const isTransitioningRef = useRef(false);
+
+  // Sync refs to avoid stale closure issues in scroll listeners
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+    isTransitioningRef.current = isTransitioning;
+  }, [activeIndex, isTransitioning]);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 90,
+    });
+  }, []);
+
+  useEffect(() => {
+    const introTimer = window.setTimeout(() => {
+      setShowIntro(false);
+      setShowLetterbox(true);
+    }, 5300);
+    const letterboxTimer = window.setTimeout(() => {
+      setShowLetterbox(false);
+    }, 6100);
+
+    return () => {
+      window.clearTimeout(introTimer);
+      window.clearTimeout(letterboxTimer);
+    };
+  }, []);
+
+  const triggerTransition = (targetIndex) => {
+    const currentIndex = activeIndexRef.current;
+    if (targetIndex === currentIndex || isTransitioningRef.current) return;
+
+    setIsTransitioning(true);
+    setDirection(targetIndex > currentIndex ? 'forward' : 'backward');
+    setActiveIndex(targetIndex);
+
+    // Lock scrolling for 950ms to prevent transition overlap issues
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 950);
+  };
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      const container = document.querySelector('.active-section-scroll-container');
+      if (container) {
+        const { scrollTop, scrollHeight, clientHeight } = container;
+        const isScrollable = scrollHeight > clientHeight;
+
+        if (isScrollable) {
+          if (e.deltaY > 0) {
+            // Scroll down: only slide page if user is at the bottom of the section content
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
+            if (!isAtBottom) return;
+          } else {
+            // Scroll up: only slide page if user is at the top of the section content
+            const isAtTop = scrollTop <= 5;
+            if (!isAtTop) return;
+          }
+        }
+      }
+
+      e.preventDefault();
+      if (isTransitioningRef.current) return;
+
+      const threshold = 25;
+      if (Math.abs(e.deltaY) < threshold) return;
+
+      const currentIndex = activeIndexRef.current;
+      if (e.deltaY > 0) {
+        if (currentIndex < SECTIONS.length - 1) {
+          triggerTransition(currentIndex + 1);
+        }
+      } else {
+        if (currentIndex > 0) {
+          triggerTransition(currentIndex - 1);
+        }
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      touchStartY.current = e.touches[0].clientY;
+      touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+      const container = document.querySelector('.active-section-scroll-container');
+      if (container) {
+        const { scrollTop, scrollHeight, clientHeight } = container;
+        const isScrollable = scrollHeight > clientHeight;
+        
+        const deltaY = e.touches[0].clientY - touchStartY.current;
+        const deltaX = e.touches[0].clientX - touchStartX.current;
+
+        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+          if (isScrollable) {
+            if (deltaY < 0) {
+              const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
+              if (!isAtBottom) return;
+            } else {
+              const isAtTop = scrollTop <= 5;
+              if (!isAtTop) return;
+            }
+          }
+        }
+      }
+
+      if (isTransitioningRef.current) return;
+
+      const deltaY = e.touches[0].clientY - touchStartY.current;
+      const deltaX = e.touches[0].clientX - touchStartX.current;
+      const threshold = 40;
+
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        if (Math.abs(deltaY) < threshold) return;
+
+        const currentIndex = activeIndexRef.current;
+        if (deltaY < 0) {
+          if (currentIndex < SECTIONS.length - 1) {
+            triggerTransition(currentIndex + 1);
+          }
+        } else {
+          if (currentIndex > 0) {
+            triggerTransition(currentIndex - 1);
+          }
+        }
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      if (isTransitioningRef.current) return;
+
+      const currentIndex = activeIndexRef.current;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        if (currentIndex < SECTIONS.length - 1) {
+          triggerTransition(currentIndex + 1);
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (currentIndex > 0) {
+          triggerTransition(currentIndex - 1);
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const renderSection = (index) => {
+    let Component;
+    switch (index) {
+      case 0:
+        Component = <Hero introComplete={!showIntro} />;
+        break;
+      case 1:
+        Component = <About />;
+        break;
+      case 2:
+        Component = <Education />;
+        break;
+      case 3:
+        Component = <Skills />;
+        break;
+      case 4:
+        Component = <Projects />;
+        break;
+      case 5:
+        Component = <Certificates />;
+        break;
+      case 6:
+        Component = <Contact />;
+        break;
+      default:
+        return null;
+    }
+
+    return (
+      <div className="active-section-scroll-container scrollbar-hide absolute inset-0 w-full h-full flex flex-col overflow-y-auto">
+        <Suspense fallback={<SectionFallback />}>
+          <div className="my-auto w-full">
+            {Component}
+          </div>
+        </Suspense>
+      </div>
+    );
+  };
+
+  const activeVariants = getTransitionVariants(direction, activeIndex);
+
+  return (
+    <div className="relative isolate w-screen h-screen overflow-hidden bg-[#050505] text-white">
+      <Helmet>
+        <meta
+          name="description"
+          content={`${personalInfo.name} portfolio featuring frontend development, React, UI design, projects, certificates, education, and contact details.`}
+        />
+        <meta name="author" content={personalInfo.name} />
+        <meta property="og:title" content={`${personalInfo.name} | Software Developer & UI Designer`} />
+        <meta property="og:description" content={personalInfo.intro} />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      {/* Fixed Background Video */}
+      <div className="portfolio-background-layer pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <video
+          className="portfolio-video-background"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+        >
+          <source src="/media/portfolio-background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-[#050505]/76" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.028)_1px,transparent_1px)] bg-[size:64px_64px] opacity-45 [mask-image:linear-gradient(to_bottom,black,transparent_90%)]" />
+      </div>
+
+      <AnimatePresence>{showIntro ? <IntroOverlay /> : null}</AnimatePresence>
+      <AnimatePresence>{showLetterbox ? <LetterboxReveal /> : null}</AnimatePresence>
+      
+      {/* Control Navbar from parent */}
+      <Navbar activeSection={SECTIONS[activeIndex]} onNavClick={(section) => triggerTransition(SECTIONS.indexOf(section))} />
+      
+      {/* Floating Pagination Dots */}
+      <div className="fixed right-6 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-4">
+        {SECTIONS.map((section, index) => (
+          <button
+            key={section}
+            className="group relative flex items-center justify-center p-1.5 focus:outline-none"
+            onClick={() => triggerTransition(index)}
+            aria-label={`Go to ${section} section`}
+          >
+            <span className="pointer-events-none absolute right-8 scale-0 rounded-md border border-white/10 bg-slate-900/90 px-2 py-1 text-[0.62rem] font-extrabold uppercase tracking-widest text-cyan-300 backdrop-blur-md transition-all duration-200 group-hover:scale-100">
+              {section === 'home' ? 'Home' : section}
+            </span>
+            <span
+              className={`block size-[7px] rounded-full border transition-all duration-300 ${
+                activeIndex === index
+                  ? 'border-cyan-600 bg-cyan-600 scale-110'
+                  : 'border-white/25 bg-transparent group-hover:border-white/60 group-hover:bg-white/10'
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+
+      {/* Viewport-locked 3D transitioning stage */}
+      <main className="relative z-10 w-full h-full overflow-hidden" style={{ perspective: 1200 }}>
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={activeIndex}
+            variants={activeVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 w-full h-full"
+            style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
+          >
+            {renderSection(activeIndex)}
+          </motion.div>
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+}

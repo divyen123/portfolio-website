@@ -37,7 +37,7 @@ function IntroOverlay() {
         >
           Welcome to
         </motion.p>
-        <h1 className="overflow-hidden pb-3 text-4xl font-black leading-[1.12] tracking-tight text-white sm:text-6xl lg:text-7xl">
+        <h1 className="intro-title overflow-hidden pb-3 text-4xl font-black leading-[1.12] tracking-tight text-white sm:text-6xl lg:text-7xl">
           <motion.span
             className="block"
             initial={{ y: '130%' }}

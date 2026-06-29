@@ -297,7 +297,9 @@ img {
   animation: hero-cursor-blink 720ms infinite;
 }
 
-.hero-name-glow {
+.intro-title,
+.hero-name-glow,
+.section-title-glow {
   font-family: 'Montserrat', sans-serif;
 }
 

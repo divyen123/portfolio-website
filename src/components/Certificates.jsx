@@ -151,7 +151,7 @@ function Certificates() {
       <AnimatePresence>
         {activeCertificate ? (
           <motion.div
-            className="fixed inset-0 z-[90] flex items-start justify-center pt-24 sm:pt-28 bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] px-3 py-6 backdrop-blur-sm sm:px-6"
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] px-3 py-6 backdrop-blur-sm sm:px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -162,7 +162,7 @@ function Certificates() {
             onClick={closeCertificate}
           >
             <motion.div
-              className="relative flex h-[78vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-cyan-200/20 bg-[#071010]/95 shadow-[0_28px_90px_rgba(0,0,0,0.62)]"
+              className="relative flex h-[78vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-cyan-200/20 bg-[#071010]/95 shadow-[0_28px_90px_rgba(0,0,0,0.62)] translate-y-10 sm:translate-y-12"
               initial={{ opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 14, scale: 0.98 }}

@@ -151,7 +151,7 @@ function Certificates() {
       <AnimatePresence>
         {activeCertificate ? (
           <motion.div
-            className="fixed inset-0 z-[90] flex items-center justify-center bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] px-3 py-6 backdrop-blur-sm sm:px-6"
+            className="fixed inset-0 z-[90] bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -161,14 +161,15 @@ function Certificates() {
             aria-label={`${activeCertificate.title} certificate preview`}
             onClick={closeCertificate}
           >
-            <motion.div
-              className="relative flex h-[78vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-cyan-200/20 bg-[#071010]/95 shadow-[0_28px_90px_rgba(0,0,0,0.62)] translate-y-10 sm:translate-y-12"
-              initial={{ opacity: 0, y: 18, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 14, scale: 0.98 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(event) => event.stopPropagation()}
-            >
+            <div className="flex h-full w-full items-center justify-center px-3 py-6 pt-20 sm:px-6 sm:pt-20">
+              <motion.div
+                className="relative flex h-[78vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-cyan-200/20 bg-[#071010]/95 shadow-[0_28px_90px_rgba(0,0,0,0.62)]"
+                initial={{ opacity: 0, y: 18, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 14, scale: 0.98 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                onClick={(event) => event.stopPropagation()}
+              >
               <div className="flex items-start justify-between gap-4 border-b border-cyan-200/10 bg-[linear-gradient(135deg,rgba(8,47,73,0.32),rgba(255,255,255,0.035))] px-4 py-3 sm:px-5">
                 <div className="min-w-0">
                   <h3 className="truncate text-sm font-black text-white sm:text-base">{activeCertificate.title}</h3>
@@ -198,7 +199,8 @@ function Certificates() {
                 )}
               </div>
             </motion.div>
-          </motion.div>
+          </div>
+        </motion.div>
         ) : null}
       </AnimatePresence>
     </AnimatedSection>

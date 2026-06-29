@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FiAward, FiExternalLink, FiX } from 'react-icons/fi';
@@ -148,61 +149,66 @@ function Certificates() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {activeCertificate ? (
-          <motion.div
-            className="fixed inset-0 z-[90] bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${activeCertificate.title} certificate preview`}
-            onClick={closeCertificate}
-          >
-            <div className="flex h-full w-full items-center justify-center px-3 py-6 pt-20 sm:px-6 sm:pt-20">
-              <motion.div
-                className="relative flex h-[78vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-cyan-200/20 bg-[#071010]/95 shadow-[0_28px_90px_rgba(0,0,0,0.62)]"
-                initial={{ opacity: 0, y: 18, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 14, scale: 0.98 }}
-                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                onClick={(event) => event.stopPropagation()}
-              >
-              <div className="flex items-start justify-between gap-4 border-b border-cyan-200/10 bg-[linear-gradient(135deg,rgba(8,47,73,0.32),rgba(255,255,255,0.035))] px-4 py-3 sm:px-5">
-                <div className="min-w-0">
-                  <h3 className="truncate text-sm font-black text-white sm:text-base">{activeCertificate.title}</h3>
-                  <p className="mt-1 text-xs font-semibold text-slate-400 sm:text-sm">{activeCertificate.issuer || 'Issuer not provided'}</p>
-                </div>
-                <button
-                  className="grid size-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white transition hover:border-cyan-200/40 hover:bg-white/[0.12] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
-                  type="button"
+      {typeof document !== 'undefined'
+        ? createPortal(
+            <AnimatePresence>
+              {activeCertificate ? (
+                <motion.div
+                  className="fixed inset-0 z-[90] bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] backdrop-blur-sm"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={`${activeCertificate.title} certificate preview`}
                   onClick={closeCertificate}
-                  aria-label="Close certificate popup"
                 >
-                  <FiX aria-hidden="true" />
-                </button>
-              </div>
+                  <div className="flex h-full w-full items-center justify-center px-3 py-6 pt-20 sm:px-6 sm:pt-20">
+                    <motion.div
+                      className="relative flex h-[78vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-cyan-200/20 bg-[#071010]/95 shadow-[0_28px_90px_rgba(0,0,0,0.62)]"
+                      initial={{ opacity: 0, y: 18, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 14, scale: 0.98 }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      <div className="flex items-start justify-between gap-4 border-b border-cyan-200/10 bg-[linear-gradient(135deg,rgba(8,47,73,0.32),rgba(255,255,255,0.035))] px-4 py-3 sm:px-5">
+                        <div className="min-w-0">
+                          <h3 className="truncate text-sm font-black text-white sm:text-base">{activeCertificate.title}</h3>
+                          <p className="mt-1 text-xs font-semibold text-slate-400 sm:text-sm">{activeCertificate.issuer || 'Issuer not provided'}</p>
+                        </div>
+                        <button
+                          className="grid size-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white transition hover:border-cyan-200/40 hover:bg-white/[0.12] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
+                          type="button"
+                          onClick={closeCertificate}
+                          aria-label="Close certificate popup"
+                        >
+                          <FiX aria-hidden="true" />
+                        </button>
+                      </div>
 
-              <div className="certificate-modal-body min-h-0 flex-1 overflow-y-auto p-3 sm:p-4">
-                {pdfReady ? (
-                  <iframe
-                    className="certificate-pdf-frame h-[680px] w-full rounded-xl bg-[#050505] sm:h-[720px]"
-                    src={`${activeCertificate.file}#toolbar=0&navpanes=0&view=FitH`}
-                    title={`${activeCertificate.title} PDF`}
-                  />
-                ) : (
-                  <div className="grid h-[680px] w-full place-items-center rounded-xl border border-cyan-200/10 bg-[#050505]/72 text-sm font-bold text-cyan-100/70 sm:h-[720px]">
-                    Loading certificate...
+                      <div className="certificate-modal-body min-h-0 flex-1 overflow-y-auto p-3 sm:p-4">
+                        {pdfReady ? (
+                          <iframe
+                            className="certificate-pdf-frame h-[680px] w-full rounded-xl bg-[#050505] sm:h-[720px]"
+                            src={`${activeCertificate.file}#toolbar=0&navpanes=0&view=FitH`}
+                            title={`${activeCertificate.title} PDF`}
+                          />
+                        ) : (
+                          <div className="grid h-[680px] w-full place-items-center rounded-xl border border-cyan-200/10 bg-[#050505]/72 text-sm font-bold text-cyan-100/70 sm:h-[720px]">
+                            Loading certificate...
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
                   </div>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-        ) : null}
-      </AnimatePresence>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body
+          )
+        : null}
     </AnimatedSection>
   );
 }

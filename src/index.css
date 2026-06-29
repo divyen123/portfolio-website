@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -294,6 +295,10 @@ img {
   -webkit-text-fill-color: rgb(207, 250, 254);
   opacity: 1;
   animation: hero-cursor-blink 720ms infinite;
+}
+
+.hero-name-glow {
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-name-glow,

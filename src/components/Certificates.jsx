@@ -151,7 +151,7 @@ function Certificates() {
       <AnimatePresence>
         {activeCertificate ? (
           <motion.div
-            className="fixed inset-0 z-[90] flex items-center justify-center bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] px-3 py-6 backdrop-blur-sm sm:px-6"
+            className="fixed inset-0 z-[90] flex items-start justify-center pt-24 sm:pt-28 bg-[radial-gradient(circle_at_50%_18%,rgba(6,182,212,0.1),transparent_32%),rgba(2,5,5,0.84)] px-3 py-6 backdrop-blur-sm sm:px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

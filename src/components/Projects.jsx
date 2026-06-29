@@ -261,7 +261,7 @@ function Projects() {
             </AnimatePresence>
 
             {/* Fixed prev/next buttons outside AnimatePresence */}
-            <div className="mt-6 flex justify-center lg:absolute lg:bottom-4 lg:right-0 lg:mt-0 z-10 gap-2">
+            <div className="mt-6 flex items-center justify-center lg:absolute lg:bottom-4 lg:right-0 lg:mt-0 z-10 gap-3">
               <button
                 className="grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 cursor-pointer"
                 type="button"
@@ -270,6 +270,9 @@ function Projects() {
               >
                 <FiChevronLeft className="size-4" aria-hidden="true" />
               </button>
+              <span className="min-w-10 text-center text-xs font-bold text-cyan-100">
+                {activeIndex + 1} / {projects.length}
+              </span>
               <button
                 className="grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 cursor-pointer"
                 type="button"

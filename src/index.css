@@ -698,6 +698,39 @@ img {
 }
 
 @media (max-width: 767px) {
+  /* Remove sweep text glow animations on mobile for zero lag */
+  .hero-name-glow,
+  .section-title-glow {
+    animation: none !important;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: none !important;
+  }
+
+  /* Two circle containers per row on mobile for technical skills */
+  .skills-carousel-stage {
+    gap: 1.5rem 1.1rem !important;
+  }
+
+  .skills-carousel-card {
+    flex: 0 0 clamp(8.8rem, 42vw, 11rem) !important;
+    width: clamp(8.8rem, 42vw, 11rem) !important;
+  }
+
+  .skill-logo-title {
+    font-size: 0.72rem !important;
+    padding-inline: 0.5rem !important;
+  }
+
+  .skill-category-badge {
+    top: 0.68rem !important;
+    width: 1.65rem !important;
+    height: 1.65rem !important;
+  }
+
   .section-shell {
     padding: 2.25rem 0;
   }

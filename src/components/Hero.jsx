@@ -20,12 +20,12 @@ function Hero({ introComplete = true }) {
   }, [homeInView, introComplete]);
 
   return (
-    <section ref={homeRef} className="relative isolate flex min-h-screen items-center overflow-hidden px-4 pb-20 pt-28 sm:px-6 lg:px-8" id="home">
+    <section ref={homeRef} className="relative isolate flex min-h-screen items-center overflow-hidden px-4 pb-12 pt-16 sm:pb-20 sm:pt-28 sm:px-6 lg:px-8" id="home">
       <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-[#050505] to-transparent" />
 
       <div className="mx-auto mt-2 grid w-full max-w-6xl place-items-center text-center sm:mt-4">
         <motion.div
-          className="relative mb-7 grid size-28 place-items-center overflow-hidden rounded-full border border-cyan-200/18 bg-[radial-gradient(circle_at_30%_20%,rgba(6,182,212,0.34),rgba(8,47,73,0.74)_52%,rgba(5,5,5,0.92))] shadow-[0_18px_46px_rgba(0,0,0,0.34),0_0_34px_rgba(6,182,212,0.12)] sm:size-32 lg:size-34"
+          className="relative mb-4 sm:mb-7 grid size-24 sm:size-32 lg:size-34 place-items-center overflow-hidden rounded-full border border-cyan-200/18 bg-[radial-gradient(circle_at_30%_20%,rgba(6,182,212,0.34),rgba(8,47,73,0.74)_52%,rgba(5,5,5,0.92))] shadow-[0_18px_46px_rgba(0,0,0,0.34),0_0_34px_rgba(6,182,212,0.12)]"
           initial={{ opacity: 0, y: 16, scale: 0.96 }}
           animate={{
             opacity: 1,
@@ -53,7 +53,7 @@ function Hero({ introComplete = true }) {
 
         <div className="mx-auto max-w-6xl">
           <motion.p
-            className="mb-5 inline-flex rounded-full border border-slate-300/10 bg-[linear-gradient(135deg,rgba(15,23,42,0.72),rgba(8,47,73,0.48))] px-4 py-2 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 shadow-[0_12px_34px_rgba(0,0,0,0.24)] backdrop-blur-xl"
+            className="mb-3.5 sm:mb-5 inline-flex rounded-full border border-slate-300/10 bg-[linear-gradient(135deg,rgba(15,23,42,0.72),rgba(8,47,73,0.48))] px-4 py-2 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 shadow-[0_12px_34px_rgba(0,0,0,0.24)] backdrop-blur-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}

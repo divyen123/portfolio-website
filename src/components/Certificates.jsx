@@ -9,6 +9,17 @@ import SectionHeading from './SectionHeading';
 
 const cardStrokeLength = 1208;
 
+const getShortTitle = (title, isMobile) => {
+  if (!isMobile) return title;
+  const mapping = {
+    'Artificial Intelligence Foundation Certification': 'AI Foundation Cert',
+    'TechA AWS Solution Architect Certification': 'AWS Solution Architect',
+    'Database Management System - Science Graduates': 'DBMS - Science Grad',
+    'Oracle Fusion AI Agent Studio Certified Foundations Associate': 'Oracle AI Agent Assoc',
+  };
+  return mapping[title] || title;
+};
+
 function Certificates() {
   const [animationRun, setAnimationRun] = useState(0);
   const [activeCertificate, setActiveCertificate] = useState(null);
@@ -54,19 +65,20 @@ function Certificates() {
 
 
   useEffect(() => {
-    if (!activeCertificate) {
-      return undefined;
-    }
+    if (!activeCertificate) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     const container = document.querySelector('.active-section-scroll-container');
-    const previousOverflow = container ? container.style.overflowY : 'auto';
     if (container) {
       container.style.overflowY = 'hidden';
     }
 
     return () => {
+      document.body.style.overflow = previousOverflow;
       if (container) {
-        container.style.overflowY = previousOverflow;
+        container.style.overflowY = 'auto';
       }
     };
   }, [activeCertificate]);
@@ -82,12 +94,12 @@ function Certificates() {
 
         <div
           ref={certificatesGridRef}
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5"
         >
           {certificates.length > 0 ? (
             certificates.map((certificate, index) => (
               <motion.button
-                className={`certificate-card glass-card group flex min-h-52 flex-col overflow-hidden p-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 ${index === certificates.length - 2 ? 'lg:col-start-2' : ''}`}
+                className={`certificate-card glass-card group flex min-h-[9.5rem] sm:min-h-52 flex-col overflow-hidden p-3 sm:p-4 text-left border border-cyan-200/10 sm:border-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 ${index === certificates.length - 2 ? 'lg:col-start-2' : ''}`}
                 key={`${certificate.title}-${certificate.file}`}
                 type="button"
                 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
@@ -98,7 +110,7 @@ function Certificates() {
                 aria-label={`Open ${certificate.title} certificate`}
               >
                 <svg
-                  className="certificate-card-stroke"
+                  className="certificate-card-stroke hidden sm:block"
                   viewBox="0 0 400 208"
                   preserveAspectRatio="none"
                   aria-hidden="true"
@@ -128,13 +140,17 @@ function Certificates() {
                   animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
                   transition={isMobile ? { duration: 0 } : { duration: 0.45, ease: 'easeOut', delay: index * 0.08 + 0.28 }}
                 >
-                  <div className="mb-4">
-                    <FiAward className="size-5 text-fuchsia-100" aria-hidden="true" />
+                  <div className="mb-2 sm:mb-4">
+                    <FiAward className="size-4 sm:size-5 text-fuchsia-100" aria-hidden="true" />
                   </div>
-                  <h3 className="text-base font-black leading-tight text-white">{certificate.title}</h3>
-                  <p className="mt-3 text-sm font-semibold text-slate-400">{certificate.issuer || 'Issuer not provided'}</p>
+                  <h3 className="text-xs sm:text-base font-black leading-tight text-white line-clamp-3 sm:line-clamp-none">
+                    {getShortTitle(certificate.title, isMobile)}
+                  </h3>
+                  <p className="mt-1.5 sm:mt-3 text-[10px] sm:text-sm font-semibold text-slate-400">
+                    {certificate.issuer || 'Issuer not provided'}
+                  </p>
                   <span className="mt-auto ml-auto inline-flex items-center justify-center text-white transition group-hover:text-fuchsia-200" aria-hidden="true">
-                    <FiExternalLink className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <FiExternalLink className="size-3 sm:size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
                 </motion.div>
               </motion.button>

@@ -25,7 +25,14 @@ function SectionFallback() {
 
 const SECTIONS = ['home', 'about', 'education', 'skills', 'projects', 'certificates', 'contact'];
 
-const getTransitionVariants = (direction, activeIndex) => {
+const getTransitionVariants = (direction, activeIndex, isMobile) => {
+  if (isMobile) {
+    return {
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      exit: { opacity: 0 }
+    };
+  }
   const isForward = direction === 'forward';
 
   switch (activeIndex) {
@@ -80,10 +87,20 @@ export default function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState('forward');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
   const activeIndexRef = useRef(0);
   const isTransitioningRef = useRef(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Sync refs to avoid stale closure issues in scroll listeners
   useEffect(() => {
@@ -275,7 +292,7 @@ export default function App() {
     return (
       <div className="active-section-scroll-container scrollbar-hide absolute inset-0 w-full h-full flex flex-col overflow-y-auto">
         <Suspense fallback={<SectionFallback />}>
-          <div className="my-auto w-full">
+          <div className="w-full my-0 md:my-auto py-16 md:py-0">
             {Component}
           </div>
         </Suspense>
@@ -283,7 +300,7 @@ export default function App() {
     );
   };
 
-  const activeVariants = getTransitionVariants(direction, activeIndex);
+  const activeVariants = getTransitionVariants(direction, activeIndex, isMobile);
 
   return (
     <div className="relative isolate w-screen h-screen overflow-hidden bg-[#050505] text-white">
@@ -352,7 +369,7 @@ export default function App() {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: isMobile ? 0.28 : 0.95, ease: isMobile ? 'easeOut' : [0.16, 1, 0.3, 1] }}
             className="absolute inset-0 w-full h-full"
             style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
           >

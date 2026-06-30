@@ -13,6 +13,8 @@ const sectionDirections = {
 
 function AnimatedSection({ children, className = '', id, direction = 'up' }) {
   const shouldReduceMotion = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.18,
@@ -20,15 +22,28 @@ function AnimatedSection({ children, className = '', id, direction = 'up' }) {
   });
   const hidden = sectionDirections[direction] || sectionDirections.up;
 
+  const initialStyle = shouldReduceMotion || isMobile
+    ? { opacity: 0, y: 16 }
+    : { opacity: 0, filter: 'blur(10px)', ...hidden };
+
+  const animateStyle = shouldReduceMotion || inView
+    ? (isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: 'blur(0px)' })
+    : undefined;
+
+  const transitionStyle = {
+    duration: isMobile ? 0.35 : 0.95,
+    ease: isMobile ? 'easeOut' : [0.16, 1, 0.3, 1],
+  };
+
   return (
     <motion.section
       ref={ref}
       id={id}
       className={className}
-      initial={shouldReduceMotion ? false : { opacity: 0, filter: 'blur(10px)', ...hidden }}
-      animate={shouldReduceMotion || inView ? { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: 'blur(0px)' } : undefined}
-      transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
-      data-aos="fade-up"
+      initial={initialStyle}
+      animate={animateStyle}
+      transition={transitionStyle}
+      data-aos={isMobile ? undefined : 'fade-up'}
     >
       {children}
     </motion.section>

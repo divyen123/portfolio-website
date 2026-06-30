@@ -127,7 +127,7 @@ function Contact() {
               </div>
             </motion.form>
 
-            <div ref={contactLinksRef} className="mx-auto grid w-full max-w-md gap-8 text-center sm:grid-cols-2 sm:gap-x-8 sm:gap-y-9">
+            <div ref={contactLinksRef} className="mx-auto grid w-full max-w-md grid-cols-2 gap-6 text-center sm:gap-x-8 sm:gap-y-9">
               {contactLinks.length > 0 ? (
                 contactLinks.map((item, index) => {
                   const Icon = item.icon;

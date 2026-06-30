@@ -36,25 +36,41 @@ const skillEntryStarts = [
 ];
 
 const skillEntryMotion = {
-  hidden: (index) => ({
-    ...skillEntryStarts[index % skillEntryStarts.length],
-    opacity: 0,
-    scale: 0.86,
-    filter: 'blur(4px)',
-  }),
-  visible: (index) => ({
-    x: 0,
-    y: 0,
-    rotate: 0,
-    opacity: 1,
-    scale: 1,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 0.68,
-      delay: index * 0.08,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
+  hidden: (index) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    if (isMobile) {
+      return {
+        x: 0,
+        y: 12,
+        rotate: 0,
+        opacity: 0,
+        scale: 1,
+        filter: 'none',
+      };
+    }
+    return {
+      ...skillEntryStarts[index % skillEntryStarts.length],
+      opacity: 0,
+      scale: 0.86,
+      filter: 'blur(4px)',
+    };
+  },
+  visible: (index) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    return {
+      x: 0,
+      y: 0,
+      rotate: 0,
+      opacity: 1,
+      scale: 1,
+      filter: 'none',
+      transition: {
+        duration: isMobile ? 0.35 : 0.68,
+        delay: index * 0.08,
+        ease: isMobile ? 'easeOut' : [0.22, 1, 0.36, 1],
+      },
+    };
+  },
 };
 
 const skillIcons = {

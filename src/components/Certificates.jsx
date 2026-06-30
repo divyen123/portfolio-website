@@ -8,14 +8,13 @@ import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 
 const cardStrokeLength = 1208;
-const strokeDrawDuration = 4.5;
-const contentRevealDelay = strokeDrawDuration * 0.3;
-const contentRevealDuration = 1.2;
 
 function Certificates() {
   const [animationRun, setAnimationRun] = useState(0);
   const [activeCertificate, setActiveCertificate] = useState(null);
   const [pdfReady, setPdfReady] = useState(false);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   const { ref: certificatesGridRef, inView: certificatesInView } = useInView({
     threshold: 0.45,
     rootMargin: '0px 0px -12% 0px',
@@ -43,11 +42,15 @@ function Certificates() {
     const timer = window.setTimeout(() => {
       setPdfReady(true);
     }, 180);
-
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') closeCertificate();
+    };
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.clearTimeout(timer);
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [activeCertificate]);
+  }, [activeCertificate, closeCertificate]);
 
 
   useEffect(() => {
@@ -61,21 +64,12 @@ function Certificates() {
       container.style.overflowY = 'hidden';
     }
 
-    function handleKeyDown(event) {
-      if (event.key === 'Escape') {
-        closeCertificate();
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown);
-
     return () => {
       if (container) {
         container.style.overflowY = previousOverflow;
       }
-      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [activeCertificate, closeCertificate]);
+  }, [activeCertificate]);
 
   return (
     <AnimatedSection className="section-shell" id="certificates" direction="diagonalRight">
@@ -96,8 +90,9 @@ function Certificates() {
                 className={`certificate-card glass-card group flex min-h-52 flex-col overflow-hidden p-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 ${index === certificates.length - 2 ? 'lg:col-start-2' : ''}`}
                 key={`${certificate.title}-${certificate.file}`}
                 type="button"
-                animate={certificatesInView ? { opacity: 1, y: 0 } : { opacity: 0.92, y: 18 }}
-                transition={{ duration: 0.45 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: isMobile ? 0 : 0.35, delay: isMobile ? 0 : index * 0.08 }}
                 whileHover={{ y: -8, scale: 1.01 }}
                 onClick={() => setActiveCertificate(certificate)}
                 aria-label={`Open ${certificate.title} certificate`}
@@ -119,18 +114,19 @@ function Certificates() {
                     stroke="rgba(103, 232, 249, 0.72)"
                     strokeWidth="1.4"
                     strokeDasharray={cardStrokeLength}
-                    strokeDashoffset={cardStrokeLength}
+                    strokeDashoffset={isMobile ? 0 : cardStrokeLength}
+                    initial={isMobile ? { strokeDashoffset: 0, opacity: 1 } : { strokeDashoffset: cardStrokeLength, opacity: 0 }}
+                    animate={{ strokeDashoffset: 0, opacity: 1 }}
+                    transition={isMobile ? { duration: 0 } : { duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 + 0.12 }}
                     strokeLinejoin="round"
-                    animate={certificatesInView ? { strokeDashoffset: 0, opacity: 1 } : { strokeDashoffset: cardStrokeLength, opacity: 0 }}
-                    transition={{ duration: strokeDrawDuration, ease: [0.22, 1, 0.36, 1] }}
                   />
                 </svg>
                 <motion.div
                   key={`content-${animationRun}-${certificate.file}`}
-                  className="certificate-card-content flex min-h-full flex-col"
-                  initial={{ opacity: 0, filter: 'blur(7px)', y: 10 }}
-                  animate={certificatesInView ? { opacity: 1, filter: 'blur(0px)', y: 0 } : { opacity: 0, filter: 'blur(7px)', y: 10 }}
-                  transition={{ duration: contentRevealDuration, delay: certificatesInView ? contentRevealDelay : 0, ease: [0.22, 1, 0.36, 1] }}
+                  className="certificate-card-content flex min-h-full flex-col w-full"
+                  initial={isMobile ? { opacity: 1, filter: 'none', y: 0 } : { opacity: 0, filter: 'blur(7px)', y: 10 }}
+                  animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                  transition={isMobile ? { duration: 0 } : { duration: 0.45, ease: 'easeOut', delay: index * 0.08 + 0.28 }}
                 >
                   <div className="mb-4">
                     <FiAward className="size-5 text-fuchsia-100" aria-hidden="true" />

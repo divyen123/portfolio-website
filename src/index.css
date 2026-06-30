@@ -86,11 +86,7 @@ img {
   filter: saturate(1.08) contrast(1.08) brightness(0.86);
 }
 
-@media (max-width: 767px) {
-  .portfolio-video-background {
-    display: none;
-  }
-}
+
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

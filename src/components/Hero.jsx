@@ -71,7 +71,7 @@ function Hero({ introComplete = true }) {
           </motion.h1>
 
           <motion.p
-            className="hero-typed-title mx-auto mt-5 min-h-8 max-w-full whitespace-nowrap bg-gradient-to-r from-white via-slate-200 to-cyan-200 bg-clip-text text-[clamp(1rem,1.55vw,1.28rem)] font-extrabold text-transparent"
+            className="hero-typed-title mx-auto mt-5 min-h-8 max-w-full whitespace-normal bg-gradient-to-r from-white via-slate-200 to-cyan-200 bg-clip-text text-[clamp(0.85rem,1.55vw,1.28rem)] font-extrabold text-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.4 }}

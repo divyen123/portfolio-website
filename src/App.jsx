@@ -338,7 +338,7 @@ export default function App() {
       <Navbar activeSection={SECTIONS[activeIndex]} onNavClick={(section) => triggerTransition(SECTIONS.indexOf(section))} />
       
       {/* Floating Pagination Dots */}
-      <div className="fixed right-6 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-4">
+      <div className="fixed right-6 top-1/2 z-50 hidden md:flex -translate-y-1/2 flex-col gap-4">
         {SECTIONS.map((section, index) => (
           <button
             key={section}

@@ -65,7 +65,7 @@ function TimelineItem({ item, index }) {
           <FiCalendar aria-hidden="true" />
           {item.period}
         </span>
-        <h3 className="text-sm sm:text-base font-black text-white leading-snug md:min-h-[2.5rem] md:flex md:items-center md:justify-center">
+        <h3 className="text-sm sm:text-base font-extrabold text-white leading-snug md:min-h-[2.5rem] md:flex md:items-center md:justify-center">
           {item.institution}
         </h3>
         <p className="mt-1 text-xs text-slate-350 leading-relaxed font-medium">

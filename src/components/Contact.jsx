@@ -50,7 +50,7 @@ function Contact() {
       .then((response) => response.json())
       .then((res) => {
         setIsSending(false);
-        if (res.success === 'true') {
+        if (res.success === true || res.success === 'true') {
           setIsSent(true);
           form.reset();
         }

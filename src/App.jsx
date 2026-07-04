@@ -337,29 +337,6 @@ export default function App() {
       {/* Control Navbar from parent */}
       <Navbar activeSection={SECTIONS[activeIndex]} onNavClick={(section) => triggerTransition(SECTIONS.indexOf(section))} />
       
-      {/* Floating Pagination Dots */}
-      <div className="fixed right-6 top-1/2 z-50 hidden md:flex -translate-y-1/2 flex-col gap-4">
-        {SECTIONS.map((section, index) => (
-          <button
-            key={section}
-            className="group relative flex items-center justify-center p-1.5 focus:outline-none"
-            onClick={() => triggerTransition(index)}
-            aria-label={`Go to ${section} section`}
-          >
-            <span className="pointer-events-none absolute right-8 scale-0 rounded-md border border-white/10 bg-slate-900/90 px-2 py-1 text-[0.62rem] font-extrabold uppercase tracking-widest text-cyan-300 backdrop-blur-md transition-all duration-200 group-hover:scale-100">
-              {section === 'home' ? 'Home' : section}
-            </span>
-            <span
-              className={`block size-[7px] rounded-full border transition-all duration-300 ${
-                activeIndex === index
-                  ? 'border-cyan-600 bg-cyan-600 scale-110'
-                  : 'border-white/25 bg-transparent group-hover:border-white/60 group-hover:bg-white/10'
-              }`}
-            />
-          </button>
-        ))}
-      </div>
-
       {/* Viewport-locked 3D transitioning stage */}
       <main className="relative z-10 w-full h-full overflow-hidden" style={{ perspective: 1200 }}>
         <AnimatePresence initial={false}>

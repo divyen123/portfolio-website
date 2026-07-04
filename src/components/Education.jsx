@@ -10,32 +10,34 @@ function TimelineItem({ item, index }) {
 
   return (
     <article
-      className="relative flex flex-col items-center text-center shrink-0 w-[240px] md:w-auto"
+      className="relative flex flex-col md:items-center text-left md:text-center pl-8 md:pl-0 w-full md:w-auto"
     >
       {/* Dot Marker on Timeline */}
-      <div className="relative z-10 flex h-10 items-center justify-center mb-5">
+      {/* Mobile: absolute positioned on the left vertical line */}
+      {/* Desktop: relative positioned horizontally on the timeline line */}
+      <div className="absolute left-1 top-[6px] z-10 md:relative md:left-auto md:top-auto md:flex md:h-10 md:items-center md:justify-center md:mb-5">
         <motion.span
           className="grid size-5 place-items-center rounded-full border border-cyan-300/50 bg-[#050505] shadow-[0_0_20px_rgba(6,182,212,0.32)]"
-          initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.2 }}
+          initial={{ opacity: 0, scale: 0.2 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={isMobile ? { duration: 0 } : { duration: 0.42, delay: 0.15 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.42, delay: 0.15 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
           aria-hidden="true"
         >
           <motion.span
             className="size-2 rounded-full bg-cyan-300"
-            initial={isMobile ? { scale: 1 } : { scale: 0 }}
+            initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={isMobile ? { duration: 0 } : { duration: 0.46, delay: 0.25 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.46, delay: 0.25 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
           />
         </motion.span>
       </div>
 
       {/* Content Container (Background container removed, animating with scan wipes) */}
       <motion.div
-        className="flex flex-col items-center w-full max-w-[230px] md:max-w-none text-center px-2"
+        className="flex flex-col items-start md:items-center w-full text-left md:text-center"
         initial={isMobile ? {
-          opacity: 1,
-          x: 0,
+          opacity: 0,
+          x: -24,
           clipPath: 'inset(0 0 0 0)',
         } : {
           opacity: 0,
@@ -47,21 +49,21 @@ function TimelineItem({ item, index }) {
           x: 0,
           clipPath: 'inset(0 0 0 0)',
         }}
-        transition={isMobile ? { duration: 0 } : {
+        transition={{
           duration: 0.95,
           delay: 0.18 + index * 0.24,
           ease: [0.16, 1, 0.3, 1],
         }}
         whileHover={{ y: -4, scale: 1.015, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
       >
-        <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-cyan-300/18 bg-cyan-300/8 px-2 py-0.5 text-[0.65rem] font-bold text-cyan-200 backdrop-blur">
+        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-cyan-300/18 bg-cyan-300/8 px-2 py-0.5 text-[0.65rem] font-bold text-cyan-200 backdrop-blur">
           <FiCalendar aria-hidden="true" />
           {item.period}
         </span>
-        <h3 className="text-sm sm:text-base font-black text-white leading-snug line-clamp-2 min-h-[2.5rem] flex items-center justify-center">
+        <h3 className="text-sm sm:text-base font-black text-white leading-snug md:min-h-[2.5rem] md:flex md:items-center md:justify-center">
           {item.institution}
         </h3>
-        <p className="mt-1.5 text-xs text-slate-350 leading-relaxed font-medium">
+        <p className="mt-1 text-xs text-slate-350 leading-relaxed font-medium">
           {item.program}
         </p>
       </motion.div>
@@ -80,7 +82,10 @@ function Education() {
         />
 
         <div className="relative mx-auto mt-2 w-full max-w-5xl">
-          {/* Horizontal Connecting Line (Desktop) */}
+          {/* Vertical Connecting Line (Mobile Only) */}
+          <div className="absolute bottom-0 left-[14px] top-0 w-px bg-cyan-300/25 md:hidden" aria-hidden="true" />
+
+          {/* Horizontal Connecting Line (Desktop Only) */}
           <motion.div
             className="absolute top-[1.25rem] left-[12.5%] right-[12.5%] h-[2px] bg-cyan-300/20 origin-left hidden md:block"
             initial={{ scaleX: 0, opacity: 0 }}
@@ -89,11 +94,9 @@ function Education() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             aria-hidden="true"
           />
-          {/* Horizontal Connecting Line (Mobile Horizontal Scroll) */}
-          <div className="absolute top-[1.25rem] left-12 right-12 h-[2px] bg-cyan-300/20 md:hidden" aria-hidden="true" />
 
           {/* Timeline Items Container */}
-          <div className="flex md:grid md:grid-cols-4 overflow-x-auto md:overflow-x-visible pb-6 md:pb-0 gap-6 md:gap-4 scrollbar-hide w-full">
+          <div className="flex flex-col md:grid md:grid-cols-4 gap-8 md:gap-4 w-full">
             {education.length > 0 ? (
               education.map((item, index) => (
                 <TimelineItem

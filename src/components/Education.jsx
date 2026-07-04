@@ -5,6 +5,24 @@ import { education } from '../data/portfolioData';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 
+const slideReveal = {
+  hidden: (index) => ({
+    opacity: 0,
+    x: index % 2 === 0 ? -42 : 42,
+    clipPath: index % 2 === 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)',
+  }),
+  visible: (index) => ({
+    opacity: 1,
+    x: 0,
+    clipPath: 'inset(0 0 0 0)',
+    transition: {
+      duration: 0.95,
+      delay: 0.18 + index * 0.24,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
 function TimelineItem({ item, index }) {
   return (
     <article
@@ -30,16 +48,17 @@ function TimelineItem({ item, index }) {
         </motion.span>
       </div>
 
-      {/* Content Card (Slightly reduced size for a cleaner fit) */}
+      {/* Content Container (Background container removed, animating with scan wipes) */}
       <motion.div
-        className="glass-card flex flex-col items-center p-4 rounded-2xl border border-white/5 bg-white/[0.02] w-full max-w-[230px] md:max-w-none text-center"
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.6, delay: index * 0.15, ease: 'easeOut' }}
+        className="flex flex-col items-center w-full max-w-[230px] md:max-w-none text-center px-2"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.05 }}
+        variants={slideReveal}
+        custom={index}
         whileHover={{ y: -4, scale: 1.015, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
       >
-        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-cyan-300/18 bg-cyan-300/8 px-2 py-0.5 text-[0.65rem] font-bold text-cyan-200 backdrop-blur">
+        <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-cyan-300/18 bg-cyan-300/8 px-2 py-0.5 text-[0.65rem] font-bold text-cyan-200 backdrop-blur">
           <FiCalendar aria-hidden="true" />
           {item.period}
         </span>

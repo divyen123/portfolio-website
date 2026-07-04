@@ -42,7 +42,7 @@ function Contact() {
     if (!isSent) return undefined;
     const timer = window.setTimeout(() => {
       setIsSent(false);
-    }, 4000);
+    }, 5000);
     return () => window.clearTimeout(timer);
   }, [isSent]);
 

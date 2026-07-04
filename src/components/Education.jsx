@@ -7,15 +7,16 @@ import SectionHeading from './SectionHeading';
 
 function TimelineItem({ item, index }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isEven = index % 2 === 0;
 
   return (
     <article
-      className="relative flex flex-col md:items-center text-left md:text-center pl-8 md:pl-0 w-full md:w-auto"
+      className="relative grid grid-cols-2 gap-x-4 md:flex md:flex-col md:items-center w-full md:w-auto mb-8 md:mb-0"
     >
       {/* Dot Marker on Timeline */}
-      {/* Mobile: absolute positioned on the left vertical line */}
+      {/* Mobile: absolute positioned in the center vertical line */}
       {/* Desktop: relative positioned horizontally on the timeline line */}
-      <div className="absolute left-1 top-[6px] z-10 md:relative md:left-auto md:top-auto md:flex md:h-10 md:items-center md:justify-center md:mb-5">
+      <div className="absolute left-1/2 top-[6px] z-10 -translate-x-1/2 md:relative md:left-auto md:top-auto md:flex md:h-10 md:items-center md:justify-center md:mb-5 md:translate-x-0">
         <motion.span
           className="grid size-5 place-items-center rounded-full border border-cyan-300/50 bg-[#050505] shadow-[0_0_20px_rgba(6,182,212,0.32)]"
           initial={{ opacity: 0, scale: 0.2 }}
@@ -32,17 +33,21 @@ function TimelineItem({ item, index }) {
         </motion.span>
       </div>
 
-      {/* Content Container (Background container removed, animating with scan wipes) */}
+      {/* Content Container (Background container removed, alternating layout on mobile, centered on desktop) */}
       <motion.div
-        className="flex flex-col items-start md:items-center w-full text-left md:text-center"
+        className={`w-full max-w-[170px] md:max-w-none flex flex-col ${
+          isEven
+            ? 'col-start-1 justify-self-end pr-6 text-right items-end'
+            : 'col-start-2 justify-self-start pl-6 text-left items-start'
+        } md:col-start-auto md:justify-self-auto md:pr-0 md:pl-0 md:text-center md:items-center`}
         initial={isMobile ? {
           opacity: 0,
-          x: -24,
+          x: isEven ? -24 : 24,
           clipPath: 'inset(0 0 0 0)',
         } : {
           opacity: 0,
-          x: index % 2 === 0 ? -42 : 42,
-          clipPath: index % 2 === 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)',
+          x: isEven ? -42 : 42,
+          clipPath: isEven ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)',
         }}
         animate={{
           opacity: 1,
@@ -82,8 +87,8 @@ function Education() {
         />
 
         <div className="relative mx-auto mt-2 w-full max-w-5xl">
-          {/* Vertical Connecting Line (Mobile Only) */}
-          <div className="absolute bottom-0 left-[14px] top-0 w-px bg-cyan-300/25 md:hidden" aria-hidden="true" />
+          {/* Vertical Connecting Line (Mobile Only - Centered) */}
+          <div className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-cyan-300/25 md:hidden" aria-hidden="true" />
 
           {/* Horizontal Connecting Line (Desktop Only) */}
           <motion.div

@@ -5,25 +5,9 @@ import { education } from '../data/portfolioData';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 
-const slideReveal = {
-  hidden: (index) => ({
-    opacity: 0,
-    x: index % 2 === 0 ? -42 : 42,
-    clipPath: index % 2 === 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)',
-  }),
-  visible: (index) => ({
-    opacity: 1,
-    x: 0,
-    clipPath: 'inset(0 0 0 0)',
-    transition: {
-      duration: 0.95,
-      delay: 0.18 + index * 0.24,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  }),
-};
-
 function TimelineItem({ item, index }) {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <article
       className="relative flex flex-col items-center text-center shrink-0 w-[240px] md:w-auto"
@@ -32,18 +16,16 @@ function TimelineItem({ item, index }) {
       <div className="relative z-10 flex h-10 items-center justify-center mb-5">
         <motion.span
           className="grid size-5 place-items-center rounded-full border border-cyan-300/50 bg-[#050505] shadow-[0_0_20px_rgba(6,182,212,0.32)]"
-          initial={{ opacity: 0, scale: 0.2 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.42, delay: 0.15 + index * 0.22, ease: [0.16, 1, 0.3, 1] }}
+          initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.2 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={isMobile ? { duration: 0 } : { duration: 0.42, delay: 0.15 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
           aria-hidden="true"
         >
           <motion.span
             className="size-2 rounded-full bg-cyan-300"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: [0, 1.35, 1] }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.46, delay: 0.25 + index * 0.22, ease: [0.16, 1, 0.3, 1] }}
+            initial={isMobile ? { scale: 1 } : { scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={isMobile ? { duration: 0 } : { duration: 0.46, delay: 0.25 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
           />
         </motion.span>
       </div>
@@ -51,11 +33,25 @@ function TimelineItem({ item, index }) {
       {/* Content Container (Background container removed, animating with scan wipes) */}
       <motion.div
         className="flex flex-col items-center w-full max-w-[230px] md:max-w-none text-center px-2"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.05 }}
-        variants={slideReveal}
-        custom={index}
+        initial={isMobile ? {
+          opacity: 1,
+          x: 0,
+          clipPath: 'inset(0 0 0 0)',
+        } : {
+          opacity: 0,
+          x: index % 2 === 0 ? -42 : 42,
+          clipPath: index % 2 === 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)',
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+          clipPath: 'inset(0 0 0 0)',
+        }}
+        transition={isMobile ? { duration: 0 } : {
+          duration: 0.95,
+          delay: 0.18 + index * 0.24,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         whileHover={{ y: -4, scale: 1.015, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
       >
         <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-cyan-300/18 bg-cyan-300/8 px-2 py-0.5 text-[0.65rem] font-bold text-cyan-200 backdrop-blur">

@@ -74,7 +74,7 @@ function Contact() {
       <AnimatePresence>
         {isSent && (
           <motion.div
-            className="fixed top-6 right-4 sm:right-6 z-[100] flex items-center gap-3 rounded-2xl border border-cyan-400/28 bg-slate-950/88 px-5 py-3.5 text-sm font-bold text-cyan-200 shadow-[0_12px_42px_rgba(6,182,212,0.22)] backdrop-blur-md"
+            className="fixed top-24 right-4 sm:right-6 z-[100] flex items-center gap-3 rounded-2xl border border-cyan-400/28 bg-slate-950/88 px-5 py-3.5 text-sm font-bold text-cyan-200 shadow-[0_12px_42px_rgba(6,182,212,0.22)] backdrop-blur-md"
             initial={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}
             animate={{ opacity: 1, x: 0, clipPath: 'inset(0 0 0 0)' }}
             exit={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}

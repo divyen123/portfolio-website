@@ -30,6 +30,14 @@ function Contact() {
     }
   }, [contactLinksInView]);
 
+  useEffect(() => {
+    if (!isSent) return undefined;
+    const timer = window.setTimeout(() => {
+      setIsSent(false);
+    }, 4000);
+    return () => window.clearTimeout(timer);
+  }, [isSent]);
+
   function handleSubmit(event) {
     event.preventDefault();
     setIsSending(true);
@@ -63,6 +71,22 @@ function Contact() {
 
   return (
     <>
+      <AnimatePresence>
+        {isSent && (
+          <motion.div
+            className="fixed top-6 right-4 sm:right-6 z-[100] flex items-center gap-3 rounded-2xl border border-cyan-400/28 bg-slate-950/88 px-5 py-3.5 text-sm font-bold text-cyan-200 shadow-[0_12px_42px_rgba(6,182,212,0.22)] backdrop-blur-md"
+            initial={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}
+            animate={{ opacity: 1, x: 0, clipPath: 'inset(0 0 0 0)' }}
+            exit={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            role="status"
+          >
+            <FiCheckCircle className="size-5 text-cyan-300 animate-pulse" aria-hidden="true" />
+            <span>Message Sent Successfully</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatedSection className="section-shell !pb-10" id="contact" direction="up">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
@@ -109,21 +133,6 @@ function Contact() {
                     </>
                   )}
                 </button>
-
-                <AnimatePresence>
-                  {isSent ? (
-                    <motion.p
-                      className="inline-flex items-center gap-2 text-sm font-bold text-cyan-200"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      role="status"
-                    >
-                      <FiCheckCircle aria-hidden="true" />
-                      Message sent successfully! (Confirm inbox on first run)
-                    </motion.p>
-                  ) : null}
-                </AnimatePresence>
               </div>
             </motion.form>
 

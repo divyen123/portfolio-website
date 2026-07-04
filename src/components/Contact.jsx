@@ -74,7 +74,7 @@ function Contact() {
       <AnimatePresence>
         {isSent && (
           <motion.div
-            className="fixed top-28 right-10 sm:right-16 z-[100] flex items-center gap-3 text-sm font-bold text-cyan-200"
+            className="fixed top-28 right-10 sm:right-16 z-[100] hidden md:flex items-center gap-3 text-sm font-bold text-cyan-200"
             initial={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}
             animate={{ opacity: 1, x: 0, clipPath: 'inset(0 0 0 0)' }}
             exit={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}
@@ -120,7 +120,8 @@ function Contact() {
               </div>
 
               <div className="mt-4 flex flex-col justify-center gap-4 sm:flex-row sm:items-center">
-                <button className="ripple-button" type="submit" disabled={isSending}>
+                {/* Desktop Button: visible only on desktop */}
+                <button className="ripple-button hidden md:inline-flex" type="submit" disabled={isSending}>
                   {isSending ? (
                     <>
                       <span className="size-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
@@ -133,6 +134,48 @@ function Contact() {
                     </>
                   )}
                 </button>
+
+                {/* Mobile Content: button hides and displays success message on mobile */}
+                <div className="md:hidden w-full flex justify-center">
+                  <AnimatePresence mode="wait">
+                    {isSent ? (
+                      <motion.div
+                        key="success-mobile"
+                        className="flex items-center justify-center gap-2 text-sm font-bold text-cyan-200 py-3"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FiCheckCircle className="size-5 text-cyan-350 animate-pulse" aria-hidden="true" />
+                        <span>Message Sent Successfully</span>
+                      </motion.div>
+                    ) : (
+                      <motion.button
+                        key="button-mobile"
+                        className="ripple-button w-full justify-center"
+                        type="submit"
+                        disabled={isSending}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {isSending ? (
+                          <>
+                            <span className="size-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <FiMail aria-hidden="true" />
+                            Send Message
+                          </>
+                        )}
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.form>
 

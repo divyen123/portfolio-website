@@ -74,7 +74,7 @@ function Contact() {
       <AnimatePresence>
         {isSent && (
           <motion.div
-            className="fixed top-24 right-4 sm:right-6 z-[100] flex items-center gap-3 text-sm font-bold text-cyan-200"
+            className="fixed top-28 right-10 sm:right-16 z-[100] flex items-center gap-3 text-sm font-bold text-cyan-200"
             initial={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}
             animate={{ opacity: 1, x: 0, clipPath: 'inset(0 0 0 0)' }}
             exit={{ opacity: 0, x: 240, clipPath: 'inset(0 0 0 100%)' }}

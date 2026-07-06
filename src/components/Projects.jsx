@@ -157,7 +157,7 @@ function Projects() {
         />
 
         {projects.length > 0 && activeProject ? (
-          <div ref={projectsStageRef} className="mx-auto max-w-6xl -mt-6 sm:-mt-10 relative">
+          <div ref={projectsStageRef} className="w-full mx-auto max-w-6xl -mt-10 sm:-mt-14 relative">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.article
                 className={`overflow-hidden py-4 ${
@@ -175,23 +175,25 @@ function Projects() {
                 {isRagasGroup ? (
                   <div className="w-full flex flex-col items-center justify-between h-full">
                     {/* Header Area with Center Logo, Subtitle & Description */}
-                    <motion.div className="w-full flex flex-col items-center" variants={morphText} custom={direction}>
-                      <img
-                        src={activeImage}
-                        alt="Ragas Group Logo"
-                        className="max-h-[5.5rem] w-auto object-contain mx-auto"
-                      />
-                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
+                    <motion.div className="w-full flex flex-col items-center animate-fadeIn" variants={morphText} custom={direction}>
+                      <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block mx-auto hover:opacity-90 transition-opacity cursor-pointer">
+                        <img
+                          src={activeImage}
+                          alt="Ragas Group Logo"
+                          className="max-h-[3.6rem] w-auto object-contain mx-auto"
+                        />
+                      </a>
+                      <p className="mt-3.5 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
                         Corporate digital ecosystem & portfolios
                       </p>
-                      <p className="mt-2.5 text-sm leading-relaxed text-slate-350 max-w-2xl">
+                      <p className="mt-2 text-sm leading-relaxed text-slate-350 max-w-2xl">
                         {activeProject.description}
                       </p>
                     </motion.div>
 
                     {/* Center Content Container: One sub-project at a time with next/prev buttons */}
                     <motion.div 
-                      className="w-full max-w-lg mt-5 relative px-12 sm:px-16" 
+                      className="w-full max-w-xl mt-3 relative px-12 sm:px-16" 
                       variants={morphText} 
                       custom={direction}
                     >
@@ -203,24 +205,24 @@ function Projects() {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
                             transition={{ duration: 0.3 }}
-                            className="flex flex-col items-center rounded-2xl border border-white/7 bg-white/[0.015] p-5 text-center relative"
+                            className="flex flex-col items-center text-center relative"
                           >
-                            {/* Logo / Thumbnail */}
-                            <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_24px_rgba(6,182,212,0.12)] mb-3">
-                              <img 
-                                src={activeProject.subprojects[subIndex].logo} 
-                                alt="" 
-                                className="h-full w-full object-cover" 
-                              />
+                            {/* Row: Logo on Left, Title on Right */}
+                            <div className="flex items-center gap-3.5 mb-2.5">
+                              <div className="size-11 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
+                                <img 
+                                  src={activeProject.subprojects[subIndex].logo} 
+                                  alt="" 
+                                  className="h-full w-full object-cover" 
+                                />
+                              </div>
+                              <h4 className="text-base sm:text-lg font-black text-white tracking-tight">
+                                {activeProject.subprojects[subIndex].name}
+                              </h4>
                             </div>
 
-                            {/* Title */}
-                            <h4 className="text-base font-black text-white leading-snug">
-                              {activeProject.subprojects[subIndex].name}
-                            </h4>
-
-                            {/* Description */}
-                            <p className="mt-2 text-xs leading-relaxed text-slate-300 min-h-[3.25rem] flex items-center justify-center">
+                            {/* Description below */}
+                            <p className="mt-2 text-[13px] sm:text-sm leading-relaxed text-slate-300 min-h-[3rem] flex items-center justify-center">
                               {activeProject.subprojects[subIndex].desc}
                             </p>
 
@@ -229,10 +231,10 @@ function Projects() {
                               href={activeProject.subprojects[subIndex].url}
                               target="_blank"
                               rel="noreferrer"
-                              className="ripple-button mt-3.5 px-4 py-2 text-xs"
+                              className="ripple-button mt-3 px-3.5 py-1.5 text-[10px] min-h-[2.25rem] h-auto rounded-full"
                             >
                               <FiExternalLink className="mr-1.5" />
-                              Visit Website
+                              Live Website
                             </a>
                           </motion.div>
                         )}
@@ -258,7 +260,7 @@ function Projects() {
                     </motion.div>
 
                     {/* Footer Area with Technologies & Sub-Pagination Dots */}
-                    <motion.div className="w-full flex flex-col items-center mt-5" variants={morphText} custom={direction}>
+                    <motion.div className="w-full flex flex-col items-center mt-3.5" variants={morphText} custom={direction}>
                       <div className="flex items-center gap-1.5 mb-3.5">
                         {activeProject.subprojects?.map((_, idx) => (
                           <span

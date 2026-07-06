@@ -108,14 +108,14 @@ function Hero({ introComplete = true }) {
           >
             <div className="relative w-12 h-12 shrink-0">
               <a 
-                className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 h-12 w-12 hover:w-[12.5rem] rounded-full flex items-center justify-start transition-all duration-500 ease-in-out cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)]" 
+                className="ripple-button group absolute right-0 top-0 !p-0 !min-h-0 h-12 w-12 hover:w-[12.5rem] rounded-full flex flex-row-reverse items-center justify-start transition-all duration-500 ease-in-out cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                 href={personalInfo.resume} 
                 download
               >
                 <div className="size-12 flex items-center justify-center shrink-0">
                   <FiDownload className="size-5" aria-hidden="true" />
                 </div>
-                <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13.5px] leading-none group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:pr-5">
+                <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13.5px] leading-none group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:pl-5">
                   Download Resume
                 </span>
               </a>

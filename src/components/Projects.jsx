@@ -228,7 +228,7 @@ function Projects() {
                           <img
                             src={activeImage}
                             alt="Ragas Group Logo"
-                            className="max-h-[3.6rem] w-auto object-contain"
+                            className="max-h-[4.4rem] w-auto object-contain"
                           />
                         </a>
                         <AnimatePresence>

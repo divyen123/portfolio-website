@@ -153,7 +153,6 @@ function Projects() {
         <SectionHeading
           eyebrow="Projects"
           title="Selected Work"
-          description="Project details, technologies, and links from the provided folders."
         />
 
         {projects.length > 0 && activeProject ? (
@@ -369,21 +368,18 @@ function Projects() {
 
                       <motion.div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start" variants={morphText} custom={direction}>
                         {activeProject.github ? (
-                          <a className="glass-button" href={activeProject.github} target="_blank" rel="noreferrer">
-                            <FaGithub aria-hidden="true" />
-                            GitHub
+                          <a className="glass-button !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center" href={activeProject.github} target="_blank" rel="noreferrer" aria-label="GitHub Repository">
+                            <FaGithub className="size-5" aria-hidden="true" />
                           </a>
                         ) : null}
                         {activeProject.liveDemo ? (
-                          <a className="ripple-button" href={activeProject.liveDemo} target="_blank" rel="noreferrer">
-                            <FiExternalLink aria-hidden="true" />
-                            Live Demo
+                          <a className="ripple-button !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center" href={activeProject.liveDemo} target="_blank" rel="noreferrer" aria-label="Live Demo">
+                            <FiExternalLink className="size-5" aria-hidden="true" />
                           </a>
                         ) : null}
                         {activeProject.prototype ? (
-                          <a className="ripple-button" href={activeProject.prototype} target="_blank" rel="noreferrer">
-                            <FiLayers aria-hidden="true" />
-                            Prototype
+                          <a className="ripple-button !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center" href={activeProject.prototype} target="_blank" rel="noreferrer" aria-label="Prototype">
+                            <FiLayers className="size-5" aria-hidden="true" />
                           </a>
                         ) : null}
                       </motion.div>

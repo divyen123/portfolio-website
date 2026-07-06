@@ -120,7 +120,7 @@ function Hero({ introComplete = true }) {
                 style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
               >
                 <div className="size-12 flex items-center justify-center shrink-0">
-                  <FiDownload className="size-5 -ml-[2px]" aria-hidden="true" />
+                  <FiDownload className="size-5 -ml-[1.5px]" aria-hidden="true" />
                 </div>
                 <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13.5px] leading-none group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:pl-5">
                   Download Resume

@@ -186,14 +186,14 @@ function Projects() {
                       <p className="mt-3.5 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
                         Corporate digital ecosystem & portfolios
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-350 max-w-2xl">
+                      <p className="mt-2 text-[15px] sm:text-base leading-relaxed text-slate-300 max-w-2xl">
                         {activeProject.description}
                       </p>
                     </motion.div>
 
                     {/* Center Content Container: One sub-project at a time with next/prev buttons */}
                     <motion.div 
-                      className="w-full max-w-[28rem] mt-1 relative px-12 sm:px-16" 
+                      className="w-full max-w-[32rem] -mt-1 relative px-12 sm:px-16" 
                       variants={morphText} 
                       custom={direction}
                     >
@@ -208,7 +208,7 @@ function Projects() {
                             className="flex flex-col items-center text-center relative"
                           >
                             {/* Row: Logo on Left, Title on Right */}
-                            <div className="flex items-center gap-3.5 mb-2.5">
+                            <div className="flex items-center gap-3.5 mb-1.5">
                               <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
                                 <img 
                                   src={activeProject.subprojects[subIndex].logo} 
@@ -222,7 +222,7 @@ function Projects() {
                             </div>
 
                             {/* Description below */}
-                            <p className="mt-2 text-[13px] sm:text-sm leading-relaxed text-slate-300 min-h-[3rem] flex items-center justify-center">
+                            <p className="mt-1.5 text-[13px] sm:text-sm leading-relaxed text-slate-300 min-h-[2.5rem] flex items-center justify-center">
                               {activeProject.subprojects[subIndex].desc}
                             </p>
 
@@ -231,10 +231,10 @@ function Projects() {
                               href={activeProject.subprojects[subIndex].url}
                               target="_blank"
                               rel="noreferrer"
-                              className="ripple-button mt-3 px-3.5 py-1.5 text-[10px] min-h-[2.25rem] h-auto rounded-full"
+                              className="grid size-9 place-items-center rounded-full border border-cyan-400/20 bg-cyan-300/10 text-cyan-300 hover:bg-cyan-300/20 hover:scale-105 transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.15)] mt-3 cursor-pointer"
+                              aria-label="Visit Live Website"
                             >
-                              <FiExternalLink className="mr-1.5" />
-                              Live Website
+                              <FiExternalLink className="size-4" />
                             </a>
                           </motion.div>
                         )}

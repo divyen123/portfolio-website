@@ -108,9 +108,10 @@ function Hero({ introComplete = true }) {
           >
             <div className="relative w-12 h-12 shrink-0">
               <a 
-                className="ripple-button group absolute right-0 top-0 !p-0 !min-h-0 h-12 w-12 hover:w-[12.5rem] rounded-full flex flex-row-reverse items-center justify-start transition-all duration-500 ease-in-out cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
+                className="ripple-button group absolute right-0 top-0 !p-0 !min-h-0 h-12 w-12 hover:w-[12.5rem] rounded-full flex flex-row-reverse items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                 href={personalInfo.resume} 
                 download
+                style={{ transition: 'width 500ms ease-in-out, padding 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
               >
                 <div className="size-12 flex items-center justify-center shrink-0">
                   <FiDownload className="size-5" aria-hidden="true" />

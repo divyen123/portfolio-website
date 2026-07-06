@@ -294,16 +294,14 @@ function Projects() {
                                 href={activeProject.subprojects[subIndex].url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="ripple-button group absolute right-0 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex flex-row-reverse items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
-                                style={{ transition: 'width 500ms ease-in-out, padding 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
+                                className="ripple-button group absolute left-1/2 -translate-x-1/2 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex items-center justify-center cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
+                                style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
                                 aria-label="Visit Live Website"
                               >
-                                <div className="size-10 flex items-center justify-center shrink-0">
-                                  <FiExternalLink className="size-4.5" />
-                                </div>
-                                <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:pl-4">
+                                <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
                                   Enter Website
                                 </span>
+                                <FiExternalLink className="size-4.5 shrink-0" aria-hidden="true" />
                               </a>
                             </div>
                           </motion.div>

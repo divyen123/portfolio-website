@@ -452,7 +452,7 @@ function Projects() {
                               style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
                             >
                               <div className="size-11 flex items-center justify-center shrink-0">
-                                <FiExternalLink className="size-5 -ml-[2px]" aria-hidden="true" />
+                                <FiExternalLink className="size-4.5 -ml-[7.2px]" aria-hidden="true" />
                               </div>
                               <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13px] leading-none group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:pr-5">
                                 Visit Application
@@ -471,7 +471,7 @@ function Projects() {
                               style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
                             >
                               <div className="size-11 flex items-center justify-center shrink-0">
-                                <FiLayers className="size-5 -ml-[2px]" aria-hidden="true" />
+                                <FiLayers className="size-5 -ml-[7.2px]" aria-hidden="true" />
                               </div>
                               <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:pr-5">
                                 Prototype

@@ -182,17 +182,17 @@ function Projects() {
                           className="max-h-[3.6rem] w-auto object-contain mx-auto"
                         />
                       </a>
-                      <p className="mt-3.5 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
+                      <p className="mt-5.5 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
                         Corporate digital ecosystem & portfolios
                       </p>
-                      <p className="mt-2 text-[15px] sm:text-base leading-relaxed text-slate-300 max-w-2xl">
+                      <p className="mt-1.5 text-[15px] sm:text-base leading-relaxed text-slate-300 max-w-2xl">
                         {activeProject.description}
                       </p>
                     </motion.div>
 
                     {/* Center Content Container: One sub-project at a time with next/prev buttons */}
                     <motion.div 
-                      className="w-full max-w-[32rem] -mt-1 relative px-12 sm:px-16" 
+                      className="w-full max-w-[32rem] -mt-2.5 relative px-12 sm:px-16" 
                       variants={morphText} 
                       custom={direction}
                     >

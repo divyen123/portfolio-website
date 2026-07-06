@@ -206,7 +206,7 @@ function Projects() {
                             transition={{ duration: 0.3 }}
                             className="flex flex-col items-center text-center relative"
                           >
-                            {/* Row: Logo on Left, Title on Right */}
+                            {/* Row: Logo on Left, Title on Right + Link Icon */}
                             <div className="flex items-center gap-3.5 mb-1.5">
                               <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
                                 <img 
@@ -215,26 +215,26 @@ function Projects() {
                                   className="h-full w-full object-cover" 
                                 />
                               </div>
-                              <h4 className="text-base sm:text-lg font-black text-white tracking-tight">
-                                {activeProject.subprojects[subIndex].name}
-                              </h4>
+                              <div className="flex items-center gap-2">
+                                <h4 className="text-base sm:text-lg font-black text-white tracking-tight">
+                                  {activeProject.subprojects[subIndex].name}
+                                </h4>
+                                <a
+                                  href={activeProject.subprojects[subIndex].url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-cyan-400/80 hover:text-cyan-300 transition-colors inline-flex items-center shrink-0 cursor-pointer"
+                                  aria-label="Visit Live Website"
+                                >
+                                  <FiExternalLink className="size-4 sm:size-4.5 mb-0.5" />
+                                </a>
+                              </div>
                             </div>
 
                             {/* Description below */}
                             <p className="mt-1.5 text-[13px] sm:text-sm leading-relaxed text-slate-300 min-h-[2.5rem] flex items-center justify-center">
                               {activeProject.subprojects[subIndex].desc}
                             </p>
-
-                            {/* Visit Link */}
-                            <a
-                              href={activeProject.subprojects[subIndex].url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="grid size-9 place-items-center rounded-full border border-cyan-400/20 bg-cyan-300/10 text-cyan-300 hover:bg-cyan-300/20 hover:scale-105 transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.15)] mt-3 cursor-pointer"
-                              aria-label="Visit Live Website"
-                            >
-                              <FiExternalLink className="size-4" />
-                            </a>
                           </motion.div>
                         )}
                       </AnimatePresence>

@@ -301,7 +301,7 @@ function Projects() {
                                 <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
                                   Enter Website
                                 </span>
-                                <FiExternalLink className="size-4.5 shrink-0 -ml-[1px]" aria-hidden="true" />
+                                <FiExternalLink className="size-4.5 shrink-0 -ml-[2px]" aria-hidden="true" />
                               </a>
                             </div>
                           </motion.div>

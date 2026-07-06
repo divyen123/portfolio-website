@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ReactTyped } from 'react-typed';
 import { useInView } from 'react-intersection-observer';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { FiDownload, FiExternalLink } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 import { personalInfo } from '../data/portfolioData';
 
 function Hero({ introComplete = true }) {
@@ -106,19 +106,21 @@ function Hero({ introComplete = true }) {
             transition={{ duration: 0.65, delay: 0.34 }}
             aria-label="Primary links"
           >
-            <a className="ripple-button group" href={personalInfo.resume} download>
-              <FiDownload aria-hidden="true" />
-              Download Resume
+            <a 
+              className="ripple-button group !p-0 !min-h-0 h-12 w-12 hover:w-[12.5rem] rounded-full flex items-center justify-center hover:justify-start hover:px-5 transition-all duration-500 ease-in-out cursor-pointer" 
+              href={personalInfo.resume} 
+              download
+            >
+              <FiDownload className="size-5 shrink-0" aria-hidden="true" />
+              <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13.5px] leading-none group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:ml-2">
+                Download Resume
+              </span>
             </a>
-            <a className="glass-button group" href={personalInfo.github} target="_blank" rel="noreferrer">
-              <FaGithub aria-hidden="true" />
-              GitHub
-              <FiExternalLink className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+            <a className="glass-button group !p-0 !min-h-0 size-12 rounded-full flex items-center justify-center" href={personalInfo.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+              <FaGithub className="size-5" aria-hidden="true" />
             </a>
-            <a className="glass-button group" href={personalInfo.linkedin} target="_blank" rel="noreferrer">
-              <FaLinkedinIn aria-hidden="true" />
-              LinkedIn
-              <FiExternalLink className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+            <a className="glass-button group !p-0 !min-h-0 size-12 rounded-full flex items-center justify-center" href={personalInfo.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <FaLinkedinIn className="size-5" aria-hidden="true" />
             </a>
           </motion.div>
         </div>

@@ -204,7 +204,7 @@ function Projects() {
         />
 
         {projects.length > 0 && activeProject ? (
-          <div ref={projectsStageRef} className="w-full mx-auto max-w-6xl mt-2 sm:mt-4 relative">
+          <div ref={projectsStageRef} className="w-full mx-auto max-w-6xl -mt-2 sm:-mt-4 relative">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.article
                 className={`overflow-hidden py-4 ${

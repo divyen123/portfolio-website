@@ -289,15 +289,22 @@ function Projects() {
                             </p>
 
                             {/* Visit Link at bottom center */}
-                            <a
-                              href={activeProject.subprojects[subIndex].url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="ripple-button !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center mt-3 cursor-pointer"
-                              aria-label="Visit Live Website"
-                            >
-                              <FiExternalLink className="size-5" />
-                            </a>
+                            <div className="relative w-10 h-10 mt-4 mx-auto shrink-0">
+                              <a
+                                href={activeProject.subprojects[subIndex].url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="ripple-button group absolute right-0 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex flex-row-reverse items-center justify-start transition-all duration-500 ease-in-out cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
+                                aria-label="Visit Live Website"
+                              >
+                                <div className="size-10 flex items-center justify-center shrink-0">
+                                  <FiExternalLink className="size-4.5" />
+                                </div>
+                                <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:pl-4">
+                                  Enter Website
+                                </span>
+                              </a>
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>

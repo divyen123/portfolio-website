@@ -218,14 +218,43 @@ function Projects() {
                       {activeProject.description}
                     </motion.p>
 
-                    <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={morphText} custom={direction}>
-                      {activeProject.highlights.map((highlight) => (
-                        <li className="flex gap-3 text-left" key={highlight}>
-                          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(6,182,212,0.65)]" aria-hidden="true" />
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </motion.ul>
+                    {activeProject.subprojects ? (
+                      <motion.div
+                        className="mt-4 grid grid-cols-2 gap-3 w-full"
+                        variants={morphText}
+                        custom={direction}
+                      >
+                        {activeProject.subprojects.map((sub) => (
+                          <a
+                            key={sub.name}
+                            href={sub.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="group flex items-center justify-between gap-2.5 rounded-xl border border-white/5 bg-white/[0.02] p-2 hover:border-cyan-300/30 hover:bg-cyan-300/5 transition-all duration-300"
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <div className="size-8 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-slate-950/40">
+                                <img src={sub.logo} alt="" className="h-full w-full object-cover" />
+                              </div>
+                              <div className="min-w-0 text-left">
+                                <h4 className="text-[11px] font-black text-white truncate leading-snug">{sub.name}</h4>
+                                <p className="text-[9px] text-slate-350 truncate leading-normal mt-0.5">{sub.desc}</p>
+                              </div>
+                            </div>
+                            <FiExternalLink className="size-3 shrink-0 text-cyan-300/50 group-hover:text-cyan-300 transition-colors" />
+                          </a>
+                        ))}
+                      </motion.div>
+                    ) : (
+                      <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={morphText} custom={direction}>
+                        {activeProject.highlights.map((highlight) => (
+                          <li className="flex gap-3 text-left" key={highlight}>
+                            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(6,182,212,0.65)]" aria-hidden="true" />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
 
                     <motion.ul className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start" variants={morphText} custom={direction}>
                       {activeProject.technologies.map((technology) => (

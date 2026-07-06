@@ -23,6 +23,11 @@ import prepMatrixAnalytics from '../assets/projects/prepmatrix-ai/analytics.webp
 import prepMatrixReport from '../assets/projects/prepmatrix-ai/report.webp';
 import prepMatrixStudyAssistant from '../assets/projects/prepmatrix-ai/study-assistant.webp';
 import prepMatrixSettings from '../assets/projects/prepmatrix-ai/settings.webp';
+import ragasGroupsMain from '../assets/projects/ragasgroups/ragasgroups_main.png';
+import ragasShippingLogo from '../assets/projects/ragasgroups/shipping_logo.jpeg';
+import ragasAerospaceLogo from '../assets/projects/ragasgroups/aerospace_logo.jpeg';
+import ragasRaicLogo from '../assets/projects/ragasgroups/raic_logo.png';
+import ragasFounderPhoto from '../assets/projects/ragasgroups/founder_photo.png';
 
 export const personalInfo = {
   name: 'R M Divyen',
@@ -171,6 +176,35 @@ export const projects = [
       prepMatrixReport,
       prepMatrixStudyAssistant,
       prepMatrixSettings,
+    ],
+  },
+  {
+    title: 'Ragas Group',
+    subtitle: 'Corporate digital ecosystem & portfolios',
+    description:
+      'I designed and developed the entire digital ecosystem for the Ragas Group, creating modern, responsive corporate websites and professional portfolios.',
+    highlights: [
+      'Ragas Shipping: Dependable Ship Chartering and Ship Broking company connecting shipowners and cargo across Asia.',
+      'Ragas Aerospace: Defence technology firm developing AI-powered autonomous drone systems for security and surveillance.',
+      'RAIC Technology: Pioneering autonomous aerial intelligence with indigenous technology for unmanned defense systems.',
+      'Founder Portfolio: Raghav S, Aerospace engineer and defence technologist building mission-critical autonomous platforms.'
+    ],
+    subprojects: [
+      { name: 'Ragas Shipping', url: 'https://shipping.ragasgroups.com', logo: ragasShippingLogo, desc: 'Ship Chartering & Broking' },
+      { name: 'Ragas Aerospace', url: 'https://aerospace.ragasgroups.com', logo: ragasAerospaceLogo, desc: 'Defence UAV Systems' },
+      { name: 'RAIC Technology', url: 'https://raic.ragasgroups.com', logo: ragasRaicLogo, desc: 'Aerial AI Intelligence' },
+      { name: 'Founder Portfolio', url: 'https://founder.ragasgroups.com', logo: ragasFounderPhoto, desc: 'Raghav S Portfolio' }
+    ],
+    technologies: ['HTML5', 'CSS3', 'React.js', 'Figma', 'UI/UX Design'],
+    github: '',
+    liveDemo: 'https://www.ragasgroups.com',
+    prototype: '',
+    images: [
+      ragasGroupsMain,
+      ragasShippingLogo,
+      ragasAerospaceLogo,
+      ragasRaicLogo,
+      ragasFounderPhoto,
     ],
   },
 ];

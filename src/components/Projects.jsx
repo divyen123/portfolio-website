@@ -237,7 +237,7 @@ function Projects() {
                               initial={{ opacity: 0, scale: 0.8, x: -10 }}
                               animate={{ opacity: 1, scale: 1, x: 0 }}
                               exit={{ opacity: 0, scale: 0.8, x: -10 }}
-                              className="absolute left-full ml-3.5 top-1/2 -translate-y-1/2 bg-cyan-950/95 border border-cyan-400/40 text-cyan-200 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.25)] flex items-center gap-1 whitespace-nowrap z-20 before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[5px] before:border-transparent before:border-r-cyan-950/95"
+                              className="absolute left-full ml-3.5 top-1/2 -translate-y-1/2 bg-[#0b0c0e] border border-white/10 text-slate-200 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1 whitespace-nowrap z-20 before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[5px] before:border-transparent before:border-r-[#0b0c0e]"
                             >
                               <span className="font-medium tracking-wide">{typedText}</span>
                               <span className="w-[1.5px] h-3 bg-cyan-300/80 animate-pulse" />

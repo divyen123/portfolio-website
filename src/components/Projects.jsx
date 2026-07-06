@@ -193,7 +193,7 @@ function Projects() {
 
                     {/* Center Content Container: One sub-project at a time with next/prev buttons */}
                     <motion.div 
-                      className="w-full max-w-xl mt-3 relative px-12 sm:px-16" 
+                      className="w-full max-w-[28rem] mt-1 relative px-12 sm:px-16" 
                       variants={morphText} 
                       custom={direction}
                     >
@@ -209,7 +209,7 @@ function Projects() {
                           >
                             {/* Row: Logo on Left, Title on Right */}
                             <div className="flex items-center gap-3.5 mb-2.5">
-                              <div className="size-11 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
+                              <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
                                 <img 
                                   src={activeProject.subprojects[subIndex].logo} 
                                   alt="" 

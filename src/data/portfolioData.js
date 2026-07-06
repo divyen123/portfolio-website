@@ -27,7 +27,6 @@ import ragasGroupsMain from '../assets/projects/ragasgroups/ragasgroups_main.png
 import ragasShippingLogo from '../assets/projects/ragasgroups/shipping_logo.jpeg';
 import ragasAerospaceLogo from '../assets/projects/ragasgroups/aerospace_logo.jpeg';
 import ragasRaicLogo from '../assets/projects/ragasgroups/raic_logo.png';
-import ragasFounderPhoto from '../assets/projects/ragasgroups/founder_photo.png';
 
 export const personalInfo = {
   name: 'R M Divyen',
@@ -207,12 +206,6 @@ export const projects = [
         url: 'https://raic.ragasgroups.com',
         logo: ragasRaicLogo,
         desc: 'Pioneering autonomous aerial intelligence with indigenous technology to advance unmanned systems for defence and industry.'
-      },
-      {
-        name: 'Founder Portfolio',
-        url: 'https://founder.ragasgroups.com',
-        logo: ragasFounderPhoto,
-        desc: 'Aerospace engineer Raghav S building autonomous platforms and leading platform engineering and product strategy.'
       }
     ],
     technologies: ['HTML5', 'CSS3', 'React.js', 'Figma', 'UI/UX Design'],

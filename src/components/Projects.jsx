@@ -70,6 +70,8 @@ function Projects() {
   const [[activeIndex, direction], setActiveProject] = useState([0, 1]);
   const [[imageIndex, imageDirection], setActiveImage] = useState([0, 1]);
   const [subIndex, setSubIndex] = useState(0);
+  const [showBubble, setShowBubble] = useState(false);
+  const [typedText, setTypedText] = useState('');
   const { ref: projectsStageRef, inView: projectsStageInView } = useInView({
     threshold: 0.32,
     rootMargin: '0px 0px -12% 0px',
@@ -85,6 +87,52 @@ function Projects() {
     setActiveImage([0, 1]);
     setSubIndex(0);
   }, [activeIndex]);
+
+  useEffect(() => {
+    if (!isRagasGroup) return;
+
+    const phrase = 'Click to visit website';
+    
+    const runCycle = () => {
+      setShowBubble(true);
+      setTypedText('');
+      
+      let cur = '';
+      let charIndex = 0;
+      const typingInterval = setInterval(() => {
+        if (charIndex < phrase.length) {
+          cur += phrase[charIndex];
+          setTypedText(cur);
+          charIndex++;
+        } else {
+          clearInterval(typingInterval);
+        }
+      }, 60);
+
+      const hideTimeout = setTimeout(() => {
+        setShowBubble(false);
+        clearInterval(typingInterval);
+      }, 4000);
+
+      return () => {
+        clearInterval(typingInterval);
+        clearTimeout(hideTimeout);
+      };
+    };
+
+    let cleanup = runCycle();
+
+    const mainInterval = setInterval(() => {
+      if (cleanup) cleanup();
+      cleanup = runCycle();
+    }, 12000);
+
+    return () => {
+      clearInterval(mainInterval);
+      if (cleanup) cleanup();
+      setShowBubble(false);
+    };
+  }, [isRagasGroup]);
 
   const nextSub = () => {
     if (!activeProject.subprojects) return;
@@ -175,13 +223,28 @@ function Projects() {
                   <div className="w-full flex flex-col items-center justify-between h-full">
                     {/* Header Area with Center Logo, Subtitle & Description */}
                     <motion.div className="w-full flex flex-col items-center animate-fadeIn" variants={morphText} custom={direction}>
-                      <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block mx-auto hover:opacity-90 transition-opacity cursor-pointer">
-                        <img
-                          src={activeImage}
-                          alt="Ragas Group Logo"
-                          className="max-h-[3.6rem] w-auto object-contain mx-auto"
-                        />
-                      </a>
+                      <div className="relative inline-flex items-center justify-center">
+                        <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity cursor-pointer">
+                          <img
+                            src={activeImage}
+                            alt="Ragas Group Logo"
+                            className="max-h-[3.6rem] w-auto object-contain"
+                          />
+                        </a>
+                        <AnimatePresence>
+                          {showBubble && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.8, x: -10 }}
+                              animate={{ opacity: 1, scale: 1, x: 0 }}
+                              exit={{ opacity: 0, scale: 0.8, x: -10 }}
+                              className="absolute left-full ml-3.5 top-1/2 -translate-y-1/2 bg-cyan-950/95 border border-cyan-400/40 text-cyan-200 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.25)] flex items-center gap-1 whitespace-nowrap z-20 before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[5px] before:border-transparent before:border-r-cyan-950/95"
+                            >
+                              <span className="font-medium tracking-wide">{typedText}</span>
+                              <span className="w-[1.5px] h-3 bg-cyan-300/80 animate-pulse" />
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                       <p className="mt-5.5 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
                         Corporate digital ecosystem & portfolios
                       </p>
@@ -206,7 +269,7 @@ function Projects() {
                             transition={{ duration: 0.3 }}
                             className="flex flex-col items-center text-center relative"
                           >
-                            {/* Row: Logo on Left, Title on Right + Link Icon */}
+                            {/* Row: Logo on Left, Title on Right */}
                             <div className="flex items-center gap-3.5 mb-1.5">
                               <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
                                 <img 
@@ -215,26 +278,26 @@ function Projects() {
                                   className="h-full w-full object-cover" 
                                 />
                               </div>
-                              <div className="flex items-center gap-2">
-                                <h4 className="text-base sm:text-lg font-black text-white tracking-tight">
-                                  {activeProject.subprojects[subIndex].name}
-                                </h4>
-                                <a
-                                  href={activeProject.subprojects[subIndex].url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="text-cyan-400/80 hover:text-cyan-300 transition-colors inline-flex items-center shrink-0 cursor-pointer"
-                                  aria-label="Visit Live Website"
-                                >
-                                  <FiExternalLink className="size-4 sm:size-4.5 mb-0.5" />
-                                </a>
-                              </div>
+                              <h4 className="text-base sm:text-lg font-black text-white tracking-tight">
+                                {activeProject.subprojects[subIndex].name}
+                              </h4>
                             </div>
 
                             {/* Description below */}
                             <p className="mt-1.5 text-[13px] sm:text-sm leading-relaxed text-slate-300 min-h-[2.5rem] flex items-center justify-center">
                               {activeProject.subprojects[subIndex].desc}
                             </p>
+
+                            {/* Visit Link at bottom center */}
+                            <a
+                              href={activeProject.subprojects[subIndex].url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="ripple-button !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center mt-3 cursor-pointer"
+                              aria-label="Visit Live Website"
+                            >
+                              <FiExternalLink className="size-5" />
+                            </a>
                           </motion.div>
                         )}
                       </AnimatePresence>

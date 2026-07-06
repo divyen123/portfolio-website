@@ -190,10 +190,30 @@ export const projects = [
       'Founder Portfolio: Raghav S, Aerospace engineer and defence technologist building mission-critical autonomous platforms.'
     ],
     subprojects: [
-      { name: 'Ragas Shipping', url: 'https://shipping.ragasgroups.com', logo: ragasShippingLogo, desc: 'Ship Chartering & Broking' },
-      { name: 'Ragas Aerospace', url: 'https://aerospace.ragasgroups.com', logo: ragasAerospaceLogo, desc: 'Defence UAV Systems' },
-      { name: 'RAIC Technology', url: 'https://raic.ragasgroups.com', logo: ragasRaicLogo, desc: 'Aerial AI Intelligence' },
-      { name: 'Founder Portfolio', url: 'https://founder.ragasgroups.com', logo: ragasFounderPhoto, desc: 'Raghav S Portfolio' }
+      {
+        name: 'Ragas Shipping',
+        url: 'https://shipping.ragasgroups.com',
+        logo: ragasShippingLogo,
+        desc: 'A dependable Ship Chartering and Ship Broking company connecting shipowners and cargo across Asia, PG, AG, and the Far East.'
+      },
+      {
+        name: 'Ragas Aerospace',
+        url: 'https://aerospace.ragasgroups.com',
+        logo: ragasAerospaceLogo,
+        desc: 'An Indian defence tech company developing AI-powered autonomous drone systems, combining swarm autonomy and advanced sensing.'
+      },
+      {
+        name: 'RAIC Technology',
+        url: 'https://raic.ragasgroups.com',
+        logo: ragasRaicLogo,
+        desc: 'Pioneering autonomous aerial intelligence with indigenous technology to advance unmanned systems for defence and industry.'
+      },
+      {
+        name: 'Founder Portfolio',
+        url: 'https://founder.ragasgroups.com',
+        logo: ragasFounderPhoto,
+        desc: 'Aerospace engineer Raghav S building autonomous platforms and leading platform engineering and product strategy.'
+      }
     ],
     technologies: ['HTML5', 'CSS3', 'React.js', 'Figma', 'UI/UX Design'],
     github: '',
@@ -201,10 +221,6 @@ export const projects = [
     prototype: '',
     images: [
       ragasGroupsMain,
-      ragasShippingLogo,
-      ragasAerospaceLogo,
-      ragasRaicLogo,
-      ragasFounderPhoto,
     ],
   },
 ];

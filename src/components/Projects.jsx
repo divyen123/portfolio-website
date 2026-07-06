@@ -69,6 +69,7 @@ const preloadImage = (src) => {
 function Projects() {
   const [[activeIndex, direction], setActiveProject] = useState([0, 1]);
   const [[imageIndex, imageDirection], setActiveImage] = useState([0, 1]);
+  const [subIndex, setSubIndex] = useState(0);
   const { ref: projectsStageRef, inView: projectsStageInView } = useInView({
     threshold: 0.32,
     rootMargin: '0px 0px -12% 0px',
@@ -76,12 +77,24 @@ function Projects() {
   });
   const activeProject = projects[activeIndex];
   const isFoodieGo = activeProject?.title === 'FoodieGo';
+  const isRagasGroup = activeProject?.title === 'Ragas Group';
   const projectImages = activeProject?.images || [];
   const activeImage = projectImages[imageIndex] || projectImages[0];
 
   useEffect(() => {
     setActiveImage([0, 1]);
+    setSubIndex(0);
   }, [activeIndex]);
+
+  const nextSub = () => {
+    if (!activeProject.subprojects) return;
+    setSubIndex((prev) => (prev + 1) % activeProject.subprojects.length);
+  };
+
+  const prevSub = () => {
+    if (!activeProject.subprojects) return;
+    setSubIndex((prev) => (prev - 1 + activeProject.subprojects.length) % activeProject.subprojects.length);
+  };
 
   useEffect(() => {
     if (projectImages.length < 2) {
@@ -147,7 +160,11 @@ function Projects() {
           <div ref={projectsStageRef} className="mx-auto max-w-6xl -mt-6 sm:-mt-10 relative">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.article
-                className="grid items-center lg:items-stretch gap-8 overflow-hidden py-4 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:h-[33.5rem]"
+                className={`overflow-hidden py-4 ${
+                  isRagasGroup 
+                    ? 'flex flex-col items-center justify-between text-center lg:h-[33.5rem] w-full max-w-3xl mx-auto'
+                    : 'grid items-center lg:items-stretch gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:h-[33.5rem] w-full'
+                }`}
                 custom={direction}
                 key={activeProject.title}
                 variants={pageMotion}
@@ -155,137 +172,222 @@ function Projects() {
                 animate={projectsStageInView ? "center" : "enter"}
                 exit="exit"
               >
-                <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={morphText} custom={direction}>
-                  <div
-                    className={`relative mx-auto overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] ${
-                      isFoodieGo ? 'aspect-[9/16] max-h-[28rem] w-full max-w-[19rem]' : 'aspect-[16/10] w-full'
-                    }`}
-                  >
-                    <AnimatePresence mode="wait" custom={imageDirection}>
-                      {activeImage ? (
-                        <motion.img
-                          className={`absolute inset-0 h-full w-full opacity-90 ${isFoodieGo ? 'object-contain' : 'object-cover'}`}
-                          src={activeImage}
-                          alt={`${activeProject.title} preview ${imageIndex + 1}`}
-                          loading="lazy"
-                          decoding="async"
-                          custom={imageDirection}
-                          variants={morphText}
-                          initial="enter"
-                          animate={projectsStageInView ? "center" : "enter"}
-                          exit="exit"
-                          key={`${activeProject.title}-${imageIndex}`}
-                        />
-                      ) : null}
-                    </AnimatePresence>
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#050505]/14 via-transparent to-[#050505]/54" aria-hidden="true" />
-                  </div>
+                {isRagasGroup ? (
+                  <div className="w-full flex flex-col items-center justify-between h-full">
+                    {/* Header Area with Center Logo, Subtitle & Description */}
+                    <motion.div className="w-full flex flex-col items-center" variants={morphText} custom={direction}>
+                      <img
+                        src={activeImage}
+                        alt="Ragas Group Logo"
+                        className="max-h-[5.5rem] w-auto object-contain mx-auto"
+                      />
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
+                        Corporate digital ecosystem & portfolios
+                      </p>
+                      <p className="mt-2.5 text-sm leading-relaxed text-slate-350 max-w-2xl">
+                        {activeProject.description}
+                      </p>
+                    </motion.div>
 
-                  {projectImages.length > 1 ? (
-                    <div className="mt-2.5 flex items-center justify-center gap-3" aria-label={`${activeProject.title} image pagination`}>
-                      <button
-                        className="project-image-button"
-                        type="button"
-                        onClick={() => paginateImage(-1)}
-                        aria-label="Previous project image"
-                      >
-                        <FiChevronLeft aria-hidden="true" />
-                      </button>
-                      <span className="min-w-12 text-center text-xs font-bold text-cyan-100">
-                        {imageIndex + 1} / {projectImages.length}
-                      </span>
-                      <button
-                        className="project-image-button"
-                        type="button"
-                        onClick={() => paginateImage(1)}
-                        aria-label="Next project image"
-                      >
-                        <FiChevronRight aria-hidden="true" />
-                      </button>
-                    </div>
-                  ) : null}
-                </motion.div>
-
-                <div className="text-center lg:text-left lg:h-full lg:flex lg:flex-col lg:justify-between w-full py-2">
-                  <div>
-                    <motion.p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300" variants={morphText} custom={direction}>
-                      {activeProject.subtitle}
-                    </motion.p>
-                    <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={morphText} custom={direction}>
-                      {activeProject.title}
-                    </motion.h3>
-                    <motion.p className="mt-2.5 text-base leading-7 text-slate-300" variants={morphText} custom={direction}>
-                      {activeProject.description}
-                    </motion.p>
-
-                    {activeProject.subprojects ? (
-                      <motion.div
-                        className="mt-4 grid grid-cols-2 gap-3 w-full"
-                        variants={morphText}
-                        custom={direction}
-                      >
-                        {activeProject.subprojects.map((sub) => (
-                          <a
-                            key={sub.name}
-                            href={sub.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="group flex items-center justify-between gap-2.5 rounded-xl border border-white/5 bg-white/[0.02] p-2 hover:border-cyan-300/30 hover:bg-cyan-300/5 transition-all duration-300"
+                    {/* Center Content Container: One sub-project at a time with next/prev buttons */}
+                    <motion.div 
+                      className="w-full max-w-lg mt-5 relative px-12 sm:px-16" 
+                      variants={morphText} 
+                      custom={direction}
+                    >
+                      <AnimatePresence mode="wait">
+                        {activeProject.subprojects && (
+                          <motion.div
+                            key={subIndex}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex flex-col items-center rounded-2xl border border-white/7 bg-white/[0.015] p-5 text-center relative"
                           >
-                            <div className="flex items-center gap-2 min-w-0">
-                              <div className="size-8 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-slate-950/40">
-                                <img src={sub.logo} alt="" className="h-full w-full object-cover" />
-                              </div>
-                              <div className="min-w-0 text-left">
-                                <h4 className="text-[11px] font-black text-white truncate leading-snug">{sub.name}</h4>
-                                <p className="text-[9px] text-slate-350 truncate leading-normal mt-0.5">{sub.desc}</p>
-                              </div>
+                            {/* Logo / Thumbnail */}
+                            <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_24px_rgba(6,182,212,0.12)] mb-3">
+                              <img 
+                                src={activeProject.subprojects[subIndex].logo} 
+                                alt="" 
+                                className="h-full w-full object-cover" 
+                              />
                             </div>
-                            <FiExternalLink className="size-3 shrink-0 text-cyan-300/50 group-hover:text-cyan-300 transition-colors" />
-                          </a>
+
+                            {/* Title */}
+                            <h4 className="text-base font-black text-white leading-snug">
+                              {activeProject.subprojects[subIndex].name}
+                            </h4>
+
+                            {/* Description */}
+                            <p className="mt-2 text-xs leading-relaxed text-slate-300 min-h-[3.25rem] flex items-center justify-center">
+                              {activeProject.subprojects[subIndex].desc}
+                            </p>
+
+                            {/* Visit Link */}
+                            <a
+                              href={activeProject.subprojects[subIndex].url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="ripple-button mt-3.5 px-4 py-2 text-xs"
+                            >
+                              <FiExternalLink className="mr-1.5" />
+                              Visit Website
+                            </a>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Next/Prev buttons on left/right edges of the card container */}
+                      <button
+                        onClick={prevSub}
+                        className="absolute left-0 top-1/2 -translate-y-1/2 grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 transition-all cursor-pointer z-10"
+                        type="button"
+                        aria-label="Previous sub-project"
+                      >
+                        <FiChevronLeft className="size-4.5" aria-hidden="true" />
+                      </button>
+                      <button
+                        onClick={nextSub}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 transition-all cursor-pointer z-10"
+                        type="button"
+                        aria-label="Next sub-project"
+                      >
+                        <FiChevronRight className="size-4.5" aria-hidden="true" />
+                      </button>
+                    </motion.div>
+
+                    {/* Footer Area with Technologies & Sub-Pagination Dots */}
+                    <motion.div className="w-full flex flex-col items-center mt-5" variants={morphText} custom={direction}>
+                      <div className="flex items-center gap-1.5 mb-3.5">
+                        {activeProject.subprojects?.map((_, idx) => (
+                          <span
+                            key={idx}
+                            className={`block size-1.5 rounded-full transition-all duration-300 ${
+                              subIndex === idx ? 'bg-cyan-400 scale-120' : 'bg-white/20'
+                            }`}
+                          />
                         ))}
-                      </motion.div>
-                    ) : (
-                      <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={morphText} custom={direction}>
-                        {activeProject.highlights.map((highlight) => (
-                          <li className="flex gap-3 text-left" key={highlight}>
-                            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(6,182,212,0.65)]" aria-hidden="true" />
-                            <span>{highlight}</span>
+                      </div>
+                      
+                      <ul className="flex flex-wrap justify-center gap-2">
+                        {activeProject.technologies.map((technology) => (
+                          <li 
+                            className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-bold text-cyan-100 backdrop-blur" 
+                            key={technology}
+                          >
+                            {technology}
                           </li>
                         ))}
-                      </motion.ul>
-                    )}
-
-                    <motion.ul className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start" variants={morphText} custom={direction}>
-                      {activeProject.technologies.map((technology) => (
-                        <li className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-bold text-cyan-100 backdrop-blur" key={technology}>
-                          {technology}
-                        </li>
-                      ))}
-                    </motion.ul>
+                      </ul>
+                    </motion.div>
                   </div>
+                ) : (
+                  <>
+                    <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={morphText} custom={direction}>
+                      <div
+                        className={`relative mx-auto overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] ${
+                          isFoodieGo ? 'aspect-[9/16] max-h-[28rem] w-full max-w-[19rem]' : 'aspect-[16/10] w-full'
+                        }`}
+                      >
+                        <AnimatePresence mode="wait" custom={imageDirection}>
+                          {activeImage ? (
+                            <motion.img
+                              className={`absolute inset-0 h-full w-full opacity-90 ${isFoodieGo ? 'object-contain' : 'object-cover'}`}
+                              src={activeImage}
+                              alt={`${activeProject.title} preview ${imageIndex + 1}`}
+                              loading="lazy"
+                              decoding="async"
+                              custom={imageDirection}
+                              variants={morphText}
+                              initial="enter"
+                              animate={projectsStageInView ? "center" : "enter"}
+                              exit="exit"
+                              key={`${activeProject.title}-${imageIndex}`}
+                            />
+                          ) : null}
+                        </AnimatePresence>
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#050505]/14 via-transparent to-[#050505]/54" aria-hidden="true" />
+                      </div>
 
-                  <motion.div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start" variants={morphText} custom={direction}>
-                    {activeProject.github ? (
-                      <a className="glass-button" href={activeProject.github} target="_blank" rel="noreferrer">
-                        <FaGithub aria-hidden="true" />
-                        GitHub
-                      </a>
-                    ) : null}
-                    {activeProject.liveDemo ? (
-                      <a className="ripple-button" href={activeProject.liveDemo} target="_blank" rel="noreferrer">
-                        <FiExternalLink aria-hidden="true" />
-                        Live Demo
-                      </a>
-                    ) : null}
-                    {activeProject.prototype ? (
-                      <a className="ripple-button" href={activeProject.prototype} target="_blank" rel="noreferrer">
-                        <FiLayers aria-hidden="true" />
-                        Prototype
-                      </a>
-                    ) : null}
-                  </motion.div>
-                </div>
+                      {projectImages.length > 1 ? (
+                        <div className="mt-2.5 flex items-center justify-center gap-3" aria-label={`${activeProject.title} image pagination`}>
+                          <button
+                            className="project-image-button"
+                            type="button"
+                            onClick={() => paginateImage(-1)}
+                            aria-label="Previous project image"
+                          >
+                            <FiChevronLeft aria-hidden="true" />
+                          </button>
+                          <span className="min-w-12 text-center text-xs font-bold text-cyan-100">
+                            {imageIndex + 1} / {projectImages.length}
+                          </span>
+                          <button
+                            className="project-image-button"
+                            type="button"
+                            onClick={() => paginateImage(1)}
+                            aria-label="Next project image"
+                          >
+                            <FiChevronRight aria-hidden="true" />
+                          </button>
+                        </div>
+                      ) : null}
+                    </motion.div>
+
+                    <div className="text-center lg:text-left lg:h-full lg:flex lg:flex-col lg:justify-between w-full py-2">
+                      <div>
+                        <motion.p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300" variants={morphText} custom={direction}>
+                          {activeProject.subtitle}
+                        </motion.p>
+                        <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={morphText} custom={direction}>
+                          {activeProject.title}
+                        </motion.h3>
+                        <motion.p className="mt-2.5 text-base leading-7 text-slate-300" variants={morphText} custom={direction}>
+                          {activeProject.description}
+                        </motion.p>
+
+                        <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={morphText} custom={direction}>
+                          {activeProject.highlights.map((highlight) => (
+                            <li className="flex gap-3 text-left" key={highlight}>
+                              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(6,182,212,0.65)]" aria-hidden="true" />
+                              <span>{highlight}</span>
+                            </li>
+                          ))}
+                        </motion.ul>
+
+                        <motion.ul className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start" variants={morphText} custom={direction}>
+                          {activeProject.technologies.map((technology) => (
+                            <li className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-bold text-cyan-100 backdrop-blur" key={technology}>
+                              {technology}
+                            </li>
+                          ))}
+                        </motion.ul>
+                      </div>
+
+                      <motion.div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start" variants={morphText} custom={direction}>
+                        {activeProject.github ? (
+                          <a className="glass-button" href={activeProject.github} target="_blank" rel="noreferrer">
+                            <FaGithub aria-hidden="true" />
+                            GitHub
+                          </a>
+                        ) : null}
+                        {activeProject.liveDemo ? (
+                          <a className="ripple-button" href={activeProject.liveDemo} target="_blank" rel="noreferrer">
+                            <FiExternalLink aria-hidden="true" />
+                            Live Demo
+                          </a>
+                        ) : null}
+                        {activeProject.prototype ? (
+                          <a className="ripple-button" href={activeProject.prototype} target="_blank" rel="noreferrer">
+                            <FiLayers aria-hidden="true" />
+                            Prototype
+                          </a>
+                        ) : null}
+                      </motion.div>
+                    </div>
+                  </>
+                )}
               </motion.article>
             </AnimatePresence>
 

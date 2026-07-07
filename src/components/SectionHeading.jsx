@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 
-function SectionHeading({ eyebrow, description }) {
+function SectionHeading({ eyebrow, description, className = '' }) {
   return (
-    <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
+    <div className={`mx-auto mb-10 max-w-3xl text-center sm:mb-14 ${className}`}>
       {eyebrow ? (
         <motion.h2
           className="mx-auto text-lg font-extrabold uppercase tracking-[0.26em] text-cyan-300 sm:text-xl lg:text-2xl"

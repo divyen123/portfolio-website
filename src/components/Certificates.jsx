@@ -88,7 +88,7 @@ function Certificates() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Certificates"
-          description="Certificate titles and dates extracted from the provided PDFs."
+          className="pt-6 sm:pt-8"
         />
 
         <div

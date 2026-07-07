@@ -103,7 +103,7 @@ function Skills() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Skills"
-          description="Grouped from the resume and skills reference files."
+          className="pt-6 sm:pt-8"
         />
 
         <div className="skills-carousel" aria-label="Technical skills">

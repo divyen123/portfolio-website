@@ -99,7 +99,7 @@ function Contact() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Get In Touch"
-            description="Contact details from the provided resume and links file."
+            className="pt-6 sm:pt-8"
           />
 
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:items-center">

@@ -82,7 +82,7 @@ function Education() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Education"
-          description="Education details from the provided portfolio files."
+          className="pt-6 sm:pt-8"
         />
 
         <div className="relative mx-auto mt-2 w-full max-w-5xl">

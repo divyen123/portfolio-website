@@ -27,8 +27,8 @@ function About() {
     <AnimatedSection className="section-shell" id="about" direction="left">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="About"
-          description="A focused overview from the portfolio reference material."
+          eyebrow="About Me"
+          className="pt-6 sm:pt-8"
         />
 
         <div className="mx-auto grid max-w-4xl gap-6 text-center">

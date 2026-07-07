@@ -103,6 +103,11 @@ function Projects() {
   const activeTextMotion = isMobile ? mobileTextMotion : morphText;
   const shouldShowRagasLogoBubble = isRagasGroup && subIndex > 0;
   const shouldShowSubprojectCursor = ['Ragas Shipping', 'Ragas Aerospace', 'RAIC Technology'].includes(activeRagasPage?.name);
+  const shouldShiftSubprojectLogoLeft = ['Ragas Shipping', 'RAIC Technology'].includes(activeRagasPage?.name);
+  const shouldNudgeAerospaceLogoLeft = activeRagasPage?.name === 'Ragas Aerospace';
+  const subprojectLogoSizeClass = shouldShiftSubprojectLogoLeft
+    ? 'max-h-[12rem] max-w-[17.5rem]'
+    : 'max-h-[11rem] max-w-[16rem]';
 
   useEffect(() => {
     setActiveImage([0, 1]);
@@ -110,35 +115,44 @@ function Projects() {
   }, [activeIndex]);
   useEffect(() => {
     const message = 'Click to visit website';
-    let revealTimer;
+    const timers = [];
     let typeTimer;
+
+    const clearBubbleTimers = () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+      window.clearInterval(typeTimer);
+    };
 
     if (!shouldShowRagasLogoBubble) {
       setShowBubble(false);
       setTypedText('');
-      return undefined;
+      return clearBubbleTimers;
     }
 
-    setShowBubble(false);
-    setTypedText('');
-
-    revealTimer = window.setTimeout(() => {
+    const startTypingCycle = () => {
       let index = 0;
+      setTypedText('');
       setShowBubble(true);
+
       typeTimer = window.setInterval(() => {
         index += 1;
         setTypedText(message.slice(0, index));
 
         if (index >= message.length) {
           window.clearInterval(typeTimer);
+          timers.push(window.setTimeout(() => {
+            setShowBubble(false);
+            timers.push(window.setTimeout(startTypingCycle, 7000));
+          }, 3000));
         }
       }, 55);
-    }, 420);
-
-    return () => {
-      window.clearTimeout(revealTimer);
-      window.clearInterval(typeTimer);
     };
+
+    setShowBubble(false);
+    setTypedText('');
+    timers.push(window.setTimeout(startTypingCycle, 420));
+
+    return clearBubbleTimers;
   }, [shouldShowRagasLogoBubble]);
 
 
@@ -267,15 +281,17 @@ function Projects() {
                             <AnimatePresence>
                               {showBubble ? (
                                 <motion.div
-                                  className="absolute left-full top-1/2 ml-4 hidden -translate-y-1/2 items-center whitespace-nowrap rounded-lg border border-white/10 bg-black/45 px-3 py-2 text-sm font-extrabold text-white shadow-[0_0_22px_rgba(6,182,212,0.16)] backdrop-blur-md md:flex"
-                                  initial={{ opacity: 0, x: -8, scale: 0.96 }}
+                                  className="absolute left-full top-1/2 ml-2 hidden -translate-y-1/2 items-center whitespace-nowrap rounded-md border border-white/10 bg-white/[0.055] px-2.5 py-1.5 text-[0.78rem] font-medium leading-none text-white/90 backdrop-blur-xl md:flex"
+                                  initial={{ opacity: 0, x: -8, scale: 0.98 }}
                                   animate={{ opacity: 1, x: 0, scale: 1 }}
-                                  exit={{ opacity: 0, x: 8, scale: 0.96 }}
-                                  transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                                  exit={{ opacity: 0, x: 10, scale: 0.98 }}
+                                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                                   aria-hidden="true"
                                 >
+                                  <span className="absolute -left-2 top-1/2 h-0 w-0 -translate-y-1/2 border-y-[5px] border-r-[8px] border-y-transparent border-r-white/20" />
+                                  <span className="absolute -left-[7px] top-1/2 h-0 w-0 -translate-y-1/2 border-y-[4px] border-r-[7px] border-y-transparent border-r-white/[0.055]" />
                                   <span>{typedText}</span>
-                                  <span className="ml-1 text-cyan-300">|</span>
+                                  <span className="ml-1 inline-block h-3.5 w-[1.5px] translate-y-[0.5px] rounded-full bg-cyan-300/90" />
                                 </motion.div>
                               ) : null}
                             </AnimatePresence>
@@ -321,8 +337,8 @@ function Projects() {
                                 <p className="text-base leading-8 text-slate-300 sm:text-lg">
                                   {activeRagasPage.description}
                                 </p>
-                                <p className="mt-5 text-sm font-extrabold uppercase tracking-[0.24em] text-cyan-300 sm:text-base">
-                                  Scroll to explore all Ragas Group websites.
+                                <p className="ragas-scroll-reveal mt-5 text-sm font-extrabold uppercase tracking-[0.24em] text-cyan-300 sm:text-base">
+                                  <span>Scroll to explore all Ragas Group websites.</span>
                                 </p>
                               </div>
                             ) : (
@@ -338,8 +354,8 @@ function Projects() {
                                 </p>
 
                                 <div className={`mt-5 grid items-center gap-8 ${subIndex === 1 ? 'text-center lg:grid-cols-1' : 'text-left lg:grid-cols-[minmax(0,0.68fr)_minmax(12rem,0.32fr)]'}`}>
-                                  <div className={subIndex === 1 ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 lg:pl-8'}>
-                                    <ul className={`grid gap-2.5 text-[15px] leading-7 text-slate-300 sm:text-base ${subIndex === 1 ? 'mx-auto max-w-4xl text-left' : ''}`}>
+                                  <div className={subIndex === 1 ? 'mx-auto min-w-0 max-w-3xl' : 'min-w-0 lg:pl-8'}>
+                                    <ul className={`grid gap-2.5 text-[15px] leading-7 text-slate-300 sm:text-base ${subIndex === 1 ? 'mx-auto max-w-3xl text-left' : ''}`}>
                                       {activeRagasPage.highlights?.map((highlight) => (
                                         <li className={subIndex === 1 ? 'flex gap-3 text-left' : 'flex gap-3'} key={highlight}>
                                           <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300" aria-hidden="true" />
@@ -367,14 +383,14 @@ function Projects() {
                                       href={activeRagasPage.url}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end"
+                                      className={`ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end ${shouldShiftSubprojectLogoLeft ? 'lg:-translate-x-12 xl:-translate-x-20' : shouldNudgeAerospaceLogoLeft ? 'lg:-translate-x-4 xl:-translate-x-6' : ''}`}
                                       aria-label={`Visit ${activeRagasPage.name} website`}
                                     >
                                       <span className="ragas-logo-click-target inline-flex items-center justify-center">
                                         <img
                                           src={activeRagasPage.logo}
                                           alt=""
-                                          className="max-h-[11rem] w-full max-w-[16rem] object-contain"
+                                          className={`${subprojectLogoSizeClass} w-full object-contain`}
                                         />
                                         {shouldShowSubprojectCursor ? (
                                           <>
@@ -585,6 +601,16 @@ function Projects() {
 }
 
 export default memo(Projects);
+
+
+
+
+
+
+
+
+
+
 
 
 

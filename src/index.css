@@ -699,38 +699,37 @@ img {
 
 .ragas-logo-click-target {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.ragas-logo-click-target::before,
-.ragas-logo-click-target::after {
-  content: "";
+.ragas-click-hand,
+.ragas-click-ring {
   position: absolute;
+  left: 50%;
+  top: 50%;
   pointer-events: none;
   z-index: 30;
 }
 
-.ragas-logo-click-target::before {
-  right: -1.05rem;
-  top: 44%;
-  width: 1rem;
-  height: 1.35rem;
-  background: rgba(255, 255, 255, 0.96);
-  clip-path: polygon(0 0, 0 100%, 29% 76%, 47% 100%, 64% 90%, 48% 66%, 82% 66%);
-  filter: drop-shadow(0 0 9px rgba(6, 182, 212, 0.5));
+.ragas-click-hand {
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 1.35rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 9px rgba(6, 182, 212, 0.58));
   opacity: 0;
-  transform: translate(0.75rem, -0.8rem) scale(0.96);
-  animation: ragas-click-cursor 6s ease-in-out infinite;
+  transform-origin: 50% 50%;
+  animation: ragas-click-hand 6s ease-in-out infinite;
 }
 
-.ragas-logo-click-target::after {
-  right: -1.02rem;
-  top: 44%;
-  width: 1.85rem;
-  height: 1.85rem;
+.ragas-click-ring {
+  width: 2.05rem;
+  height: 2.05rem;
   border-radius: 9999px;
   border: 1px solid rgba(103, 232, 249, 0.78);
   opacity: 0;
-  transform: translate(0.18rem, -0.18rem) scale(0.35);
+  transform: translate(-50%, -50%) scale(0.35);
   animation: ragas-click-ripple 6s ease-in-out infinite;
 }
 
@@ -738,51 +737,55 @@ img {
   animation: ragas-subproject-logo-float 4.8s ease-in-out infinite;
 }
 
-@keyframes ragas-click-cursor {
+@keyframes ragas-click-hand {
   0%,
   58%,
   100% {
     opacity: 0;
-    transform: translate(0.75rem, -0.8rem) scale(0.96);
+    transform: translate(3rem, 2.35rem) rotate(-18deg) scale(0.94);
   }
 
-  12%,
+  12% {
+    opacity: 1;
+    transform: translate(2.45rem, 1.95rem) rotate(-18deg) scale(0.96);
+  }
+
+  26%,
   42% {
     opacity: 1;
-    transform: translate(0, 0) scale(1);
+    transform: translate(-50%, -50%) rotate(-18deg) scale(1);
   }
 
-  30% {
+  32% {
     opacity: 1;
-    transform: translate(0, 0) scale(0.86);
+    transform: translate(-50%, -50%) rotate(-18deg) scale(0.82);
   }
 
-  36% {
+  38% {
     opacity: 1;
-    transform: translate(0, 0) scale(1);
+    transform: translate(-50%, -50%) rotate(-18deg) scale(1);
   }
 }
 
 @keyframes ragas-click-ripple {
   0%,
-  26%,
+  28%,
   58%,
   100% {
     opacity: 0;
-    transform: translate(0.18rem, -0.18rem) scale(0.35);
+    transform: translate(-50%, -50%) scale(0.35);
   }
 
-  31% {
+  33% {
     opacity: 0.82;
-    transform: translate(0.18rem, -0.18rem) scale(0.55);
+    transform: translate(-50%, -50%) scale(0.58);
   }
 
-  45% {
+  47% {
     opacity: 0;
-    transform: translate(0.18rem, -0.18rem) scale(1.45);
+    transform: translate(-50%, -50%) scale(1.45);
   }
 }
-
 @keyframes ragas-subproject-logo-float {
   0%,
   100% {
@@ -904,6 +907,7 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+
 
 
 

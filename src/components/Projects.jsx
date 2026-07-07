@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaRegHandPointer } from 'react-icons/fa';
 import { FiChevronLeft, FiChevronRight, FiExternalLink, FiLayers } from 'react-icons/fi';
 import { projects } from '../data/portfolioData';
 import AnimatedSection from './AnimatedSection';
@@ -101,11 +101,45 @@ function Projects() {
   const ragasPageCount = ragasPages.length || activeProject?.subprojects?.length || 0;
   const activePageMotion = isMobile ? mobilePageMotion : pageMotion;
   const activeTextMotion = isMobile ? mobileTextMotion : morphText;
+  const shouldShowRagasLogoBubble = isRagasGroup && subIndex > 0;
+  const shouldShowSubprojectCursor = ['Ragas Shipping', 'Ragas Aerospace', 'RAIC Technology'].includes(activeRagasPage?.name);
 
   useEffect(() => {
     setActiveImage([0, 1]);
     setSubIndex(0);
   }, [activeIndex]);
+  useEffect(() => {
+    const message = 'Click to visit website';
+    let revealTimer;
+    let typeTimer;
+
+    if (!shouldShowRagasLogoBubble) {
+      setShowBubble(false);
+      setTypedText('');
+      return undefined;
+    }
+
+    setShowBubble(false);
+    setTypedText('');
+
+    revealTimer = window.setTimeout(() => {
+      let index = 0;
+      setShowBubble(true);
+      typeTimer = window.setInterval(() => {
+        index += 1;
+        setTypedText(message.slice(0, index));
+
+        if (index >= message.length) {
+          window.clearInterval(typeTimer);
+        }
+      }, 55);
+    }, 420);
+
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.clearInterval(typeTimer);
+    };
+  }, [shouldShowRagasLogoBubble]);
 
 
   const nextSub = () => {
@@ -221,14 +255,30 @@ function Projects() {
                           transition={isMobile ? { duration: 0.12, ease: 'linear' } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                         >
                           <div className="relative inline-flex items-center justify-center">
-                            <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className={`${subIndex === 1 ? 'ragas-logo-click-target ' : ''}block hover:opacity-90 transition-opacity cursor-pointer`}>
+                            <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center hover:opacity-90 transition-opacity cursor-pointer">
                               <motion.img
                                 layoutId="ragas-main-logo"
                                 src={activeImage}
                                 alt="Ragas Group Logo"
                                 className="max-h-[4.1rem] max-w-[82vw] w-auto object-contain sm:max-h-[4.45rem]"
                               />
+
                             </a>
+                            <AnimatePresence>
+                              {showBubble ? (
+                                <motion.div
+                                  className="absolute left-full top-1/2 ml-4 hidden -translate-y-1/2 items-center whitespace-nowrap rounded-lg border border-white/10 bg-black/45 px-3 py-2 text-sm font-extrabold text-white shadow-[0_0_22px_rgba(6,182,212,0.16)] backdrop-blur-md md:flex"
+                                  initial={{ opacity: 0, x: -8, scale: 0.96 }}
+                                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                                  exit={{ opacity: 0, x: 8, scale: 0.96 }}
+                                  transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                                  aria-hidden="true"
+                                >
+                                  <span>{typedText}</span>
+                                  <span className="ml-1 text-cyan-300">|</span>
+                                </motion.div>
+                              ) : null}
+                            </AnimatePresence>
 
                           </div>
                         </motion.div>
@@ -317,14 +367,24 @@ function Projects() {
                                       href={activeRagasPage.url}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="ragas-logo-click-target ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end"
+                                      className="ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end"
                                       aria-label={`Visit ${activeRagasPage.name} website`}
                                     >
-                                      <img
-                                        src={activeRagasPage.logo}
-                                        alt=""
-                                        className="max-h-[11rem] w-full max-w-[16rem] object-contain"
-                                      />
+                                      <span className="ragas-logo-click-target inline-flex items-center justify-center">
+                                        <img
+                                          src={activeRagasPage.logo}
+                                          alt=""
+                                          className="max-h-[11rem] w-full max-w-[16rem] object-contain"
+                                        />
+                                        {shouldShowSubprojectCursor ? (
+                                          <>
+                                            <span className="ragas-click-hand" aria-hidden="true">
+                                              <FaRegHandPointer />
+                                            </span>
+                                            <span className="ragas-click-ring" aria-hidden="true" />
+                                          </>
+                                        ) : null}
+                                      </span>
                                     </a>
                                   ) : null}
                                 </div>
@@ -525,6 +585,9 @@ function Projects() {
 }
 
 export default memo(Projects);
+
+
+
 
 
 

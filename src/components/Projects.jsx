@@ -236,7 +236,7 @@ function Projects() {
         />
 
         {projects.length > 0 && activeProject ? (
-          <div ref={projectsStageRef} className="w-full mx-auto max-w-6xl -mt-2 sm:-mt-4 relative">
+          <div ref={projectsStageRef} className="w-full mx-auto max-w-6xl -mt-5 sm:-mt-6 lg:-mt-7 relative">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.article
                 className={`relative overflow-hidden py-4 ${
@@ -430,10 +430,10 @@ function Projects() {
                   </div>
                 ) : (
                   <>
-                    <motion.p className="relative left-auto top-auto z-10 mb-4 w-full max-w-5xl translate-x-0 text-center text-xs font-bold uppercase tracking-[0.2em] text-cyan-300 md:absolute md:left-1/2 md:top-2 md:mb-0 md:-translate-x-1/2 md:tracking-[0.24em]" variants={activeTextMotion} custom={direction}>
+                    <motion.p className="relative left-auto top-auto z-10 mb-4 w-full max-w-5xl translate-x-0 text-center text-xs font-bold uppercase tracking-[0.2em] text-cyan-300 md:absolute md:left-1/2 md:top-0 md:mb-0 md:-translate-x-1/2 md:tracking-[0.24em]" variants={activeTextMotion} custom={direction}>
                       {activeProject.subtitle}
                     </motion.p>
-                    <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={activeTextMotion} custom={direction}>
+                    <motion.div className="mx-auto w-full lg:-mt-3 lg:h-full lg:flex lg:flex-col lg:justify-center" variants={activeTextMotion} custom={direction}>
                       <div
                         className={`relative mx-auto overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] ${
                           isFoodieGo ? 'aspect-[9/16] max-h-[28rem] w-full max-w-[19rem]' : 'aspect-[16/10] w-full'
@@ -485,7 +485,7 @@ function Projects() {
                     </motion.div>
 
                     <div className="text-center lg:text-left lg:h-full lg:flex lg:flex-col lg:justify-between w-full py-2">
-                      <div className={isFoodieGo ? 'lg:pt-16 xl:pt-18' : activeProject.title === 'MedAI Health Assistant' ? 'lg:pt-22 xl:pt-24' : 'lg:pt-16 xl:pt-18'}>
+                      <div className={isFoodieGo ? 'lg:pt-12 xl:pt-14' : activeProject.title === 'MedAI Health Assistant' ? 'lg:pt-18 xl:pt-20' : 'lg:pt-12 xl:pt-14'}>
 
                         <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={activeTextMotion} custom={direction}>
                           {activeProject.title}
@@ -597,6 +597,7 @@ function Projects() {
 }
 
 export default memo(Projects);
+
 
 
 

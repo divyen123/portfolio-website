@@ -697,8 +697,90 @@ img {
   filter: blur(0);
 }
 
+.ragas-logo-click-target {
+  position: relative;
+}
+
+.ragas-logo-click-target::before,
+.ragas-logo-click-target::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.ragas-logo-click-target::before {
+  right: -1.05rem;
+  top: 44%;
+  width: 1rem;
+  height: 1.35rem;
+  background: rgba(255, 255, 255, 0.96);
+  clip-path: polygon(0 0, 0 100%, 29% 76%, 47% 100%, 64% 90%, 48% 66%, 82% 66%);
+  filter: drop-shadow(0 0 9px rgba(6, 182, 212, 0.5));
+  opacity: 0;
+  transform: translate(0.75rem, -0.8rem) scale(0.96);
+  animation: ragas-click-cursor 6s ease-in-out infinite;
+}
+
+.ragas-logo-click-target::after {
+  right: -1.02rem;
+  top: 44%;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(103, 232, 249, 0.78);
+  opacity: 0;
+  transform: translate(0.18rem, -0.18rem) scale(0.35);
+  animation: ragas-click-ripple 6s ease-in-out infinite;
+}
+
 .ragas-subproject-logo-float img {
   animation: ragas-subproject-logo-float 4.8s ease-in-out infinite;
+}
+
+@keyframes ragas-click-cursor {
+  0%,
+  58%,
+  100% {
+    opacity: 0;
+    transform: translate(0.75rem, -0.8rem) scale(0.96);
+  }
+
+  12%,
+  42% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.86);
+  }
+
+  36% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes ragas-click-ripple {
+  0%,
+  26%,
+  58%,
+  100% {
+    opacity: 0;
+    transform: translate(0.18rem, -0.18rem) scale(0.35);
+  }
+
+  31% {
+    opacity: 0.82;
+    transform: translate(0.18rem, -0.18rem) scale(0.55);
+  }
+
+  45% {
+    opacity: 0;
+    transform: translate(0.18rem, -0.18rem) scale(1.45);
+  }
 }
 
 @keyframes ragas-subproject-logo-float {
@@ -822,6 +904,7 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+
 
 
 

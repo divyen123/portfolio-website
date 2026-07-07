@@ -107,51 +107,6 @@ function Projects() {
     setSubIndex(0);
   }, [activeIndex]);
 
-  useEffect(() => {
-    if (!isRagasGroup || subIndex === 0 || isMobile) return;
-
-    const phrase = 'Click to visit website';
-    
-    const runCycle = () => {
-      setShowBubble(true);
-      setTypedText('');
-      
-      let cur = '';
-      let charIndex = 0;
-      const typingInterval = setInterval(() => {
-        if (charIndex < phrase.length) {
-          cur += phrase[charIndex];
-          setTypedText(cur);
-          charIndex++;
-        } else {
-          clearInterval(typingInterval);
-        }
-      }, 60);
-
-      const hideTimeout = setTimeout(() => {
-        setShowBubble(false);
-        clearInterval(typingInterval);
-      }, 4000);
-
-      return () => {
-        clearInterval(typingInterval);
-        clearTimeout(hideTimeout);
-      };
-    };
-
-    let cleanup = runCycle();
-
-    const mainInterval = setInterval(() => {
-      if (cleanup) cleanup();
-      cleanup = runCycle();
-    }, 12000);
-
-    return () => {
-      clearInterval(mainInterval);
-      if (cleanup) cleanup();
-      setShowBubble(false);
-    };
-  }, [isRagasGroup, isMobile, subIndex]);
 
   const nextSub = () => {
     const count = activeProject?.ragasPages?.length || activeProject?.subprojects?.length || 0;
@@ -266,7 +221,7 @@ function Projects() {
                           transition={isMobile ? { duration: 0.12, ease: 'linear' } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                         >
                           <div className="relative inline-flex items-center justify-center">
-                            <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity cursor-pointer">
+                            <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className={`${subIndex === 1 ? 'ragas-logo-click-target ' : ''}block hover:opacity-90 transition-opacity cursor-pointer`}>
                               <motion.img
                                 layoutId="ragas-main-logo"
                                 src={activeImage}
@@ -274,19 +229,7 @@ function Projects() {
                                 className="max-h-[4.1rem] max-w-[82vw] w-auto object-contain sm:max-h-[4.45rem]"
                               />
                             </a>
-                            <AnimatePresence>
-                              {showBubble && (
-                                <motion.div
-                                  initial={{ opacity: 0, scale: 0.8, x: -10 }}
-                                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                                  exit={{ opacity: 0, scale: 0.8, x: -10 }}
-                                  className="absolute left-full ml-3.5 top-1/2 -translate-y-1/2 bg-[#0b0c0e] border border-white/10 text-slate-200 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1 whitespace-nowrap z-20 before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[5px] before:border-transparent before:border-r-[#0b0c0e]"
-                                >
-                                  <span className="font-medium tracking-wide">{typedText}</span>
-                                  <span className="w-[1.5px] h-3 bg-cyan-300/80 animate-pulse" />
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
+
                           </div>
                         </motion.div>
                       ) : null}
@@ -334,25 +277,10 @@ function Projects() {
                               </div>
                             ) : (
                               <div className="mx-auto w-full max-w-6xl">
-                                <div className="mx-auto mt-1 flex flex-wrap items-center justify-center gap-3 text-center md:-mt-3">
+                                <div className="mx-auto mt-1 flex flex-wrap items-center justify-center text-center md:-mt-3">
                                   <h3 className="text-lg font-extrabold uppercase tracking-[0.16em] text-cyan-300 sm:text-2xl sm:tracking-[0.2em]">
                                     {activeRagasPage.name}
                                   </h3>
-                                  <div className="relative h-10 w-10 shrink-0">
-                                    <a
-                                      href={activeRagasPage.url}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      className="ripple-button mobile-icon-action group absolute left-0 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex items-center justify-center cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
-                                      style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
-                                      aria-label={`Enter ${activeRagasPage.name} website`}
-                                    >
-                                      <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
-                                        Enter Website
-                                      </span>
-                                      <FiExternalLink className="size-4.5 shrink-0 md:-ml-[7.5px]" aria-hidden="true" />
-                                    </a>
-                                  </div>
                                 </div>
 
                                 <p className="mx-auto mt-4 max-w-4xl text-center text-sm leading-7 text-slate-300 sm:text-base">
@@ -389,7 +317,7 @@ function Projects() {
                                       href={activeRagasPage.url}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end"
+                                      className="ragas-logo-click-target ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end"
                                       aria-label={`Visit ${activeRagasPage.name} website`}
                                     >
                                       <img
@@ -597,6 +525,8 @@ function Projects() {
 }
 
 export default memo(Projects);
+
+
 
 
 

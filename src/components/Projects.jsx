@@ -269,18 +269,19 @@ function Projects() {
                             transition={{ duration: 0.3 }}
                             className="flex flex-col items-center text-center relative"
                           >
-                            {/* Row: Logo on Left, Title on Right */}
-                            <div className="flex items-center gap-3.5 mb-1.5">
-                              <div className="size-16 flex items-center justify-center overflow-visible">
+                            {/* Row: Logo on Left, Title Centered */}
+                            <div className="mb-1.5 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-3.5">
+                              <div className="size-16 flex items-center justify-center overflow-visible justify-self-end">
                                 <img 
                                   src={activeProject.subprojects[subIndex].logo} 
                                   alt="" 
                                   className="h-16 w-16 object-contain" 
                                 />
                               </div>
-                              <h4 className="text-base sm:text-lg font-black text-white tracking-tight">
+                              <h4 className="text-base sm:text-lg font-black text-white tracking-tight text-center justify-self-center">
                                 {activeProject.subprojects[subIndex].name}
                               </h4>
+                              <div aria-hidden="true" />
                             </div>
 
                             {/* Description below */}

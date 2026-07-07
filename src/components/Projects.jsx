@@ -271,11 +271,11 @@ function Projects() {
                           >
                             {/* Row: Logo on Left, Title on Right */}
                             <div className="flex items-center gap-3.5 mb-1.5">
-                              <div className="size-14 overflow-hidden rounded-full border border-cyan-300/15 bg-slate-900 shadow-[0_0_18px_rgba(6,182,212,0.1)]">
+                              <div className="size-16 flex items-center justify-center overflow-visible">
                                 <img 
                                   src={activeProject.subprojects[subIndex].logo} 
                                   alt="" 
-                                  className="h-full w-full object-cover" 
+                                  className="h-16 w-16 object-contain" 
                                 />
                               </div>
                               <h4 className="text-base sm:text-lg font-black text-white tracking-tight">

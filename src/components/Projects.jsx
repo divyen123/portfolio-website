@@ -230,7 +230,7 @@ function Projects() {
 
   return (
     <AnimatedSection className="section-shell min-h-screen flex flex-col justify-center" id="projects" direction="zoom">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full flex-grow flex flex-col justify-center">
+      <div className="mx-auto max-w-7xl translate-y-6 px-4 sm:translate-y-7 sm:px-6 lg:translate-y-8 lg:px-8 w-full flex-grow flex flex-col justify-center">
         <SectionHeading
           eyebrow="Projects"
         />
@@ -597,6 +597,7 @@ function Projects() {
 }
 
 export default memo(Projects);
+
 
 
 

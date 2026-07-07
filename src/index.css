@@ -751,7 +751,9 @@ img {
   }
 
   .portfolio-video-background {
-    display: none;
+    display: block;
+    opacity: 0.34;
+    filter: saturate(0.9) contrast(1.02) brightness(0.72);
   }
 
   .ragas-subproject-logo-float img {
@@ -820,6 +822,7 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+
 
 
 

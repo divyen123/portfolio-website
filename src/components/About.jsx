@@ -28,7 +28,6 @@ function About() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="About"
-          title="About Me"
           description="A focused overview from the portfolio reference material."
         />
 

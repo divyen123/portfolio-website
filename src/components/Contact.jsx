@@ -98,8 +98,7 @@ function Contact() {
       <AnimatedSection className="section-shell !pb-10" id="contact" direction="up">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Contact"
-            title="Get In Touch"
+            eyebrow="Get In Touch"
             description="Contact details from the provided resume and links file."
           />
 

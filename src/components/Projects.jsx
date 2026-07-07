@@ -200,7 +200,6 @@ function Projects() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full flex-grow flex flex-col justify-center">
         <SectionHeading
           eyebrow="Projects"
-          title="Selected Work"
         />
 
         {projects.length > 0 && activeProject ? (

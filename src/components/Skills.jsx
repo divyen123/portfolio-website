@@ -103,7 +103,6 @@ function Skills() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Skills"
-          title="Technical Skill Set"
           description="Grouped from the resume and skills reference files."
         />
 

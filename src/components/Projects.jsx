@@ -278,7 +278,7 @@ function Projects() {
                                   className="h-16 w-16 object-contain" 
                                 />
                               </div>
-                              <h4 className="text-lg sm:text-xl font-extrabold text-white tracking-tight text-center justify-self-center">
+                              <h4 className="text-lg sm:text-xl font-bold text-white tracking-tight text-center justify-self-center">
                                 {activeProject.subprojects[subIndex].name}
                               </h4>
                               <div aria-hidden="true" />

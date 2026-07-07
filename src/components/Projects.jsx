@@ -444,7 +444,7 @@ function Projects() {
                         {activeProject.liveDemo ? (
                           <div className="relative w-11 h-11 shrink-0">
                             <a 
-                              className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 h-11 w-11 hover:w-[11.5rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
+                              className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[11.5rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                               href={activeProject.liveDemo} 
                               target="_blank" 
                               rel="noreferrer" 
@@ -452,9 +452,9 @@ function Projects() {
                               style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
                             >
                               <div className="size-11 flex items-center justify-center shrink-0">
-                                <FiExternalLink className="size-4.5 -ml-[7.2px]" aria-hidden="true" />
+                                <FiExternalLink className="size-4.5 shrink-0" aria-hidden="true" />
                               </div>
-                              <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13px] leading-none group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:pr-5">
+                              <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
                                 Visit Application
                               </span>
                             </a>
@@ -463,7 +463,7 @@ function Projects() {
                         {activeProject.prototype ? (
                           <div className="relative w-11 h-11 shrink-0">
                             <a 
-                              className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 h-11 w-11 hover:w-[9rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
+                              className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[9rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                               href={activeProject.prototype} 
                               target="_blank" 
                               rel="noreferrer" 
@@ -471,7 +471,7 @@ function Projects() {
                               style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
                             >
                               <div className="size-11 flex items-center justify-center shrink-0">
-                                <FiLayers className="size-5 -ml-[7.2px]" aria-hidden="true" />
+                                <FiLayers className="size-4.5 shrink-0" aria-hidden="true" />
                               </div>
                               <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:pr-5">
                                 Prototype

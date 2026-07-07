@@ -24,8 +24,8 @@ import prepMatrixReport from '../assets/projects/prepmatrix-ai/report.webp';
 import prepMatrixStudyAssistant from '../assets/projects/prepmatrix-ai/study-assistant.webp';
 import prepMatrixSettings from '../assets/projects/prepmatrix-ai/settings.webp';
 import ragasGroupsMain from '../assets/projects/ragasgroups/ragasgroups_main.png';
-import ragasShippingLogo from '../assets/projects/ragasgroups/shipping_logo.jpeg';
-import ragasAerospaceLogo from '../assets/projects/ragasgroups/aerospace_logo.jpeg';
+import ragasShippingLogo from '../assets/projects/ragasgroups/shipping_logo.png';
+import ragasAerospaceLogo from '../assets/projects/ragasgroups/aerospace_logo.png';
 import ragasRaicLogo from '../assets/projects/ragasgroups/raic_logo.png';
 
 export const personalInfo = {

@@ -772,9 +772,29 @@ img {
     transform: translateY(-0.2rem) scale(1.04);
   }
 
-  .ripple-button,
-  .glass-button {
+  .ripple-button:not(.mobile-icon-action),
+  .glass-button:not(.mobile-icon-action) {
     width: 100%;
+  }
+
+  .mobile-icon-action,
+  .mobile-icon-action:hover,
+  .mobile-icon-action:focus-visible {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-height: 0 !important;
+    border-radius: 9999px !important;
+    justify-content: center !important;
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease !important;
+  }
+
+  .mobile-icon-action span {
+    display: none !important;
+  }
+
+  .mobile-icon-action > div {
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 
@@ -792,4 +812,5 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+
 

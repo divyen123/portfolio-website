@@ -100,27 +100,27 @@ function Hero({ introComplete = true }) {
           </motion.p>
 
           <motion.div
-            className="mt-9 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap"
+            className="mt-9 flex flex-row flex-wrap justify-center gap-3"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.34 }}
             aria-label="Primary links"
           >
-            <a className="glass-button group !p-0 !min-h-0 size-12 rounded-full flex items-center justify-center" href={personalInfo.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+            <a className="glass-button mobile-icon-action group !p-0 !min-h-0 size-12 rounded-full flex items-center justify-center" href={personalInfo.github} target="_blank" rel="noreferrer" aria-label="GitHub">
               <FaGithub className="size-5" aria-hidden="true" />
             </a>
-            <a className="glass-button group !p-0 !min-h-0 size-12 rounded-full flex items-center justify-center" href={personalInfo.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <a className="glass-button mobile-icon-action group !p-0 !min-h-0 size-12 rounded-full flex items-center justify-center" href={personalInfo.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
               <FaLinkedinIn className="size-5" aria-hidden="true" />
             </a>
             <div className="relative w-12 h-12 shrink-0">
               <a 
-                className="ripple-button group absolute right-0 top-0 !p-0 !min-h-0 h-12 w-12 hover:w-[8.75rem] rounded-full flex flex-row-reverse items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
+                className="ripple-button mobile-icon-action group absolute right-0 top-0 !p-0 !min-h-0 h-12 w-12 hover:w-[8.75rem] rounded-full flex flex-row-reverse items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                 href={personalInfo.resume} 
                 download
                 style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
               >
                 <div className="size-12 flex items-center justify-center shrink-0">
-                  <FiDownload className="size-5 -ml-[7.9px]" aria-hidden="true" />
+                  <FiDownload className="size-5 md:-ml-[7.9px]" aria-hidden="true" />
                 </div>
                 <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13.5px] leading-none group-hover:max-w-[6rem] group-hover:opacity-100 group-hover:pl-4">
                   Resume
@@ -135,3 +135,5 @@ function Hero({ introComplete = true }) {
 }
 
 export default memo(Hero);
+
+

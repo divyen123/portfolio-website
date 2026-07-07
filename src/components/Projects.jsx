@@ -242,7 +242,7 @@ function Projects() {
                       {subIndex > 0 ? (
                         <motion.div
                           key="ragas-top-logo"
-                          className="relative z-10 -mt-3 flex w-full shrink-0 flex-col items-center sm:-mt-4"
+                          className="relative z-10 mt-1 mb-3 flex w-full shrink-0 flex-col items-center md:-mt-3 md:mb-0 lg:-mt-3"
                           variants={morphText}
                           custom={direction}
                           initial={{ opacity: 0, y: 24 }}
@@ -256,7 +256,7 @@ function Projects() {
                                 layoutId="ragas-main-logo"
                                 src={activeImage}
                                 alt="Ragas Group Logo"
-                                className="max-h-[4.1rem] w-auto object-contain sm:max-h-[4.45rem]"
+                                className="max-h-[4.1rem] max-w-[82vw] w-auto object-contain sm:max-h-[4.45rem]"
                               />
                             </a>
                             <AnimatePresence>
@@ -300,15 +300,15 @@ function Projects() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -18 }}
                             transition={{ duration: 0.32 }}
-                            className="mx-auto -mt-7 w-full max-w-6xl text-center sm:-mt-8"
+                            className="mx-auto mt-0 w-full max-w-6xl text-center md:-mt-7"
                           >
                             {subIndex === 0 ? (
-                              <div className="mx-auto -mt-4 flex max-w-3xl flex-col items-center justify-center">
+                              <div className="mx-auto mt-2 flex max-w-3xl flex-col items-center justify-center md:-mt-4">
                                 <motion.img
                                   layoutId="ragas-main-logo"
                                   src={activeImage}
                                   alt="Ragas Group Logo"
-                                  className="mb-7 max-h-[4.4rem] w-auto object-contain sm:max-h-[4.8rem]"
+                                  className="mb-5 max-h-[3.6rem] max-w-[82vw] w-auto object-contain sm:mb-7 sm:max-h-[4.8rem]"
                                 />
                                 <p className="text-base leading-8 text-slate-300 sm:text-lg">
                                   {activeRagasPage.description}
@@ -319,8 +319,8 @@ function Projects() {
                               </div>
                             ) : (
                               <div className="mx-auto w-full max-w-6xl">
-                                <div className="mx-auto -mt-3 flex flex-wrap items-center justify-center gap-3 text-center">
-                                  <h3 className="text-xl font-extrabold uppercase tracking-[0.2em] text-cyan-300 sm:text-2xl">
+                                <div className="mx-auto mt-1 flex flex-wrap items-center justify-center gap-3 text-center md:-mt-3">
+                                  <h3 className="text-lg font-extrabold uppercase tracking-[0.16em] text-cyan-300 sm:text-2xl sm:tracking-[0.2em]">
                                     {activeRagasPage.name}
                                   </h3>
                                   <div className="relative h-10 w-10 shrink-0">
@@ -328,14 +328,14 @@ function Projects() {
                                       href={activeRagasPage.url}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex items-center justify-center cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
+                                      className="ripple-button mobile-icon-action group absolute left-0 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex items-center justify-center cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
                                       style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
                                       aria-label={`Enter ${activeRagasPage.name} website`}
                                     >
                                       <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
                                         Enter Website
                                       </span>
-                                      <FiExternalLink className="size-4.5 shrink-0 -ml-[7.5px]" aria-hidden="true" />
+                                      <FiExternalLink className="size-4.5 shrink-0 md:-ml-[7.5px]" aria-hidden="true" />
                                     </a>
                                   </div>
                                 </div>
@@ -415,7 +415,7 @@ function Projects() {
                   </div>
                 ) : (
                   <>
-                    <motion.p className="absolute left-1/2 top-1 z-10 w-full max-w-5xl -translate-x-1/2 text-center text-xs font-bold uppercase tracking-[0.24em] text-cyan-300 sm:top-2" variants={morphText} custom={direction}>
+                    <motion.p className="relative left-auto top-auto z-10 mb-4 w-full max-w-5xl translate-x-0 text-center text-xs font-bold uppercase tracking-[0.2em] text-cyan-300 md:absolute md:left-1/2 md:top-2 md:mb-0 md:-translate-x-1/2 md:tracking-[0.24em]" variants={morphText} custom={direction}>
                       {activeProject.subtitle}
                     </motion.p>
                     <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={morphText} custom={direction}>
@@ -499,14 +499,14 @@ function Projects() {
 
                       <motion.div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start" variants={morphText} custom={direction}>
                         {activeProject.github ? (
-                          <a className="glass-button !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center" href={activeProject.github} target="_blank" rel="noreferrer" aria-label="GitHub Repository">
+                          <a className="glass-button mobile-icon-action !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center" href={activeProject.github} target="_blank" rel="noreferrer" aria-label="GitHub Repository">
                             <FaGithub className="size-5" aria-hidden="true" />
                           </a>
                         ) : null}
                         {activeProject.liveDemo ? (
                           <div className="relative w-11 h-11 shrink-0">
                             <a 
-                              className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[11.5rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
+                              className="ripple-button mobile-icon-action group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[11.5rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                               href={activeProject.liveDemo} 
                               target="_blank" 
                               rel="noreferrer" 
@@ -525,7 +525,7 @@ function Projects() {
                         {activeProject.prototype ? (
                           <div className="relative w-11 h-11 shrink-0">
                             <a 
-                              className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[9rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
+                              className="ripple-button mobile-icon-action group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[9rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden" 
                               href={activeProject.prototype} 
                               target="_blank" 
                               rel="noreferrer" 
@@ -582,6 +582,8 @@ function Projects() {
 }
 
 export default memo(Projects);
+
+
 
 
 

@@ -23,16 +23,16 @@ function AnimatedSection({ children, className = '', id, direction = 'up' }) {
   const hidden = sectionDirections[direction] || sectionDirections.up;
 
   const initialStyle = shouldReduceMotion || isMobile
-    ? { opacity: 0, y: 16 }
+    ? { opacity: 0 }
     : { opacity: 0, filter: 'blur(10px)', ...hidden };
 
   const animateStyle = shouldReduceMotion || inView
-    ? (isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: 'blur(0px)' })
+    ? (isMobile ? { opacity: 1 } : { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: 'blur(0px)' })
     : undefined;
 
   const transitionStyle = {
-    duration: isMobile ? 0.35 : 0.95,
-    ease: isMobile ? 'easeOut' : [0.16, 1, 0.3, 1],
+    duration: isMobile ? 0.12 : 0.95,
+    ease: isMobile ? 'linear' : [0.16, 1, 0.3, 1],
   };
 
   return (

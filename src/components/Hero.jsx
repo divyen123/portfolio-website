@@ -7,6 +7,7 @@ import { FiDownload } from 'react-icons/fi';
 import { personalInfo } from '../data/portfolioData';
 
 function Hero({ introComplete = true }) {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const [typingCycle, setTypingCycle] = useState(0);
   const { ref: homeRef, inView: homeInView } = useInView({
     threshold: 0.45,
@@ -27,13 +28,13 @@ function Hero({ introComplete = true }) {
         <motion.div
           className="relative mb-4 sm:mb-7 grid size-24 sm:size-32 lg:size-34 place-items-center overflow-hidden rounded-full border border-cyan-200/18 bg-[radial-gradient(circle_at_30%_20%,rgba(6,182,212,0.34),rgba(8,47,73,0.74)_52%,rgba(5,5,5,0.92))] shadow-[0_18px_46px_rgba(0,0,0,0.34),0_0_34px_rgba(6,182,212,0.12)]"
           initial={{ opacity: 0, y: 16, scale: 0.96 }}
-          animate={{
+          animate={isMobile ? { opacity: 1, y: 0, scale: 1, rotate: 0 } : {
             opacity: 1,
             y: [0, -10, 0],
             scale: [1, 1.025, 1],
             rotate: [0, 1.2, 0],
           }}
-          transition={{
+          transition={isMobile ? { duration: 0.12 } : {
             opacity: { duration: 0.45, delay: 0.02 },
             y: { duration: 3.2, repeat: Infinity, ease: 'easeInOut' },
             scale: { duration: 3.2, repeat: Infinity, ease: 'easeInOut' },
@@ -77,7 +78,9 @@ function Hero({ introComplete = true }) {
             transition={{ duration: 0.7, delay: 0.4 }}
             aria-label={personalInfo.professionalTitle}
           >
-            {introComplete ? (
+            {isMobile ? (
+              personalInfo.professionalTitle
+            ) : introComplete ? (
               <ReactTyped
                 key={`hero-title-typing-${typingCycle}`}
                 strings={[personalInfo.professionalTitle]}
@@ -135,5 +138,6 @@ function Hero({ introComplete = true }) {
 }
 
 export default memo(Hero);
+
 
 

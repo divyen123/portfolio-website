@@ -750,6 +750,14 @@ img {
     padding: 2.25rem 0;
   }
 
+  .portfolio-video-background {
+    display: none;
+  }
+
+  .ragas-subproject-logo-float img {
+    animation: none !important;
+  }
+
   .skills-carousel-card .skill-logo-list {
     width: 76%;
     min-height: 54%;
@@ -812,5 +820,6 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+
 
 

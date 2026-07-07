@@ -56,6 +56,18 @@ const morphText = {
   }),
 };
 
+const mobilePageMotion = {
+  enter: { opacity: 0 },
+  center: { opacity: 1, transition: { duration: 0.14, ease: 'linear' } },
+  exit: { opacity: 0, transition: { duration: 0.1, ease: 'linear' } },
+};
+
+const mobileTextMotion = {
+  enter: { opacity: 0 },
+  center: { opacity: 1, transition: { duration: 0.12, ease: 'linear' } },
+  exit: { opacity: 0, transition: { duration: 0.08, ease: 'linear' } },
+};
+
 const preloadImage = (src) => {
   if (!src || typeof window === 'undefined') {
     return;
@@ -73,6 +85,7 @@ function Projects() {
   const [showBubble, setShowBubble] = useState(false);
   const [typedText, setTypedText] = useState('');
   const ragasScrollLockRef = useRef(false);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const { ref: projectsStageRef, inView: projectsStageInView } = useInView({
     threshold: 0.32,
     rootMargin: '0px 0px -12% 0px',
@@ -86,6 +99,8 @@ function Projects() {
   const ragasPages = isRagasGroup ? activeProject?.ragasPages || [] : [];
   const activeRagasPage = ragasPages[subIndex] || ragasPages[0];
   const ragasPageCount = ragasPages.length || activeProject?.subprojects?.length || 0;
+  const activePageMotion = isMobile ? mobilePageMotion : pageMotion;
+  const activeTextMotion = isMobile ? mobileTextMotion : morphText;
 
   useEffect(() => {
     setActiveImage([0, 1]);
@@ -93,7 +108,7 @@ function Projects() {
   }, [activeIndex]);
 
   useEffect(() => {
-    if (!isRagasGroup || subIndex === 0) return;
+    if (!isRagasGroup || subIndex === 0 || isMobile) return;
 
     const phrase = 'Click to visit website';
     
@@ -136,7 +151,7 @@ function Projects() {
       if (cleanup) cleanup();
       setShowBubble(false);
     };
-  }, [isRagasGroup, subIndex]);
+  }, [isRagasGroup, isMobile, subIndex]);
 
   const nextSub = () => {
     const count = activeProject?.ragasPages?.length || activeProject?.subprojects?.length || 0;
@@ -231,7 +246,7 @@ function Projects() {
                 }`}
                 custom={direction}
                 key={activeProject.title}
-                variants={pageMotion}
+                variants={activePageMotion}
                 initial="enter"
                 animate={projectsStageInView ? "center" : "enter"}
                 exit="exit"
@@ -243,12 +258,12 @@ function Projects() {
                         <motion.div
                           key="ragas-top-logo"
                           className="relative z-10 mt-1 mb-3 flex w-full shrink-0 flex-col items-center md:-mt-3 md:mb-0 lg:-mt-3"
-                          variants={morphText}
+                          variants={activeTextMotion}
                           custom={direction}
-                          initial={{ opacity: 0, y: 24 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -16 }}
-                          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 24 }}
+                          animate={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                          exit={isMobile ? { opacity: 0 } : { opacity: 0, y: -16 }}
+                          transition={isMobile ? { duration: 0.12, ease: 'linear' } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                         >
                           <div className="relative inline-flex items-center justify-center">
                             <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity cursor-pointer">
@@ -279,7 +294,7 @@ function Projects() {
 
                     <motion.div
                       className="relative mt-2 flex w-full flex-1 items-center px-10 sm:px-14 lg:px-16"
-                      variants={morphText}
+                      variants={activeTextMotion}
                       custom={direction}
                       onWheel={handleRagasWheel}
                     >
@@ -296,10 +311,10 @@ function Projects() {
                         {activeRagasPage ? (
                           <motion.div
                             key={activeRagasPage.name}
-                            initial={{ opacity: 0, y: 18 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -18 }}
-                            transition={{ duration: 0.32 }}
+                            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 18 }}
+                            animate={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                            exit={isMobile ? { opacity: 0 } : { opacity: 0, y: -18 }}
+                            transition={{ duration: isMobile ? 0.1 : 0.32 }}
                             className="mx-auto mt-0 w-full max-w-6xl text-center md:-mt-7"
                           >
                             {subIndex === 0 ? (
@@ -401,7 +416,7 @@ function Projects() {
                       </button>
                     </motion.div>
 
-                    <motion.div className="mt-2 flex w-full items-center justify-center gap-3" variants={morphText} custom={direction}>
+                    <motion.div className="mt-2 flex w-full items-center justify-center gap-3" variants={activeTextMotion} custom={direction}>
                       <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-cyan-100">
                         {String(subIndex + 1).padStart(2, '0')} / {String(ragasPageCount).padStart(2, '0')}
                       </span>
@@ -415,10 +430,10 @@ function Projects() {
                   </div>
                 ) : (
                   <>
-                    <motion.p className="relative left-auto top-auto z-10 mb-4 w-full max-w-5xl translate-x-0 text-center text-xs font-bold uppercase tracking-[0.2em] text-cyan-300 md:absolute md:left-1/2 md:top-2 md:mb-0 md:-translate-x-1/2 md:tracking-[0.24em]" variants={morphText} custom={direction}>
+                    <motion.p className="relative left-auto top-auto z-10 mb-4 w-full max-w-5xl translate-x-0 text-center text-xs font-bold uppercase tracking-[0.2em] text-cyan-300 md:absolute md:left-1/2 md:top-2 md:mb-0 md:-translate-x-1/2 md:tracking-[0.24em]" variants={activeTextMotion} custom={direction}>
                       {activeProject.subtitle}
                     </motion.p>
-                    <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={morphText} custom={direction}>
+                    <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={activeTextMotion} custom={direction}>
                       <div
                         className={`relative mx-auto overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] ${
                           isFoodieGo ? 'aspect-[9/16] max-h-[28rem] w-full max-w-[19rem]' : 'aspect-[16/10] w-full'
@@ -433,7 +448,7 @@ function Projects() {
                               loading="lazy"
                               decoding="async"
                               custom={imageDirection}
-                              variants={morphText}
+                              variants={activeTextMotion}
                               initial="enter"
                               animate={projectsStageInView ? "center" : "enter"}
                               exit="exit"
@@ -472,14 +487,14 @@ function Projects() {
                     <div className="text-center lg:text-left lg:h-full lg:flex lg:flex-col lg:justify-between w-full py-2">
                       <div className={isFoodieGo ? 'lg:pt-16 xl:pt-18' : activeProject.title === 'MedAI Health Assistant' ? 'lg:pt-22 xl:pt-24' : 'lg:pt-16 xl:pt-18'}>
 
-                        <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={morphText} custom={direction}>
+                        <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={activeTextMotion} custom={direction}>
                           {activeProject.title}
                         </motion.h3>
-                        <motion.p className="mt-2.5 text-base leading-7 text-slate-300" variants={morphText} custom={direction}>
+                        <motion.p className="mt-2.5 text-base leading-7 text-slate-300" variants={activeTextMotion} custom={direction}>
                           {activeProject.description}
                         </motion.p>
 
-                        <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={morphText} custom={direction}>
+                        <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={activeTextMotion} custom={direction}>
                           {activeProject.highlights.map((highlight) => (
                             <li className="flex gap-3 text-left" key={highlight}>
                               <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(6,182,212,0.65)]" aria-hidden="true" />
@@ -488,7 +503,7 @@ function Projects() {
                           ))}
                         </motion.ul>
 
-                        <motion.ul className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start" variants={morphText} custom={direction}>
+                        <motion.ul className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start" variants={activeTextMotion} custom={direction}>
                           {activeProject.technologies.map((technology) => (
                             <li className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-bold text-cyan-100 backdrop-blur" key={technology}>
                               {technology}
@@ -497,7 +512,7 @@ function Projects() {
                         </motion.ul>
                       </div>
 
-                      <motion.div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start" variants={morphText} custom={direction}>
+                      <motion.div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start" variants={activeTextMotion} custom={direction}>
                         {activeProject.github ? (
                           <a className="glass-button mobile-icon-action !p-0 !min-h-0 size-11 rounded-full flex items-center justify-center" href={activeProject.github} target="_blank" rel="noreferrer" aria-label="GitHub Repository">
                             <FaGithub className="size-5" aria-hidden="true" />
@@ -582,6 +597,7 @@ function Projects() {
 }
 
 export default memo(Projects);
+
 
 
 

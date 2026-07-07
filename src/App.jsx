@@ -92,10 +92,13 @@ export default function App() {
   const touchStartX = useRef(0);
   const activeIndexRef = useRef(0);
   const isTransitioningRef = useRef(false);
+  const isMobileRef = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const nextIsMobile = window.innerWidth < 768;
+      setIsMobile(nextIsMobile);
+      isMobileRef.current = nextIsMobile;
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -140,10 +143,10 @@ export default function App() {
     setDirection(targetIndex > currentIndex ? 'forward' : 'backward');
     setActiveIndex(targetIndex);
 
-    // Lock scrolling for 950ms to prevent transition overlap issues
+    const lockDuration = isMobileRef.current ? 300 : 950;
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 950);
+    }, lockDuration);
   };
 
   useEffect(() => {
@@ -346,7 +349,7 @@ export default function App() {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: isMobile ? 0.28 : 0.95, ease: isMobile ? 'easeOut' : [0.16, 1, 0.3, 1] }}
+            transition={{ duration: isMobile ? 0.16 : 0.95, ease: isMobile ? 'linear' : [0.16, 1, 0.3, 1] }}
             className="absolute inset-0 w-full h-full"
             style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
           >
@@ -357,3 +360,4 @@ export default function App() {
     </div>
   );
 }
+

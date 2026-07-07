@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaGithub } from 'react-icons/fa';
@@ -72,6 +72,7 @@ function Projects() {
   const [subIndex, setSubIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(false);
   const [typedText, setTypedText] = useState('');
+  const ragasScrollLockRef = useRef(false);
   const { ref: projectsStageRef, inView: projectsStageInView } = useInView({
     threshold: 0.32,
     rootMargin: '0px 0px -12% 0px',
@@ -82,6 +83,9 @@ function Projects() {
   const isRagasGroup = activeProject?.title === 'Ragas Group';
   const projectImages = activeProject?.images || [];
   const activeImage = projectImages[imageIndex] || projectImages[0];
+  const ragasPages = isRagasGroup ? activeProject?.ragasPages || [] : [];
+  const activeRagasPage = ragasPages[subIndex] || ragasPages[0];
+  const ragasPageCount = ragasPages.length || activeProject?.subprojects?.length || 0;
 
   useEffect(() => {
     setActiveImage([0, 1]);
@@ -89,7 +93,7 @@ function Projects() {
   }, [activeIndex]);
 
   useEffect(() => {
-    if (!isRagasGroup) return;
+    if (!isRagasGroup || subIndex === 0) return;
 
     const phrase = 'Click to visit website';
     
@@ -132,16 +136,30 @@ function Projects() {
       if (cleanup) cleanup();
       setShowBubble(false);
     };
-  }, [isRagasGroup]);
+  }, [isRagasGroup, subIndex]);
 
   const nextSub = () => {
-    if (!activeProject.subprojects) return;
-    setSubIndex((prev) => (prev + 1) % activeProject.subprojects.length);
+    const count = activeProject?.ragasPages?.length || activeProject?.subprojects?.length || 0;
+    if (count < 2) return;
+    setSubIndex((prev) => (prev + 1) % count);
   };
 
   const prevSub = () => {
-    if (!activeProject.subprojects) return;
-    setSubIndex((prev) => (prev - 1 + activeProject.subprojects.length) % activeProject.subprojects.length);
+    const count = activeProject?.ragasPages?.length || activeProject?.subprojects?.length || 0;
+    if (count < 2) return;
+    setSubIndex((prev) => (prev - 1 + count) % count);
+  };
+
+  const handleRagasWheel = (event) => {
+    if (!isRagasGroup || ragasPageCount < 2 || Math.abs(event.deltaY) < 28 || ragasScrollLockRef.current) return;
+
+    event.preventDefault();
+    ragasScrollLockRef.current = true;
+    setSubIndex((prev) => (prev + (event.deltaY > 0 ? 1 : -1) + ragasPageCount) % ragasPageCount);
+
+    window.setTimeout(() => {
+      ragasScrollLockRef.current = false;
+    }, 650);
   };
 
   useEffect(() => {
@@ -206,10 +224,10 @@ function Projects() {
           <div ref={projectsStageRef} className="w-full mx-auto max-w-6xl -mt-2 sm:-mt-4 relative">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.article
-                className={`overflow-hidden py-4 ${
+                className={`relative overflow-hidden py-4 ${
                   isRagasGroup 
-                    ? 'flex flex-col items-center justify-between text-center lg:h-[33.5rem] w-full max-w-3xl mx-auto'
-                    : 'grid items-center lg:items-stretch gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:h-[33.5rem] w-full'
+                    ? 'flex flex-col items-center justify-between text-center lg:h-[38rem] w-full max-w-5xl mx-auto'
+                    : 'grid items-center lg:items-stretch gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:h-[38rem] w-full'
                 }`}
                 custom={direction}
                 key={activeProject.title}
@@ -219,141 +237,187 @@ function Projects() {
                 exit="exit"
               >
                 {isRagasGroup ? (
-                  <div className="w-full flex flex-col items-center justify-between h-full">
-                    {/* Header Area with Center Logo, Subtitle & Description */}
-                    <motion.div className="w-full flex flex-col items-center animate-fadeIn" variants={morphText} custom={direction}>
-                      <div className="relative inline-flex items-center justify-center">
-                        <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity cursor-pointer">
-                          <img
-                            src={activeImage}
-                            alt="Ragas Group Logo"
-                            className="max-h-[4.4rem] w-auto object-contain"
-                          />
-                        </a>
-                        <AnimatePresence>
-                          {showBubble && (
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.8, x: -10 }}
-                              animate={{ opacity: 1, scale: 1, x: 0 }}
-                              exit={{ opacity: 0, scale: 0.8, x: -10 }}
-                              className="absolute left-full ml-3.5 top-1/2 -translate-y-1/2 bg-[#0b0c0e] border border-white/10 text-slate-200 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1 whitespace-nowrap z-20 before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[5px] before:border-transparent before:border-r-[#0b0c0e]"
-                            >
-                              <span className="font-medium tracking-wide">{typedText}</span>
-                              <span className="w-[1.5px] h-3 bg-cyan-300/80 animate-pulse" />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                      <p className="mt-5.5 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">
-                        Corporate digital ecosystem & portfolios
-                      </p>
-                      <p className="mt-1.5 text-[15px] sm:text-base leading-relaxed text-slate-300 max-w-2xl">
-                        {activeProject.description}
-                      </p>
-                    </motion.div>
+                  <div className="flex h-full w-full flex-col items-center">
+                    <AnimatePresence mode="wait">
+                      {subIndex > 0 ? (
+                        <motion.div
+                          key="ragas-top-logo"
+                          className="relative z-10 -mt-3 flex w-full shrink-0 flex-col items-center sm:-mt-4"
+                          variants={morphText}
+                          custom={direction}
+                          initial={{ opacity: 0, y: 24 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -16 }}
+                          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          <div className="relative inline-flex items-center justify-center">
+                            <a href="https://www.ragasgroups.com" target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity cursor-pointer">
+                              <motion.img
+                                layoutId="ragas-main-logo"
+                                src={activeImage}
+                                alt="Ragas Group Logo"
+                                className="max-h-[4.1rem] w-auto object-contain sm:max-h-[4.45rem]"
+                              />
+                            </a>
+                            <AnimatePresence>
+                              {showBubble && (
+                                <motion.div
+                                  initial={{ opacity: 0, scale: 0.8, x: -10 }}
+                                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                                  exit={{ opacity: 0, scale: 0.8, x: -10 }}
+                                  className="absolute left-full ml-3.5 top-1/2 -translate-y-1/2 bg-[#0b0c0e] border border-white/10 text-slate-200 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1 whitespace-nowrap z-20 before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[5px] before:border-transparent before:border-r-[#0b0c0e]"
+                                >
+                                  <span className="font-medium tracking-wide">{typedText}</span>
+                                  <span className="w-[1.5px] h-3 bg-cyan-300/80 animate-pulse" />
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
 
-                    {/* Center Content Container: One sub-project at a time with next/prev buttons */}
-                    <motion.div 
-                      className="w-full max-w-[32rem] -mt-2.5 relative px-12 sm:px-16" 
-                      variants={morphText} 
+                    <motion.div
+                      className="relative mt-2 flex w-full flex-1 items-center px-10 sm:px-14 lg:px-16"
+                      variants={morphText}
                       custom={direction}
+                      onWheel={handleRagasWheel}
                     >
-                      <AnimatePresence mode="wait">
-                        {activeProject.subprojects && (
-                          <motion.div
-                            key={subIndex}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.3 }}
-                            className="flex flex-col items-center text-center relative"
-                          >
-                            {/* Row: Logo on Left, Title Centered */}
-                            <div className="mb-1.5 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-3.5">
-                              <div className="size-16 flex items-center justify-center overflow-visible justify-self-end">
-                                <img 
-                                  src={activeProject.subprojects[subIndex].logo} 
-                                  alt="" 
-                                  className="h-16 w-16 object-contain" 
-                                />
-                              </div>
-                              <h4 className="text-lg sm:text-xl font-bold text-white tracking-tight text-center justify-self-center">
-                                {activeProject.subprojects[subIndex].name}
-                              </h4>
-                              <div aria-hidden="true" />
-                            </div>
-
-                            {/* Description below */}
-                            <p className="mt-1.5 text-[13px] sm:text-sm leading-relaxed text-slate-300 min-h-[2.5rem] flex items-center justify-center">
-                              {activeProject.subprojects[subIndex].desc}
-                            </p>
-
-                            {/* Visit Link at bottom center */}
-                            <div className="relative w-10 h-10 mt-4 mx-auto shrink-0">
-                              <a
-                                href={activeProject.subprojects[subIndex].url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="ripple-button group absolute left-1/2 -translate-x-1/2 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex items-center justify-center cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
-                                style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
-                                aria-label="Visit Live Website"
-                              >
-                                <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
-                                  Enter Website
-                                </span>
-                                <FiExternalLink className="size-4.5 shrink-0 -ml-[7.5px]" aria-hidden="true" />
-                              </a>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Next/Prev buttons on left/right edges of the card container */}
                       <button
                         onClick={prevSub}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 transition-all cursor-pointer z-10"
+                        className="absolute left-0 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white transition-all hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
                         type="button"
-                        aria-label="Previous sub-project"
+                        aria-label="Previous Ragas page"
                       >
                         <FiChevronLeft className="size-4.5" aria-hidden="true" />
                       </button>
+
+                      <AnimatePresence mode="wait">
+                        {activeRagasPage ? (
+                          <motion.div
+                            key={activeRagasPage.name}
+                            initial={{ opacity: 0, y: 18 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -18 }}
+                            transition={{ duration: 0.32 }}
+                            className="mx-auto -mt-7 w-full max-w-6xl text-center sm:-mt-8"
+                          >
+                            {subIndex === 0 ? (
+                              <div className="mx-auto -mt-4 flex max-w-3xl flex-col items-center justify-center">
+                                <motion.img
+                                  layoutId="ragas-main-logo"
+                                  src={activeImage}
+                                  alt="Ragas Group Logo"
+                                  className="mb-7 max-h-[4.4rem] w-auto object-contain sm:max-h-[4.8rem]"
+                                />
+                                <p className="text-base leading-8 text-slate-300 sm:text-lg">
+                                  {activeRagasPage.description}
+                                </p>
+                                <p className="mt-5 text-sm font-extrabold uppercase tracking-[0.24em] text-cyan-300 sm:text-base">
+                                  Scroll to explore all Ragas Group websites.
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="mx-auto w-full max-w-6xl">
+                                <div className="mx-auto -mt-3 flex flex-wrap items-center justify-center gap-3 text-center">
+                                  <h3 className="text-xl font-extrabold uppercase tracking-[0.2em] text-cyan-300 sm:text-2xl">
+                                    {activeRagasPage.name}
+                                  </h3>
+                                  <div className="relative h-10 w-10 shrink-0">
+                                    <a
+                                      href={activeRagasPage.url}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="ripple-button group absolute left-0 top-0 !p-0 !min-h-0 h-10 w-10 hover:w-[10.5rem] rounded-full flex items-center justify-center cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden"
+                                      style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
+                                      aria-label={`Enter ${activeRagasPage.name} website`}
+                                    >
+                                      <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[12.5px] sm:text-[13px] leading-none group-hover:max-w-[8rem] group-hover:opacity-100 group-hover:mr-2">
+                                        Enter Website
+                                      </span>
+                                      <FiExternalLink className="size-4.5 shrink-0 -ml-[7.5px]" aria-hidden="true" />
+                                    </a>
+                                  </div>
+                                </div>
+
+                                <p className="mx-auto mt-4 max-w-4xl text-center text-sm leading-7 text-slate-300 sm:text-base">
+                                  {activeRagasPage.description}
+                                </p>
+
+                                <div className={`mt-5 grid items-center gap-8 ${subIndex === 1 ? 'text-center lg:grid-cols-1' : 'text-left lg:grid-cols-[minmax(0,0.68fr)_minmax(12rem,0.32fr)]'}`}>
+                                  <div className={subIndex === 1 ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 lg:pl-8'}>
+                                    <ul className={`grid gap-2.5 text-[15px] leading-7 text-slate-300 sm:text-base ${subIndex === 1 ? 'mx-auto max-w-4xl text-left' : ''}`}>
+                                      {activeRagasPage.highlights?.map((highlight) => (
+                                        <li className={subIndex === 1 ? 'flex gap-3 text-left' : 'flex gap-3'} key={highlight}>
+                                          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300" aria-hidden="true" />
+                                          <span>{highlight}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+
+                                    <div className={subIndex === 1 ? 'mt-5 text-center' : 'mt-5'}>
+                                      <p className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-cyan-300">
+                                        Tech Stack
+                                      </p>
+                                      <ul className={subIndex === 1 ? 'flex flex-wrap justify-center gap-2' : 'flex flex-wrap gap-2'}>
+                                        {activeRagasPage.technologies?.map((technology) => (
+                                          <li className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-bold text-cyan-100 backdrop-blur" key={technology}>
+                                            {technology}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  </div>
+
+                                  {subIndex > 1 ? (
+                                    <a
+                                      href={activeRagasPage.url}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="ragas-subproject-logo-float flex w-full items-center justify-center transition-opacity hover:opacity-90 lg:justify-end"
+                                      aria-label={`Visit ${activeRagasPage.name} website`}
+                                    >
+                                      <img
+                                        src={activeRagasPage.logo}
+                                        alt=""
+                                        className="max-h-[11rem] w-full max-w-[16rem] object-contain"
+                                      />
+                                    </a>
+                                  ) : null}
+                                </div>
+                              </div>
+                            )}
+                          </motion.div>
+                        ) : null}
+                      </AnimatePresence>
+
                       <button
                         onClick={nextSub}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300 transition-all cursor-pointer z-10"
+                        className="absolute right-0 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full border border-cyan-300/20 bg-cyan-300/10 text-cyan-200 transition-all hover:border-cyan-300/45 hover:bg-cyan-300/15 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
                         type="button"
-                        aria-label="Next sub-project"
+                        aria-label="Next Ragas page"
                       >
                         <FiChevronRight className="size-4.5" aria-hidden="true" />
                       </button>
                     </motion.div>
 
-                    {/* Footer Area with Technologies & Sub-Pagination Dots */}
-                    <motion.div className="w-full flex flex-col items-center mt-3.5" variants={morphText} custom={direction}>
-                      <div className="flex items-center gap-1.5 mb-3.5">
-                        {activeProject.subprojects?.map((_, idx) => (
-                          <span
-                            key={idx}
-                            className={`block size-1.5 rounded-full transition-all duration-300 ${
-                              subIndex === idx ? 'bg-cyan-400 scale-120' : 'bg-white/20'
-                            }`}
-                          />
-                        ))}
+                    <motion.div className="mt-2 flex w-full items-center justify-center gap-3" variants={morphText} custom={direction}>
+                      <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-cyan-100">
+                        {String(subIndex + 1).padStart(2, '0')} / {String(ragasPageCount).padStart(2, '0')}
+                      </span>
+                      <div className="h-px w-28 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+                        <div
+                          className="h-full rounded-full bg-cyan-300 transition-all duration-300"
+                          style={{ width: `${((subIndex + 1) / Math.max(ragasPageCount, 1)) * 100}%` }}
+                        />
                       </div>
-                      
-                      <ul className="flex flex-wrap justify-center gap-2">
-                        {activeProject.technologies.map((technology) => (
-                          <li 
-                            className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-bold text-cyan-100 backdrop-blur" 
-                            key={technology}
-                          >
-                            {technology}
-                          </li>
-                        ))}
-                      </ul>
                     </motion.div>
                   </div>
                 ) : (
                   <>
+                    <motion.p className="absolute left-1/2 top-1 z-10 w-full max-w-5xl -translate-x-1/2 text-center text-xs font-bold uppercase tracking-[0.24em] text-cyan-300 sm:top-2" variants={morphText} custom={direction}>
+                      {activeProject.subtitle}
+                    </motion.p>
                     <motion.div className="mx-auto w-full lg:h-full lg:flex lg:flex-col lg:justify-center" variants={morphText} custom={direction}>
                       <div
                         className={`relative mx-auto overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] ${
@@ -406,10 +470,8 @@ function Projects() {
                     </motion.div>
 
                     <div className="text-center lg:text-left lg:h-full lg:flex lg:flex-col lg:justify-between w-full py-2">
-                      <div>
-                        <motion.p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-cyan-300" variants={morphText} custom={direction}>
-                          {activeProject.subtitle}
-                        </motion.p>
+                      <div className={isFoodieGo ? 'lg:pt-16 xl:pt-18' : activeProject.title === 'MedAI Health Assistant' ? 'lg:pt-22 xl:pt-24' : 'lg:pt-16 xl:pt-18'}>
+
                         <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={morphText} custom={direction}>
                           {activeProject.title}
                         </motion.h3>
@@ -520,3 +582,6 @@ function Projects() {
 }
 
 export default memo(Projects);
+
+
+

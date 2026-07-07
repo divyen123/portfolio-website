@@ -134,7 +134,7 @@ export const projects = [
     ],
   },
   {
-    title: 'Memory Timeline Application',
+    title: 'Memory Timeline',
     subtitle: 'MERN stack memory management application',
     description:
       'Developed a full-stack memory timeline web application to store, organize, and manage personal memories with images, dates, categories, favorites, reminders, trash recovery, and hidden image protection.',
@@ -181,32 +181,78 @@ export const projects = [
     title: 'Ragas Group',
     subtitle: 'Corporate digital ecosystem & portfolios',
     description:
-      'I designed and developed the entire digital ecosystem for the Ragas Group, creating modern, responsive corporate websites and professional portfolios.',
-    highlights: [
-      'Ragas Shipping: Dependable Ship Chartering and Ship Broking company connecting shipowners and cargo across Asia.',
-      'Ragas Aerospace: Defence technology firm developing AI-powered autonomous drone systems for security and surveillance.',
-      'RAIC Technology: Pioneering autonomous aerial intelligence with indigenous technology for unmanned defense systems.',
-      'Founder Portfolio: Raghav S, Aerospace engineer and defence technologist building mission-critical autonomous platforms.'
-    ],
-    subprojects: [
+      'I designed and developed the complete digital ecosystem for Ragas Group, creating a unified online presence that connects its corporate websites, business divisions, and professional portfolios. Each website was built with a modern, responsive, and user-friendly design to represent the brand clearly across all devices. Scroll to explore all Ragas Group websites.',
+    ragasPages: [
+      {
+        name: 'Ragas Group Digital Ecosystem',
+        label: 'Overview',
+        url: 'https://www.ragasgroups.com',
+        logo: ragasGroupsMain,
+        description:
+          'I designed and developed the complete digital ecosystem for Ragas Group, creating a unified online presence that connects its corporate websites, business divisions, and professional portfolios. Each website was built with a modern, responsive, and user-friendly design to represent the brand clearly across all devices.',
+        highlights: [
+          'Unified parent brand, business division websites, and professional portfolio experiences under one ecosystem.',
+          'Modern responsive layouts designed to stay clear, polished, and easy to use across desktop and mobile devices.',
+          'Scroll to explore all Ragas Group websites.',
+        ],
+        technologies: ['HTML5', 'CSS3', 'React.js', 'Figma', 'UI/UX Design'],
+      },
+      {
+        name: 'Ragas Group of Companies',
+        label: 'Parent Company Website',
+        url: 'https://www.ragasgroups.com',
+        logo: ragasGroupsMain,
+        description:
+          'A modern static corporate website for Ragas Group, the parent company of Ragas Shipping and Ragas Aerospace. It presents both divisions through branded navigation, video-led division cards, corporate highlights, and a dedicated contact experience.',
+        highlights: [
+          'Built a clean responsive business platform with custom CSS, CSS Grid, Flexbox, gradient overlays, and polished hover transitions.',
+          'Used locally bundled brand assets, background imagery, and division videos for a consistent corporate identity.',
+          'Added SEO foundations including meta tags, canonical URL, Open Graph, Twitter Cards, JSON-LD schema, robots.txt, and sitemap.xml.',
+        ],
+        technologies: ['HTML5', 'CSS3', 'JavaScript', 'SEO', 'Responsive UI'],
+      },
       {
         name: 'Ragas Shipping',
+        label: 'Maritime Corporate Website',
         url: 'https://shipping.ragasgroups.com',
         logo: ragasShippingLogo,
-        desc: 'A dependable Ship Chartering and Ship Broking company connecting shipowners and cargo across Asia, PG, AG, and the Far East.'
+        description:
+          'A premium corporate website for Ragas Shipping Pte Ltd, a Singapore-based maritime, marine logistics, energy, and commodity trading company. The site presents services, trading capabilities, values, vision, mission, and contact information with a maritime-inspired visual system.',
+        highlights: [
+          'Created animated hero titles, video backgrounds, smooth reveal animations, glassmorphism cards, and full-screen visual sections.',
+          'Built service showcases, trading highlights, company values, capability sections, and a professional contact flow.',
+          'Implemented the frontend with Next.js, React, TypeScript, Tailwind CSS, Motion, Lucide icons, and shadcn/Tailwind utilities.',
+        ],
+        technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
       },
       {
         name: 'Ragas Aerospace',
+        label: 'Defence Drone Technology Website',
         url: 'https://aerospace.ragasgroups.com',
         logo: ragasAerospaceLogo,
-        desc: 'An Indian defence tech company developing AI-powered autonomous drone systems, combining swarm autonomy and advanced sensing.'
+        description:
+          'A full-stack website for Ragas Aerospace, an Indian defence drone technology company focused on autonomous aerial systems, surveillance, security, and mission-critical operations. The interface uses a cinematic aerospace identity with strong motion and operational depth.',
+        highlights: [
+          'Designed animated HUD overlays, drone visuals, video backgrounds, interactive product cards, achievement modals, and team/contact sections.',
+          'Built a full-stack system with React, React Router, Framer Motion, Python, FastAPI, PostgreSQL, JWT authentication, and protected routes.',
+          'Included SMTP notifications, login/register flows, role application forms, an admin dashboard, responsive layouts, and bundled media assets.',
+        ],
+        technologies: ['React', 'FastAPI', 'PostgreSQL', 'JWT Auth', 'Framer Motion'],
       },
       {
         name: 'RAIC Technology',
+        label: 'Autonomous Aerial Intelligence Website',
         url: 'https://raic.ragasgroups.com',
         logo: ragasRaicLogo,
-        desc: 'Pioneering autonomous aerial intelligence with indigenous technology to advance unmanned systems for defence and industry.'
-      }
+        description:
+          'A futuristic aerospace technology website focused on autonomous aerial intelligence, RAIC technology, drone systems, swarm architecture, and mission-focused UAV applications. It works as a cinematic single-page company platform with immersive visual storytelling.',
+        highlights: [
+          'Created a logo intro animation, video hero, HUD overlays, Three.js particle effects, glassmorphism cards, animated counters, and application showcases.',
+          'Built modular React/Vite architecture with Tailwind CSS, Framer Motion, GSAP ScrollTrigger, Three.js, React Three Fiber, Swiper, and Lucide icons.',
+          'Integrated a FormSubmit contact flow and centralized content data for maintainable updates across the experience.',
+        ],
+        technologies: ['React', 'Vite', 'Three.js', 'GSAP', 'Tailwind CSS'],
+      },
     ],
     technologies: ['HTML5', 'CSS3', 'React.js', 'Figma', 'UI/UX Design'],
     github: '',

@@ -697,6 +697,21 @@ img {
   filter: blur(0);
 }
 
+.ragas-subproject-logo-float img {
+  animation: ragas-subproject-logo-float 4.8s ease-in-out infinite;
+}
+
+@keyframes ragas-subproject-logo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.55rem);
+  }
+}
+
 @media (max-width: 767px) {
   /* Remove sweep text glow animations on mobile for zero lag */
   .hero-name-glow,
@@ -777,3 +792,4 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+

@@ -27,12 +27,6 @@ function LetterboxReveal() {
         animate={{ y: '100%' }}
         transition={barTransition}
       />
-      <motion.div
-        className="absolute left-1/2 top-1/2 h-px w-0 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-cyan-200/80 to-transparent"
-        initial={{ width: '0%', opacity: 0 }}
-        animate={{ width: ['0%', '72%', '0%'], opacity: [0, 1, 0] }}
-        transition={{ duration: 1, ease: 'easeInOut' }}
-      />
     </motion.div>
   );
 }

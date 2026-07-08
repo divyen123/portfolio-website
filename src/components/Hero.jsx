@@ -146,7 +146,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
             <AnimatePresence>
               {heroFocusMode && (
                 <motion.div
-                  className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[1.6px] origin-center -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
+                  className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[1.7px] origin-center -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
                   style={{ width: isMobile ? 'calc(100vw / 0.68)' : 'calc(100vw / 0.7)' }}
                   initial={{ opacity: 1, scaleX: 0.08 }}
                   animate={{ opacity: 1, scaleX: 1 }}

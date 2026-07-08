@@ -53,22 +53,26 @@ export const education = [
   {
     institution: 'Maharishi Vidya Mandir',
     program: 'Senior Secondary School',
-    period: '2011 - 2022',
+    period: '2010 - 2022',
+    description: 'My academic journey began at Maharishi Vidya Mandir, where I completed my schooling from LKG to 10th under the CBSE curriculum.',
   },
   {
     institution: 'Kaligi Ranganathan Montford',
     program: 'Higher Secondary School',
     period: '2022 - 2024',
+    description: 'I pursued my higher secondary education at Kaligi Ranganathan Montford, completing 11th and 12th under the State Board.',
   },
   {
     institution: 'Apollo Computer Centre',
     program: 'Master of Software Engineering',
     period: '6 months',
+    description: 'To strengthen my technical foundation, I completed a 6 month Master of Software Engineering program at Apollo Computer Education Centre.',
   },
   {
     institution: 'R.M.K Engineering College',
     program: 'Information Technology',
     period: '2024 - 2028',
+    description: 'Currently, I am pursuing my 3rd year in Information Technology at R.M.K Engineering College, with a strong focus on software development and web technologies.',
   },
 ];
 
@@ -326,4 +330,5 @@ export const certificates = [
     file: '/certificates/python4.pdf',
   },
 ];
+
 

@@ -45,7 +45,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
             {!heroFocusMode && (
               <motion.h1
                 layoutId="hero-name-title"
-                className="hero-name-glow text-4xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl"
+                className="hero-name-glow mt-4 text-4xl font-black tracking-tight text-white sm:mt-6 sm:text-6xl lg:text-7xl"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -56,16 +56,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
             )}
           </AnimatePresence>
 
-          <motion.div
-            className="mt-4 mb-2 flex"
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.55, delay: 0.12 }}
-          >
-            <p className="inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full border border-slate-200/12 bg-[linear-gradient(135deg,rgba(15,23,42,0.82),rgba(12,22,32,0.66))] px-4 py-2 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 shadow-[0_12px_34px_rgba(0,0,0,0.24)] backdrop-blur-xl">
-              {personalInfo.title}
-            </p>
-          </motion.div>
+
 
           <motion.p
             className="hero-typed-title mt-4 min-h-8 max-w-full whitespace-normal bg-gradient-to-r from-white via-slate-200 to-cyan-200 bg-clip-text text-[clamp(0.85rem,1.55vw,1.28rem)] font-extrabold text-transparent"
@@ -214,6 +205,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
 }
 
 export default memo(Hero);
+
 
 
 

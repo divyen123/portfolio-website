@@ -94,6 +94,7 @@ function Projects() {
   const activeProject = projects[activeIndex];
   const isFoodieGo = activeProject?.title === 'FoodieGo';
   const isRagasGroup = activeProject?.title === 'Ragas Group';
+  const shouldLowerProjectText = ['Memory Timeline', 'PrepMatrix AI'].includes(activeProject?.title);
   const projectImages = activeProject?.images || [];
   const activeImage = projectImages[imageIndex] || projectImages[0];
   const ragasPages = isRagasGroup ? activeProject?.ragasPages || [] : [];
@@ -489,7 +490,7 @@ function Projects() {
                     </motion.div>
 
                     <div className="text-center lg:text-left lg:h-full lg:flex lg:flex-col lg:justify-between w-full py-2">
-                      <div className={isFoodieGo ? 'lg:pt-12 xl:pt-14' : activeProject.title === 'MedAI Health Assistant' ? 'lg:pt-18 xl:pt-20' : 'lg:pt-12 xl:pt-14'}>
+                      <div className={isFoodieGo ? 'lg:pt-16 xl:pt-18' : activeProject.title === 'MedAI Health Assistant' ? 'lg:pt-18 xl:pt-20' : shouldLowerProjectText ? 'lg:pt-16 xl:pt-18' : 'lg:pt-12 xl:pt-14'}>
 
                         <motion.h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl" variants={activeTextMotion} custom={direction}>
                           {activeProject.title}
@@ -601,26 +602,4 @@ function Projects() {
 }
 
 export default memo(Projects);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -84,7 +84,7 @@ function TimelineItem({ item, index, isActive, onSelect }) {
           <FiCalendar aria-hidden="true" />
           {item.period}
         </span>
-        <h3 className={`text-sm sm:text-base font-extrabold leading-snug md:min-h-[2.5rem] md:flex md:items-center md:justify-center ${isActive ? 'text-cyan-50' : 'text-white'}`}>
+        <h3 className={`text-sm font-extrabold leading-snug transition-[color,transform] duration-300 ease-out group-hover:scale-[1.045] sm:text-base md:min-h-[2.5rem] md:flex md:items-center md:justify-center md:whitespace-nowrap ${isActive ? 'scale-[1.045] text-cyan-50' : 'text-white'}`}>
           {item.institution}
         </h3>
         <p className="mt-1 text-xs text-slate-350 leading-relaxed font-medium">
@@ -187,6 +187,8 @@ function Education() {
 }
 
 export default memo(Education);
+
+
 
 
 

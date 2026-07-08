@@ -292,11 +292,13 @@ img {
   transform: translateY(-2px);
 }
 
-.hero-typed-title .typed-cursor {
+.hero-typed-title .typed-cursor,
+.hero-typed-title .typed-cursor--blink {
+  display: inline-block;
   color: rgb(207, 250, 254);
   -webkit-text-fill-color: rgb(207, 250, 254);
   opacity: 1;
-  animation: hero-cursor-blink 720ms infinite;
+  animation: hero-cursor-blink 980ms steps(1, end) infinite !important;
 }
 
 .intro-title,
@@ -351,13 +353,15 @@ img {
 
 @keyframes hero-cursor-blink {
   0%,
-  45% {
+  49% {
     opacity: 1;
+    visibility: visible;
   }
 
-  46%,
+  50%,
   100% {
     opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -937,6 +941,8 @@ img {
     animation-iteration-count: 1 !important;
   }
 }
+
+
 
 
 

@@ -1,29 +1,16 @@
 import { memo, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { FiCheckCircle, FiMail, FiPhone } from 'react-icons/fi';
+import { FiCheckCircle, FiMail } from 'react-icons/fi';
 import { personalInfo } from '../data/portfolioData';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 import Footer from './Footer';
 
-const contactLinks = [
-  { label: 'Email', value: personalInfo.email, href: `mailto:${personalInfo.email}`, icon: FiMail },
-  { label: 'Phone', value: personalInfo.phone, href: `tel:${personalInfo.phone.replace(/\s/g, '')}`, icon: FiPhone },
-  { label: 'GitHub', value: personalInfo.github, href: personalInfo.github, icon: FaGithub },
-  { label: 'LinkedIn', value: personalInfo.linkedin, href: personalInfo.linkedin, icon: FaLinkedinIn },
-].filter((item) => item.value);
 
 function Contact() {
   const [isSent, setIsSent] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [contactAnimationRun, setContactAnimationRun] = useState(0);
-  const { ref: contactLinksRef, inView: contactLinksInView } = useInView({
-    threshold: 0.55,
-    triggerOnce: false,
-  });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -31,12 +18,6 @@ function Contact() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
-  useEffect(() => {
-    if (contactLinksInView) {
-      setContactAnimationRun((run) => run + 1);
-    }
-  }, [contactLinksInView]);
 
   useEffect(() => {
     if (!isSent) return undefined;
@@ -102,9 +83,9 @@ function Contact() {
             className="pt-6 sm:pt-8"
           />
 
-          <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:items-center">
+          <div className="mx-auto flex max-w-3xl justify-center">
             <motion.form
-              className="mx-auto w-full max-w-lg lg:max-w-xl"
+              className="mx-auto w-full max-w-xl"
               onSubmit={handleSubmit}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -167,56 +148,6 @@ function Contact() {
                 </AnimatePresence>
               </div>
             </motion.form>
-
-            <div ref={contactLinksRef} className="mx-auto grid w-full max-w-md grid-cols-2 gap-6 text-center sm:gap-x-8 sm:gap-y-9">
-              {contactLinks.length > 0 ? (
-                contactLinks.map((item, index) => {
-                  const Icon = item.icon;
-                  const isInternal = item.label === 'Email' || item.label === 'Phone';
-
-                  return (
-                    <motion.a
-                      className="group flex flex-col items-center gap-3 px-3 py-4 text-center"
-                      href={item.href}
-                      key={item.label}
-                      target={isInternal ? undefined : '_blank'}
-                      rel={isInternal ? undefined : 'noreferrer'}
-                      whileHover="hover"
-                    >
-                      <motion.span
-                        key={`icon-${contactAnimationRun}-${item.label}`}
-                        className="grid size-14 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-xl text-cyan-100 backdrop-blur transition group-hover:border-cyan-300/35 group-hover:bg-cyan-300/10"
-                        initial={{ opacity: 0, rotate: -180, scale: 0.45 }}
-                        animate={contactLinksInView ? { opacity: 1, rotate: 0, scale: 1 } : { opacity: 0, rotate: -180, scale: 0.45 }}
-                        transition={{ duration: 1.05, delay: index * 0.18, ease: [0.22, 1, 0.36, 1] }}
-                        variants={{
-                          hover: {
-                            rotate: 360,
-                            scale: 1.1,
-                            transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-                          },
-                        }}
-                      >
-                        <Icon aria-hidden="true" />
-                      </motion.span>
-                      <span className="min-w-0">
-                        <motion.span
-                          key={`label-${contactAnimationRun}-${item.label}`}
-                          className="block overflow-hidden whitespace-nowrap text-xs font-bold uppercase tracking-[0.22em] text-cyan-300"
-                          initial={{ width: 0 }}
-                          animate={contactLinksInView ? { width: `${item.label.length * 1.9}ch` } : { width: 0 }}
-                          transition={{ duration: 2.50, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                          {item.label}
-                        </motion.span>
-                      </span>
-                    </motion.a>
-                  );
-                })
-              ) : (
-                <p className="text-slate-400">Contact details have not been provided yet.</p>
-              )}
-            </div>
           </div>
         </div>
       </AnimatedSection>
@@ -226,3 +157,4 @@ function Contact() {
 }
 
 export default memo(Contact);
+

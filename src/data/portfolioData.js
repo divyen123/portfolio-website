@@ -1,4 +1,4 @@
-import profileImage from '../assets/profile.jpeg';
+import profileImage from '../assets/profile.png';
 import foodieGoOnboarding from '../assets/projects/foodiego/onboarding.webp';
 import foodieGoHome from '../assets/projects/foodiego/home.webp';
 import foodieGoRestaurant from '../assets/projects/foodiego/restaurant-details.webp';
@@ -326,3 +326,4 @@ export const certificates = [
     file: '/certificates/python4.pdf',
   },
 ];
+

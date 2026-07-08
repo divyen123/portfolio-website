@@ -31,7 +31,7 @@ import ragasRaicLogo from '../assets/projects/ragasgroups/raic_logo.png';
 export const personalInfo = {
   name: 'R M Divyen',
   title: 'Aspiring Frontend Developer',
-  professionalTitle: 'Software Developer, Frontend Developer, React Developer, and UI Designer',
+  professionalTitle: 'Frontend Developer, React Developer, and UI Designer',
   intro:
     'Aspiring Frontend Developer specializing in React.js and modern web technologies, passionate about creating responsive, user-friendly, and engaging web applications. Skilled in building interactive interfaces, optimizing performance, and delivering smooth digital experiences. Committed to continuous learning, problem-solving, and developing innovative solutions that improve user experience.',
   email: 'divyen624@gmail.com',

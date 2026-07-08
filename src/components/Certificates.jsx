@@ -93,12 +93,12 @@ function Certificates() {
 
         <div
           ref={certificatesGridRef}
-          className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5"
+          className="mx-auto grid max-w-[74rem] grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-5"
         >
           {certificates.length > 0 ? (
             certificates.map((certificate, index) => (
               <motion.button
-                className={`certificate-card glass-card group flex min-h-[9.5rem] sm:min-h-52 flex-col overflow-hidden p-3 sm:p-4 text-left border border-cyan-200/10 sm:border-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 ${index === certificates.length - 2 ? 'lg:col-start-2' : ''}`}
+                className={`certificate-card glass-card group flex min-h-[9rem] sm:min-h-48 flex-col overflow-hidden p-3 sm:p-3.5 text-left border border-cyan-200/10 sm:border-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 ${index === certificates.length - 2 ? 'lg:col-start-2' : ''}`}
                 key={`${certificate.title}-${certificate.file}`}
                 type="button"
                 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}

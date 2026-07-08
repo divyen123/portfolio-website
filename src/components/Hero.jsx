@@ -152,6 +152,18 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
               decoding="async"
               fetchPriority="high"
             />
+            <AnimatePresence>
+              {heroFocusMode && (
+                <motion.div
+                  className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[1.6px] origin-center -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
+                  style={{ width: isMobile ? 'calc(100vw / 0.68)' : 'calc(100vw / 0.7)' }}
+                  initial={{ opacity: 1, scaleX: 0.08 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  exit={{ opacity: 0, scaleX: 0.08 }}
+                  transition={{ duration: isMobile ? 0.8 : 1.6, delay: isMobile ? 0 : 0.05, ease: [0.16, 1, 0.3, 1] }}
+                />
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>
@@ -179,18 +191,11 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
         {heroFocusMode && (
           <motion.div
             className="pointer-events-none absolute inset-x-0 bottom-[4.3rem] z-30 flex flex-col items-center gap-5 px-0 sm:bottom-[5.50rem]"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 18 }}
-            transition={{ duration: isMobile ? 0.65 : 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: isMobile ? 0.65 : 1.05, delay: isMobile ? 0.08 : 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.div
-              className="h-[1.6px] w-screen origin-center bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0 }}
-              transition={{ duration: isMobile ? 0.7 : 1.25, ease: [0.16, 1, 0.3, 1] }}
-            />
             <div className="flex items-center justify-center gap-3 text-lg font-bold uppercase tracking-[0.24em] text-cyan-50 sm:text-1xl">
               <span>Scroll to Explore</span>
               <motion.span
@@ -209,6 +214,9 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
 }
 
 export default memo(Hero);
+
+
+
 
 
 

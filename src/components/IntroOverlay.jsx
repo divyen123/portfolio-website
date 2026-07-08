@@ -11,18 +11,6 @@ function IntroOverlay() {
       role="status"
       aria-label="Opening Divyen's Portfolio"
     >
-      <video
-        className="portfolio-video-background"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-      >
-        <source src="/media/portfolio-background.mp4" type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-[#050505]/78" aria-hidden="true" />
       <motion.div
         className="relative px-6 text-center"
         initial={{ opacity: 0, y: 24, scale: 0.96 }}

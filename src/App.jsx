@@ -409,7 +409,7 @@ export default function App() {
       </Helmet>
 
       {/* Fixed Background Video */}
-      <div className="portfolio-background-layer pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <div className={`portfolio-background-layer pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-500 ${showIntro ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <video
           className="portfolio-video-background"
           autoPlay

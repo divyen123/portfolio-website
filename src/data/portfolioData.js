@@ -35,7 +35,6 @@ export const personalInfo = {
   intro:
     'Aspiring Frontend Developer specializing in React.js and modern web technologies, passionate about creating responsive, user-friendly, and engaging web applications. Skilled in building interactive interfaces, optimizing performance, and delivering smooth digital experiences. Committed to continuous learning, problem-solving, and developing innovative solutions that improve user experience.',
   email: 'divyen624@gmail.com',
-  phone: '+91 9840801856',
   github: 'https://github.com/divyen123',
   linkedin: 'https://www.linkedin.com/in/divyen-r-m-66b34934a',
   portfolio: '',

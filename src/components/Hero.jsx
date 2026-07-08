@@ -41,14 +41,20 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
           style={{ pointerEvents: heroFocusMode ? 'none' : 'auto' }}
           aria-hidden={heroFocusMode}
         >
-          <motion.h1
-            className="hero-name-glow text-4xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {personalInfo.name}
-          </motion.h1>
+          <AnimatePresence initial={false}>
+            {!heroFocusMode && (
+              <motion.h1
+                layoutId="hero-name-title"
+                className="hero-name-glow text-4xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {personalInfo.name}
+              </motion.h1>
+            )}
+          </AnimatePresence>
 
           <motion.div
             className="mt-4 mb-2 flex"
@@ -130,7 +136,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
           animate={{
             opacity: 1,
             scale: heroFocusMode ? (isMobile ? 0.68 : 0.7) : (isMobile ? 0.92 : 0.9),
-            x: heroFocusMode ? (isMobile ? 0 : '-70%') : 0,
+            x: heroFocusMode ? (isMobile ? 0 : '-74%') : 0,
             y: heroFocusMode ? (isMobile ? -28 : -130) : 0,
           }}
           transition={isMobile ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { duration: 1.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
@@ -146,36 +152,63 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
               decoding="async"
               fetchPriority="high"
             />
-
-             <AnimatePresence>
-              {heroFocusMode && (
-                <div className="absolute inset-x-0 top-full z-20">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.96, y: 8 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, y: 8 }}
-                    transition={{ duration: isMobile ? 0.85 : 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ transformOrigin: 'top center' }}
-                  >
-                    <p className="relative left-1/2 inline-flex w-[calc(100%+2rem)] -translate-x-1/2 items-center justify-center gap-3.5 overflow-hidden whitespace-nowrap rounded-full border border-slate-200/12 bg-[linear-gradient(135deg,rgba(15,23,42,0.82),rgba(12,22,32,0.66))] px-6 py-3.5 text-[0.95rem] font-bold uppercase tracking-[0.19em] text-cyan-100 shadow-[0_12px_34px_rgba(0,0,0,0.24)] backdrop-blur-xl">
-                      <span>Scroll to Explore</span>
-                      <motion.span
-                        aria-hidden="true"
-                        animate={{ y: [0, 4, 0], opacity: [0.55, 1, 0.55] }}
-                        transition={{ duration: 1.25, repeat: Infinity, ease: 'easeInOut' }}
-                      >
-                        <FiChevronDown className="size-[1.05rem]" />
-                      </motion.span>
-                    </p>
-                  </motion.div>
-                </div>
-              )}
-            </AnimatePresence>
           </div>
         </motion.div>
       </div>
+      <AnimatePresence>
+        {heroFocusMode && (
+          <motion.div
+            className="pointer-events-none absolute inset-x-0 top-28 z-30 flex justify-center px-4 sm:top-32 lg:top-36"
+            initial={{ opacity: 0, y: -28 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -18 }}
+            transition={{ duration: isMobile ? 0.55 : 1.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <motion.h2
+              layoutId="hero-name-title"
+              className="hero-name-glow text-center text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl"
+              transition={{ duration: isMobile ? 0.55 : 1.15, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {personalInfo.name}
+            </motion.h2>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {heroFocusMode && (
+          <motion.div
+            className="pointer-events-none absolute inset-x-0 bottom-[4.3rem] z-30 flex flex-col items-center gap-5 px-0 sm:bottom-[5.50rem]"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 18 }}
+            transition={{ duration: isMobile ? 0.65 : 1.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <motion.div
+              className="h-[1.6px] w-screen origin-center bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              exit={{ scaleX: 0 }}
+              transition={{ duration: isMobile ? 0.7 : 1.25, ease: [0.16, 1, 0.3, 1] }}
+            />
+            <div className="flex items-center justify-center gap-3 text-lg font-bold uppercase tracking-[0.24em] text-cyan-50 sm:text-1xl">
+              <span>Scroll to Explore</span>
+              <motion.span
+                aria-hidden="true"
+                animate={{ y: [0, 6, 0], opacity: [0.55, 1, 0.55] }}
+                transition={{ duration: 1.25, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <FiChevronDown className="size-6" />
+              </motion.span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
 
 export default memo(Hero);
+
+
+

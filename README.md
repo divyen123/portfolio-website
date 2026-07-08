@@ -49,33 +49,6 @@ An AI-powered study planner with personalized timetables, chapter tracking, smar
 ### Ragas Group Digital Ecosystem
 A collection of professional websites for Ragas Group, Ragas Shipping, Ragas Aerospace, and RAIC Technology, built with modern responsive interfaces and brand-focused design.
 
-## Getting Started
-
-Follow these steps to run the project locally:
-
-```bash
-npm install
-npm run dev
-```
-
-To create a production build:
-
-```bash
-npm run build
-```
-
-To preview the production build locally:
-
-```bash
-npm run preview
-```
-
-## Available Scripts
-
-- `npm run dev` starts the local development server.
-- `npm run build` creates an optimized production build.
-- `npm run preview` previews the production build.
-- `npm run lint` runs ESLint checks across the project.
 
 ## Project Structure
 

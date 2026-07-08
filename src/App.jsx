@@ -88,11 +88,13 @@ export default function App() {
   const [direction, setDirection] = useState('forward');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [heroFocusMode, setHeroFocusMode] = useState(false);
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
   const activeIndexRef = useRef(0);
   const isTransitioningRef = useRef(false);
   const isMobileRef = useRef(false);
+  const heroFocusModeRef = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -109,7 +111,8 @@ export default function App() {
   useEffect(() => {
     activeIndexRef.current = activeIndex;
     isTransitioningRef.current = isTransitioning;
-  }, [activeIndex, isTransitioning]);
+    heroFocusModeRef.current = heroFocusMode;
+  }, [activeIndex, isTransitioning, heroFocusMode]);
 
   useEffect(() => {
     AOS.init({
@@ -135,34 +138,92 @@ export default function App() {
     };
   }, []);
 
-  const triggerTransition = (targetIndex) => {
+  const triggerTransition = (targetIndex, options = {}) => {
     const currentIndex = activeIndexRef.current;
     if (targetIndex === currentIndex || isTransitioningRef.current) return;
 
+    isTransitioningRef.current = true;
+    activeIndexRef.current = targetIndex;
     setIsTransitioning(true);
     setDirection(targetIndex > currentIndex ? 'forward' : 'backward');
+    if (Object.prototype.hasOwnProperty.call(options, 'heroFocusMode')) {
+      heroFocusModeRef.current = options.heroFocusMode;
+      setHeroFocusMode(options.heroFocusMode);
+    }
     setActiveIndex(targetIndex);
 
     const lockDuration = isMobileRef.current ? 300 : 950;
     setTimeout(() => {
+      isTransitioningRef.current = false;
       setIsTransitioning(false);
     }, lockDuration);
   };
 
+  const triggerHeroFocusMode = (nextFocused) => {
+    if (heroFocusModeRef.current === nextFocused || isTransitioningRef.current) return;
+
+    heroFocusModeRef.current = nextFocused;
+    isTransitioningRef.current = true;
+    setHeroFocusMode(nextFocused);
+    setIsTransitioning(true);
+
+    const lockDuration = isMobileRef.current ? 240 : 720;
+    setTimeout(() => {
+      isTransitioningRef.current = false;
+      setIsTransitioning(false);
+    }, lockDuration);
+  };
+
+  const handleNavClick = (section) => {
+    const targetIndex = SECTIONS.indexOf(section);
+    if (targetIndex < 0) return;
+
+    if (targetIndex === 0) {
+      if (activeIndexRef.current === 0) {
+        triggerHeroFocusMode(false);
+      } else {
+        triggerTransition(0, { heroFocusMode: false });
+      }
+      return;
+    }
+
+    triggerTransition(targetIndex);
+  };
+
   useEffect(() => {
     const handleWheel = (e) => {
+      const threshold = 25;
+      if (Math.abs(e.deltaY) < threshold) return;
+
+      const currentIndex = activeIndexRef.current;
+      const isScrollingDown = e.deltaY > 0;
+
+      if (currentIndex === 0) {
+        e.preventDefault();
+        if (isTransitioningRef.current) return;
+
+        if (isScrollingDown) {
+          if (heroFocusModeRef.current) {
+            triggerTransition(1);
+          } else {
+            triggerHeroFocusMode(true);
+          }
+        } else if (heroFocusModeRef.current) {
+          triggerHeroFocusMode(false);
+        }
+        return;
+      }
+
       const container = document.querySelector('.active-section-scroll-container');
       if (container) {
         const { scrollTop, scrollHeight, clientHeight } = container;
         const isScrollable = scrollHeight > clientHeight;
 
         if (isScrollable) {
-          if (e.deltaY > 0) {
-            // Scroll down: only slide page if user is at the bottom of the section content
+          if (isScrollingDown) {
             const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
             if (!isAtBottom) return;
           } else {
-            // Scroll up: only slide page if user is at the top of the section content
             const isAtTop = scrollTop <= 5;
             if (!isAtTop) return;
           }
@@ -172,18 +233,14 @@ export default function App() {
       e.preventDefault();
       if (isTransitioningRef.current) return;
 
-      const threshold = 25;
-      if (Math.abs(e.deltaY) < threshold) return;
-
-      const currentIndex = activeIndexRef.current;
-      if (e.deltaY > 0) {
+      if (isScrollingDown) {
         if (currentIndex < SECTIONS.length - 1) {
           triggerTransition(currentIndex + 1);
         }
-      } else {
-        if (currentIndex > 0) {
-          triggerTransition(currentIndex - 1);
-        }
+      } else if (currentIndex === 1) {
+        triggerTransition(0, { heroFocusMode: true });
+      } else if (currentIndex > 0) {
+        triggerTransition(currentIndex - 1);
       }
     };
 
@@ -193,67 +250,100 @@ export default function App() {
     };
 
     const handleTouchMove = (e) => {
-      const container = document.querySelector('.active-section-scroll-container');
-      if (container) {
-        const { scrollTop, scrollHeight, clientHeight } = container;
-        const isScrollable = scrollHeight > clientHeight;
-        
-        const deltaY = e.touches[0].clientY - touchStartY.current;
-        const deltaX = e.touches[0].clientX - touchStartX.current;
-
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
-          if (isScrollable) {
-            if (deltaY < 0) {
-              const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
-              if (!isAtBottom) return;
-            } else {
-              const isAtTop = scrollTop <= 5;
-              if (!isAtTop) return;
-            }
-          }
-        }
-      }
-
-      if (isTransitioningRef.current) return;
-
       const deltaY = e.touches[0].clientY - touchStartY.current;
       const deltaX = e.touches[0].clientX - touchStartX.current;
       const threshold = 40;
 
-      if (Math.abs(deltaY) > Math.abs(deltaX)) {
-        if (Math.abs(deltaY) < threshold) return;
+      if (Math.abs(deltaY) <= Math.abs(deltaX) || Math.abs(deltaY) < threshold) return;
 
-        const currentIndex = activeIndexRef.current;
-        if (deltaY < 0) {
-          if (currentIndex < SECTIONS.length - 1) {
-            triggerTransition(currentIndex + 1);
+      const currentIndex = activeIndexRef.current;
+      const isScrollingDown = deltaY < 0;
+
+      if (currentIndex === 0) {
+        e.preventDefault();
+        if (isTransitioningRef.current) return;
+
+        if (isScrollingDown) {
+          if (heroFocusModeRef.current) {
+            triggerTransition(1);
+          } else {
+            triggerHeroFocusMode(true);
           }
-        } else {
-          if (currentIndex > 0) {
-            triggerTransition(currentIndex - 1);
+        } else if (heroFocusModeRef.current) {
+          triggerHeroFocusMode(false);
+        }
+        return;
+      }
+
+      const container = document.querySelector('.active-section-scroll-container');
+      if (container) {
+        const { scrollTop, scrollHeight, clientHeight } = container;
+        const isScrollable = scrollHeight > clientHeight;
+
+        if (isScrollable) {
+          if (isScrollingDown) {
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
+            if (!isAtBottom) return;
+          } else {
+            const isAtTop = scrollTop <= 5;
+            if (!isAtTop) return;
           }
         }
+      }
+
+      e.preventDefault();
+      if (isTransitioningRef.current) return;
+
+      if (isScrollingDown) {
+        if (currentIndex < SECTIONS.length - 1) {
+          triggerTransition(currentIndex + 1);
+        }
+      } else if (currentIndex === 1) {
+        triggerTransition(0, { heroFocusMode: true });
+      } else if (currentIndex > 0) {
+        triggerTransition(currentIndex - 1);
       }
     };
 
     const handleKeyDown = (e) => {
-      if (isTransitioningRef.current) return;
+      if (e.key !== 'ArrowDown' && e.key !== 'PageDown' && e.key !== 'ArrowUp' && e.key !== 'PageUp') return;
 
       const currentIndex = activeIndexRef.current;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      const isMovingDown = e.key === 'ArrowDown' || e.key === 'PageDown';
+
+      if (currentIndex === 0) {
+        e.preventDefault();
+        if (isTransitioningRef.current) return;
+
+        if (isMovingDown) {
+          if (heroFocusModeRef.current) {
+            triggerTransition(1);
+          } else {
+            triggerHeroFocusMode(true);
+          }
+        } else if (heroFocusModeRef.current) {
+          triggerHeroFocusMode(false);
+        }
+        return;
+      }
+
+      e.preventDefault();
+      if (isTransitioningRef.current) return;
+
+      if (isMovingDown) {
         if (currentIndex < SECTIONS.length - 1) {
           triggerTransition(currentIndex + 1);
         }
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        if (currentIndex > 0) {
-          triggerTransition(currentIndex - 1);
-        }
+      } else if (currentIndex === 1) {
+        triggerTransition(0, { heroFocusMode: true });
+      } else if (currentIndex > 0) {
+        triggerTransition(currentIndex - 1);
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
@@ -268,7 +358,7 @@ export default function App() {
     let Component;
     switch (index) {
       case 0:
-        Component = <Hero introComplete={!showIntro} />;
+        Component = <Hero introComplete={!showIntro} heroFocusMode={heroFocusMode} />;
         break;
       case 1:
         Component = <About />;
@@ -338,7 +428,7 @@ export default function App() {
       <AnimatePresence>{showLetterbox ? <LetterboxReveal /> : null}</AnimatePresence>
       
       {/* Control Navbar from parent */}
-      <Navbar activeSection={SECTIONS[activeIndex]} onNavClick={(section) => triggerTransition(SECTIONS.indexOf(section))} />
+      <Navbar activeSection={SECTIONS[activeIndex]} onNavClick={handleNavClick} />
       
       {/* Viewport-locked 3D transitioning stage */}
       <main className="relative z-10 w-full h-full overflow-hidden" style={{ perspective: 1200 }}>
@@ -360,4 +450,3 @@ export default function App() {
     </div>
   );
 }
-

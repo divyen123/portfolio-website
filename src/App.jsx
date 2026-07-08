@@ -88,13 +88,13 @@ export default function App() {
   const [direction, setDirection] = useState('forward');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [heroFocusMode, setHeroFocusMode] = useState(false);
+  const [heroFocusMode, setHeroFocusMode] = useState(true);
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
   const activeIndexRef = useRef(0);
   const isTransitioningRef = useRef(false);
   const isMobileRef = useRef(false);
-  const heroFocusModeRef = useRef(false);
+  const heroFocusModeRef = useRef(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -180,9 +180,9 @@ export default function App() {
 
     if (targetIndex === 0) {
       if (activeIndexRef.current === 0) {
-        triggerHeroFocusMode(false);
+        triggerHeroFocusMode(true);
       } else {
-        triggerTransition(0, { heroFocusMode: false });
+        triggerTransition(0, { heroFocusMode: true });
       }
       return;
     }
@@ -204,12 +204,12 @@ export default function App() {
 
         if (isScrollingDown) {
           if (heroFocusModeRef.current) {
-            triggerTransition(1);
+            triggerHeroFocusMode(false);
           } else {
-            triggerHeroFocusMode(true);
+            triggerTransition(1);
           }
-        } else if (heroFocusModeRef.current) {
-          triggerHeroFocusMode(false);
+        } else if (!heroFocusModeRef.current) {
+          triggerHeroFocusMode(true);
         }
         return;
       }
@@ -238,7 +238,7 @@ export default function App() {
           triggerTransition(currentIndex + 1);
         }
       } else if (currentIndex === 1) {
-        triggerTransition(0, { heroFocusMode: true });
+        triggerTransition(0, { heroFocusMode: false });
       } else if (currentIndex > 0) {
         triggerTransition(currentIndex - 1);
       }
@@ -265,12 +265,12 @@ export default function App() {
 
         if (isScrollingDown) {
           if (heroFocusModeRef.current) {
-            triggerTransition(1);
+            triggerHeroFocusMode(false);
           } else {
-            triggerHeroFocusMode(true);
+            triggerTransition(1);
           }
-        } else if (heroFocusModeRef.current) {
-          triggerHeroFocusMode(false);
+        } else if (!heroFocusModeRef.current) {
+          triggerHeroFocusMode(true);
         }
         return;
       }
@@ -299,7 +299,7 @@ export default function App() {
           triggerTransition(currentIndex + 1);
         }
       } else if (currentIndex === 1) {
-        triggerTransition(0, { heroFocusMode: true });
+        triggerTransition(0, { heroFocusMode: false });
       } else if (currentIndex > 0) {
         triggerTransition(currentIndex - 1);
       }
@@ -317,12 +317,12 @@ export default function App() {
 
         if (isMovingDown) {
           if (heroFocusModeRef.current) {
-            triggerTransition(1);
+            triggerHeroFocusMode(false);
           } else {
-            triggerHeroFocusMode(true);
+            triggerTransition(1);
           }
-        } else if (heroFocusModeRef.current) {
-          triggerHeroFocusMode(false);
+        } else if (!heroFocusModeRef.current) {
+          triggerHeroFocusMode(true);
         }
         return;
       }
@@ -335,7 +335,7 @@ export default function App() {
           triggerTransition(currentIndex + 1);
         }
       } else if (currentIndex === 1) {
-        triggerTransition(0, { heroFocusMode: true });
+        triggerTransition(0, { heroFocusMode: false });
       } else if (currentIndex > 0) {
         triggerTransition(currentIndex - 1);
       }

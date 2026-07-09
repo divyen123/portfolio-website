@@ -650,6 +650,17 @@ img {
     transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.skill-logo-list li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.skill-logo-list--ui-ux,
+.skill-logo-list--tools,
+.skill-logo-list--other-skills {
+  min-height: 58%;
+  row-gap: 0.82rem;
+}
 .skill-logo-list li {
   opacity: 0;
   transform: translateY(0.8rem) scale(0.86);
@@ -886,6 +897,18 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
+
+  .skills-carousel-card .skill-logo-list li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .skills-carousel-card .skill-logo-list--ui-ux,
+  .skills-carousel-card .skill-logo-list--tools,
+  .skills-carousel-card .skill-logo-list--other-skills {
+    min-height: 58% !important;
+    row-gap: 0.48rem !important;
+  }
   .skills-carousel-card .skill-logo-list li span:first-child {
     width: 1.65rem !important;
     height: 1.65rem !important;

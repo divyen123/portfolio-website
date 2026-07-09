@@ -116,6 +116,7 @@ function Skills() {
             {skills.map((group, groupIndex) => {
               const CategoryIcon = categoryIcons[groupIndex % categoryIcons.length];
               const visibleItems = group.items.filter((skill) => !hiddenSkillItems.has(skill));
+              const categoryLayoutClass = `skill-logo-list--${group.category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
 
               return (
                 <motion.div
@@ -147,7 +148,7 @@ function Skills() {
                       </h3>
 
                       {visibleItems.length > 0 ? (
-                        <ul className="skill-logo-list">
+                        <ul className={`skill-logo-list ${categoryLayoutClass}`}>
                           {visibleItems.map((skill, index) => {
                             const iconData = skillIcons[skill] || { Icon: FiCode, color: 'text-white' };
                             const SkillIcon = iconData.Icon;

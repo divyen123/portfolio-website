@@ -391,6 +391,8 @@ function Projects() {
                                         <img
                                           src={activeRagasPage.logo}
                                           alt=""
+                                          loading="lazy"
+                                          decoding="async"
                                           className={`${subprojectLogoSizeClass} w-full object-contain`}
                                         />
                                         {shouldShowSubprojectCursor ? (

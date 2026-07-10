@@ -126,9 +126,9 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{
             opacity: 1,
-            scale: heroFocusMode ? (isMobile ? 0.86 : 0.7) : (isMobile ? 1 : 0.9),
-            x: heroFocusMode ? (isMobile ? 0 : '-74%') : 0,
-            y: heroFocusMode ? (isMobile ? -12 : -130) : 0,
+            scale: heroFocusMode ? (isMobile ? 0.84 : 0.7) : (isMobile ? 0.96 : 0.9),
+            x: heroFocusMode ? (isMobile ? 0 : '-74%') : (isMobile ? 22 : 0),
+            y: heroFocusMode ? (isMobile ? -108 : -130) : 0,
           }}
           transition={isMobile ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { duration: 1.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           style={{ transformOrigin: 'bottom center' }}
@@ -147,7 +147,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
               {heroFocusMode && (
                 <motion.div
                   className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[1.7px] origin-center -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
-                  style={{ width: isMobile ? 'calc(100vw / 0.68)' : 'calc(100vw / 0.7)' }}
+                  style={{ width: isMobile ? 'calc(100vw / 0.84)' : 'calc(100vw / 0.7)' }}
                   initial={{ opacity: 1, scaleX: 0.08 }}
                   animate={{ opacity: 1, scaleX: 1 }}
                   exit={{ opacity: 0, scaleX: 0.08 }}

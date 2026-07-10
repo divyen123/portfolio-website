@@ -928,14 +928,14 @@ img {
   .hero-mobile-visual {
     position: absolute;
     inset-inline: 0;
-    bottom: 2.55rem;
+    bottom: 0.55rem;
     height: auto;
     align-items: flex-end;
   }
 
   .hero-mobile-portrait {
-    width: min(62vw, 15.25rem);
-    height: min(58vh, 21rem);
+    width: min(60vw, 14.75rem);
+    height: min(56vh, 20.25rem);
   }
 
   .hero-mobile-focus-title {
@@ -950,7 +950,7 @@ img {
   }
 
   .hero-mobile-scroll-cue {
-    bottom: 3.1rem;
+    bottom: 2.35rem;
   }
 
   .hero-mobile-scroll-cue > div {

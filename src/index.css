@@ -673,8 +673,8 @@ img {
 
 .skill-logo-card:hover .skill-card-image,
 .skill-logo-card:focus-visible .skill-card-image {
-  opacity: 0.72;
-  filter: blur(2px);
+  opacity: 0.18;
+  filter: blur(2px) brightness(0.5);
   transform: scale(1.035);
 }
 

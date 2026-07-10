@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import IntroOverlay from './components/IntroOverlay';
 import LetterboxReveal from './components/LetterboxReveal';
+import SplashCursor from './components/SplashCursor';
 import { personalInfo } from './data/portfolioData';
 
 const About = lazy(() => import('./components/About'));
@@ -397,6 +398,15 @@ export default function App() {
 
   return (
     <div className="relative isolate w-screen h-screen overflow-hidden bg-[#050505] text-white">
+      <SplashCursor
+        RAINBOW_MODE={false}
+        COLOR="#004f63"
+        DENSITY_DISSIPATION={4.5}
+        VELOCITY_DISSIPATION={2}
+        SPLAT_RADIUS={0.2}
+        SPLAT_FORCE={6000}
+        COLOR_UPDATE_SPEED={0}
+      />
       <Helmet>
         <meta
           name="description"

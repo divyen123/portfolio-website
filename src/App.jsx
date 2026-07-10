@@ -17,11 +17,7 @@ const Certificates = lazy(() => import('./components/Certificates'));
 const Contact = lazy(() => import('./components/Contact'));
 
 function SectionFallback() {
-  return (
-    <div className="mx-auto min-h-48 w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8" aria-label="Loading section">
-      <div className="h-40 animate-pulse rounded-3xl border border-white/10 bg-white/[0.04]" />
-    </div>
-  );
+  return null;
 }
 
 const SECTIONS = ['home', 'about', 'education', 'skills', 'projects', 'certificates', 'contact'];

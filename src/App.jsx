@@ -386,7 +386,7 @@ export default function App() {
     return (
       <div className="active-section-scroll-container scrollbar-hide absolute inset-0 w-full h-full flex flex-col overflow-y-auto">
         <Suspense fallback={<SectionFallback />}>
-          <div className="w-full my-0 md:my-auto py-16 md:py-0">
+          <div className={`w-full my-0 md:my-auto ${index === 0 ? 'py-0' : 'py-16 md:py-0'}`}>
             {Component}
           </div>
         </Suspense>

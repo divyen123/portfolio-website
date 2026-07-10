@@ -880,6 +880,106 @@ img {
     padding: 2.25rem 0;
   }
 
+
+  .hero-mobile-section {
+    min-height: 100svh;
+    align-items: flex-start;
+    padding-top: 5.75rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .hero-mobile-grid {
+    height: calc(100svh - 7rem);
+    min-height: 35rem;
+    align-content: start;
+    gap: 1.1rem;
+    padding-top: 0;
+  }
+
+  .hero-mobile-copy {
+    padding-bottom: 0;
+  }
+
+  .hero-mobile-copy .hero-name-glow {
+    margin-top: 0;
+    font-size: clamp(2.65rem, 12vw, 3.45rem);
+    line-height: 0.96;
+  }
+
+  .hero-mobile-copy .hero-typed-title {
+    margin-top: 0.85rem;
+    min-height: 0;
+    font-size: clamp(0.92rem, 3.5vw, 1.05rem);
+    line-height: 1.45;
+  }
+
+  .hero-mobile-copy p:not(.hero-typed-title) {
+    margin-top: 1.65rem;
+    max-width: 100%;
+    font-size: clamp(1rem, 4vw, 1.12rem);
+    line-height: 1.95;
+  }
+
+  .hero-mobile-copy [aria-label="Primary links"] {
+    margin-top: 1.55rem;
+    gap: 0.85rem;
+  }
+
+  .hero-mobile-visual {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 2.55rem;
+    height: auto;
+    align-items: flex-end;
+  }
+
+  .hero-mobile-portrait {
+    width: min(62vw, 15.25rem);
+    height: min(58vh, 21rem);
+  }
+
+  .hero-mobile-focus-title {
+    top: 7.35rem;
+  }
+
+  .hero-mobile-focus-title .hero-name-glow {
+    max-width: calc(100vw - 2rem);
+    font-size: clamp(2.65rem, 12vw, 3.55rem);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .hero-mobile-scroll-cue {
+    bottom: 3.1rem;
+  }
+
+  .hero-mobile-scroll-cue > div {
+    gap: 0.6rem;
+    font-size: clamp(1rem, 4.3vw, 1.2rem);
+    letter-spacing: 0.2em;
+  }
+
+  .site-footer {
+    margin-top: -0.35rem;
+    padding-top: 1rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .site-footer > div {
+    gap: 0.9rem;
+  }
+
+  .site-footer p {
+    max-width: 17rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .site-footer .icon-link {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+
   .portfolio-video-background {
     display: block;
     opacity: 0.34;

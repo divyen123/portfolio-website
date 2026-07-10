@@ -25,13 +25,13 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
   }, [homeInView, introComplete]);
 
   return (
-    <section ref={homeRef} className="relative isolate flex min-h-screen items-center md:items-end overflow-hidden px-4 pb-12 md:pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
+    <section ref={homeRef} className="hero-mobile-section relative isolate flex min-h-screen items-center md:items-end overflow-hidden px-4 pb-12 md:pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
       <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-[#050505] to-transparent" />
 
-      <div className="mx-auto mt-2 grid w-full max-w-6xl grid-cols-1 md:grid-cols-12 gap-8 items-center md:items-stretch h-full pt-16 md:pt-0">
+      <div className="hero-mobile-grid mx-auto mt-2 grid w-full max-w-6xl grid-cols-1 md:grid-cols-12 gap-8 items-center md:items-stretch h-full pt-16 md:pt-0">
         {/* Left side: titles, names, descriptions, and icons */}
         <motion.div
-          className="col-span-12 md:col-span-7 flex flex-col justify-center items-start text-left pb-8 md:pb-24 z-10"
+          className="hero-mobile-copy col-span-12 md:col-span-7 flex flex-col justify-center items-start text-left pb-8 md:pb-24 z-10"
           initial={{ opacity: 0, x: -30 }}
           animate={{
             opacity: heroFocusMode ? 0 : 1,
@@ -122,19 +122,19 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
 
         {/* Right side: profile picture, touching the bottom frame on desktop */}
         <motion.div
-          className="col-span-12 md:col-span-5 flex items-end justify-center h-full relative self-end z-10"
+          className="hero-mobile-visual col-span-12 md:col-span-5 flex items-end justify-center h-full relative self-end z-10"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{
             opacity: 1,
-            scale: heroFocusMode ? (isMobile ? 0.68 : 0.7) : (isMobile ? 0.92 : 0.9),
+            scale: heroFocusMode ? (isMobile ? 0.86 : 0.7) : (isMobile ? 1 : 0.9),
             x: heroFocusMode ? (isMobile ? 0 : '-74%') : 0,
-            y: heroFocusMode ? (isMobile ? -28 : -130) : 0,
+            y: heroFocusMode ? (isMobile ? -12 : -130) : 0,
           }}
           transition={isMobile ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { duration: 1.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           style={{ transformOrigin: 'bottom center' }}
           aria-label={`${personalInfo.name} profile`}
         >
-          <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-[350px] md:h-[480px] lg:w-[420px] lg:h-[580px] xl:w-[460px] xl:h-[640px] flex items-end justify-center overflow-visible bg-transparent">
+          <div className="hero-mobile-portrait relative w-44 h-44 sm:w-56 sm:h-56 md:w-[350px] md:h-[480px] lg:w-[420px] lg:h-[580px] xl:w-[460px] xl:h-[640px] flex items-end justify-center overflow-visible bg-transparent">
             <img
               className="w-full h-full object-contain object-bottom select-none pointer-events-none z-10"
               src={personalInfo.image}
@@ -161,7 +161,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
       <AnimatePresence>
         {heroFocusMode && (
           <motion.div
-            className="pointer-events-none absolute inset-x-0 top-28 z-30 flex justify-center px-4 sm:top-32 lg:top-36"
+            className="hero-mobile-focus-title pointer-events-none absolute inset-x-0 top-28 z-30 flex justify-center px-4 sm:top-32 lg:top-36"
             initial={{ opacity: 0, y: -28 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -18 }}
@@ -181,7 +181,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
       <AnimatePresence>
         {heroFocusMode && (
           <motion.div
-            className="pointer-events-none absolute inset-x-0 bottom-[4.3rem] z-30 flex flex-col items-center gap-5 px-0 sm:bottom-[5.50rem]"
+            className="hero-mobile-scroll-cue pointer-events-none absolute inset-x-0 bottom-[4.3rem] z-30 flex flex-col items-center gap-5 px-0 sm:bottom-[5.50rem]"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 18 }}

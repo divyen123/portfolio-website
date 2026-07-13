@@ -28,10 +28,10 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
     <section ref={homeRef} className="hero-mobile-section relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
       <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-[#050505] to-transparent" />
 
-      <div className="hero-mobile-grid mx-auto mt-2 flex flex-col md:grid w-full max-w-6xl grid-cols-1 md:grid-cols-12 gap-8 md:items-stretch h-full flex-1 pt-16 md:pt-0">
+      <div className="hero-mobile-grid mx-auto flex flex-col md:grid w-full max-w-6xl grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 md:items-stretch flex-1 pt-6 md:pt-0">
         {/* Left side: titles, names, descriptions, and icons */}
         <motion.div
-          className="hero-mobile-copy flex-1 md:flex-none col-span-12 md:col-span-7 flex flex-col justify-center items-start text-left pb-8 md:pb-24 z-10"
+          className="hero-mobile-copy md:col-span-7 flex flex-col justify-start md:justify-center items-start text-left pb-4 md:pb-24 z-10"
           initial={{ opacity: 0, x: -30 }}
           animate={{
             opacity: heroFocusMode ? 0 : 1,
@@ -122,7 +122,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
 
         {/* Right side: profile picture, touching the bottom frame on desktop */}
         <motion.div
-          className="hero-mobile-visual col-span-12 md:col-span-5 flex items-end justify-center h-full relative self-end z-10"
+          className="hero-mobile-visual md:col-span-5 flex items-end justify-center relative self-end z-10 mt-auto pt-8 md:pt-0"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{
             opacity: 1,

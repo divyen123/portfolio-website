@@ -503,10 +503,17 @@ function Projects() {
                         </motion.p>
 
                         <motion.ul className="mt-4 grid gap-2.5 text-sm leading-6 text-slate-300" variants={activeTextMotion} custom={direction}>
-                          {activeProject.highlights.map((highlight) => (
+                          {activeProject.highlights.map((highlight, index) => (
                             <li className="flex gap-3 text-left" key={highlight}>
                               <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(6,182,212,0.65)]" aria-hidden="true" />
-                              <span>{highlight}</span>
+                              <span>
+                                {highlight}
+                                {activeProject.detailedOverview && index === activeProject.highlights.length - 1 && (
+                                  <button onClick={() => setShowModal(true)} className="ml-1.5 text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-sm cursor-pointer inline">
+                                    Know more
+                                  </button>
+                                )}
+                              </span>
                             </li>
                           ))}
                         </motion.ul>
@@ -562,23 +569,6 @@ function Projects() {
                                 Prototype
                               </span>
                             </a>
-                          </div>
-                        ) : null}
-                        {activeProject.detailedOverview ? (
-                          <div className="relative w-11 h-11 shrink-0">
-                            <button 
-                              onClick={() => setShowModal(true)}
-                              className="ripple-button mobile-icon-action group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[9.5rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden bg-white/[0.04] border border-white/10 text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300" 
-                              aria-label="Know More"
-                              style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
-                            >
-                              <div className="size-11 flex items-center justify-center shrink-0">
-                                <FiInfo className="size-4.5 shrink-0" aria-hidden="true" />
-                              </div>
-                              <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13px] leading-none group-hover:max-w-[7.5rem] group-hover:opacity-100 group-hover:pr-5">
-                                Know more
-                              </span>
-                            </button>
                           </div>
                         ) : null}
                       </motion.div>

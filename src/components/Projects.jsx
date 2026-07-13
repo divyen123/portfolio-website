@@ -665,11 +665,27 @@ function Projects() {
 
               <div className="flex items-center gap-4 mb-6 pr-10 md:pr-12">
                 {activeProject.detailedOverview.logo && (
-                  <img 
-                    src={activeProject.detailedOverview.logo} 
-                    alt="" 
-                    className="size-8 sm:size-10 object-contain" 
-                  />
+                  activeProject.liveDemo ? (
+                    <a 
+                      href={activeProject.liveDemo} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="shrink-0 hover:scale-105 transition-transform" 
+                      aria-label={`Visit ${activeProject.title} application`}
+                    >
+                      <img 
+                        src={activeProject.detailedOverview.logo} 
+                        alt="" 
+                        className="size-8 sm:size-10 object-contain drop-shadow-md" 
+                      />
+                    </a>
+                  ) : (
+                    <img 
+                      src={activeProject.detailedOverview.logo} 
+                      alt="" 
+                      className="size-8 sm:size-10 object-contain shrink-0" 
+                    />
+                  )
                 )}
                 <h2 className="text-2xl sm:text-3xl font-black text-white">
                   {activeProject.title} Overview

@@ -135,6 +135,41 @@ export const projects = [
       medAiDoctorAi,
       medAiSettings,
     ],
+    detailedOverview: {
+      executiveDescription: 'MedAI is an advanced, AI-powered health intelligence and self-care tracking platform. Designed to bridge the gap between patient symptoms and clinical clarity, it serves as a secure, local-first wellness dashboard. It empowers users to analyze symptoms using AI, monitor daily vitals, manage self-care reminders (with customizable alerts and postponement options), coordinate emergency contacts, and chat interactively with a virtual medical assistant.',
+      technologyStack: {
+        frontend: [
+          'React 18 - Core framework for component-driven UI',
+          'Vite - Bundler and optimized development server',
+          'Vanilla CSS - Custom design token variables for light/dark themes',
+          'Framer Motion - Premium transition and UI micro-animations',
+          'Web Audio API - Synthesis of reminder alarm sounds',
+          'Notification / Service Worker API - Background scheduling and alerts'
+        ],
+        backend: [
+          'Node.js - Execution runtime environment',
+          'Express.js - RESTful API controller layer',
+          'JWT - Stateless session authorization token handling',
+          'bcryptjs - 12-round password security hashing',
+          'CORS middleware - Cross-origin resource sharing controls'
+        ],
+        database: [
+          'Supabase (PostgreSQL) - Primary database hosting user accounts, reports, settings, and schedules',
+          'Claude AI API - Generates diagnoses, clinical disclaimers, dietary remedies, and chat dialogues',
+          'Hybrid Offline Replication - Dual storage sync merging local storage cache with cloud storage on login'
+        ]
+      },
+      pagesAndComponents: [
+        { title: 'Dashboard (Home)', description: 'Aggregated statistics (total symptoms logged, high severity alerts, pain averages), quick access search query check, emergency direct dial controls, and daily checklist tracker.' },
+        { title: 'Symptom Analyzer', description: 'Detailed form logs evaluating severity, duration, and descriptions. Connects to the Claude AI API to return structured diagnostic alerts, recommended OTC medications, and direct pharmacy saving shortcuts.' },
+        { title: 'Vitals Log', description: 'Logs and monitors crucial health markers (Blood Pressure, Heart Rate, Temperature, Blood Sugar, SpO2) using custom visual pain scale gauges.' },
+        { title: 'Doctor AI Chat', description: 'Interactive virtual assistant supporting voice transcription commands and medical inquiry dialogue logging.' },
+        { title: 'Emergency Services & Hospital Locator', description: 'Speed-dial buttons, red flags warning list, nearby emergency care facility geolocation mappings, and emergency contact list manager.' },
+        { title: 'Wellness Page (Fever Guide)', description: 'Features custom guides for temperature ranges with responsive stacked urgency level indicators, recommended diets, and wellness guides.' },
+        { title: 'Reminders Manager & Postpone UI', description: 'Allows users to configure reminders with sound playback, click editing inline (repeat rules, custom dates), and select smart postponement intervals (5h, 12h, custom units).' },
+        { title: 'Settings Panel', description: 'Appearance configuration (glassmorphism layouts, navbar positioning, font choices), profile details, account deletions, and password modifications with active validation.' }
+      ]
+    }
   },
   {
     title: 'Memory Timeline',
@@ -157,6 +192,56 @@ export const projects = [
       memoryView,
       memoryHiddenImages,
     ],
+    detailedOverview: {
+      executiveDescription: 'Memory Timeline is a full-stack personal archive for preserving, organizing, and revisiting image-based memories in a private visual workspace. Users can create rich multi-image entries with dates, categories, descriptions, favorites, and reminders; explore them in timeline, calendar, or compact tile layouts; search, sort, filter, share individual memories, and export image collections. The application also provides a PIN-gated Hidden Images interface, 30-day trash recovery, profile and account controls, responsive layouts, and extensive per-device appearance, sound, and interaction settings.',
+      technologyStack: {
+        frontend: [
+          'React 19 - Component-driven interface and stateful user workflows',
+          'Vite 7 - Fast development server and optimized production bundling',
+          'React Router 7 - Protected routes, public share links, and navigation',
+          'Framer Motion 12 - Page transitions, onboarding, and shared-layout motion',
+          'Axios - API client with credentials, CSRF support, and session refresh',
+          'JSZip - Image collection packaging for browser downloads',
+          'Remotion and Web APIs - Animated intro, Web Audio, Canvas, and local preferences'
+        ],
+        backend: [
+          'Node.js and Express 5 - REST API, middleware, and application runtime',
+          'Mongoose 9 - MongoDB schemas, indexes, queries, and lifecycle state',
+          'JWT and cookie sessions - Rotating access and refresh authentication',
+          'bcryptjs - Password hashing and sensitive-action confirmation',
+          'Multer and Sharp - Validated uploads, WebP normalization, and thumbnails',
+          'Helmet, CORS, rate limit - Browser policy and request protection',
+          'sanitize-html and Nodemailer - Safe rich text and optional email delivery'
+        ],
+        database: [
+          'MongoDB Atlas - Stores users, memories, sessions, settings profiles, reminders, and share links',
+          'Cloudinary - Authenticated production media storage with AES-256-GCM encryption enabled by default',
+          'Resend or SMTP - Optional reminder delivery with a scheduled due-date scan',
+          'Vercel and Render - Frontend and API deployment with an API health check and environment-based configuration'
+        ]
+      },
+      pagesAndComponents: [
+        { title: 'Accounts & Guided Onboarding', description: 'Registration, sign-in, session restore, password recovery and change, profile setup, and a six-step guided tour introduce the main workflows.' },
+        { title: 'Create & Edit Memories', description: 'Add a title, rich-text story, memory date, optional reminder, category, and up to 10 JPG, PNG, or WebP images of up to 8 MB each.' },
+        { title: 'Optimized Image Pipeline', description: 'The browser and API create WebP full-view images and lightweight thumbnails; edits can retain, add, or remove individual images.' },
+        { title: 'Timeline Home', description: 'Browse chronological cards with lazy paging, automatic loading, and timeline virtualization for larger desktop and mobile collections.' },
+        { title: 'Calendar & Compact Tile Views', description: 'Switch to month-grouped calendar cards or a dense gallery, and save the preferred default view independently for each device profile.' },
+        { title: 'Search, Sort, Filter & Favorites', description: 'Search titles, stories, and categories; sort newest or oldest; filter by category or favorites; and star important memories.' },
+        { title: 'Rich Preview, Carousel & Zoom', description: 'Open animated previews with multi-image navigation, swipe gestures, full-screen viewing, zoom and pan, image details, and direct actions.' },
+        { title: 'Reminders', description: 'Set special dates, choose the lead window, review upcoming items, play a selected sound, dismiss for today, snooze until tomorrow, or enable configured email delivery.' },
+        { title: 'Private Sharing & Public View', description: 'Create a time-limited public link for one memory, share through the device or clipboard, and present the owner, date, category, story, and images to recipients.' },
+        { title: 'Image Export & Personal Backups', description: 'Export images from all memories, selected visible memories, or category/date/favorite filters; one image downloads directly and multiple images become a ZIP.' },
+        { title: 'Hidden Images', description: 'Move items out of the main timeline into a dedicated interface protected by a four-digit UI PIN, then preview, unhide, or permanently delete them.' },
+        { title: 'Trash & Recovery', description: 'Deleted memories remain recoverable for 30 days. Restore one or many items, permanently remove selected items, empty the bin, or allow automatic expiry.' },
+        { title: 'Profile, Insights & Account Controls', description: 'Manage name, age, email, and photo; view totals and a category chart; change password; clear memories to Trash; revoke sessions; or delete the account.' },
+        { title: 'Personalization, Backup & Accessibility', description: 'Separate desktop/mobile profiles cover themes, animated backgrounds, cards, controls, glass effects, fonts, hover, sounds, reminders, reduced motion, and JSON settings backup/restore.' }
+      ],
+      securityAndArchitecture: [
+        { title: 'Identity & Sessions', description: 'Strong password policy, bcryptjs hashing, rotating sessions, session revocation, and attempt controls.' },
+        { title: 'Request & API Protection', description: 'CSRF and origin checks, CORS allowlist, Helmet policies, ownership checks, and sanitized content.' },
+        { title: 'Media & Data Lifecycle', description: 'Strict upload validation, normalized derivatives, protected delivery, encrypted cloud media, Hidden Images PIN, and expiring data paths.' }
+      ]
+    }
   },
   {
     title: 'PrepMatrix AI',
@@ -179,6 +264,45 @@ export const projects = [
       prepMatrixStudyAssistant,
       prepMatrixSettings,
     ],
+    detailedOverview: {
+      executiveDescription: 'PrepMatrix AI is an AI-powered study planning, practice, and progress intelligence workspace for students across school, college, and specialized academic tracks. It combines each learner\'s academic profile, subjects, chapter load, difficulty, exam date, and daily completion data to generate an adaptive study path, reveal weak areas, and measure exam readiness. Within one authenticated workspace, learners can manage goals and reminders, capture notes, discover syllabus-aware materials, generate topic quizzes, take secure exams, export reports and question papers, and ask a planner-aware study companion questions through text, voice, image, or PDF inputs.',
+      technologyStack: {
+        frontend: [
+          'React 19 - Component-driven SPA with lazy routes',
+          'Vite 8 - Fast development and optimized builds',
+          'React Router 7 - Protected study and settings routes',
+          'Recharts - Progress, workload, readiness, and trend charts',
+          'Lucide + CSS3 - Responsive icons, themes, glass cards, and motion',
+          'Three.js / R3F - Interactive animated study visuals'
+        ],
+        backend: [
+          'Node.js + Express 5 - REST APIs, SPA delivery, validation, and orchestration',
+          'MongoDB driver - Indexed user, plan, note, quiz, and exam data',
+          'PBKDF2 + sessions - Salted hashes, expiry, and scoped API access',
+          'Email verification - OTP delivery through Nodemailer or Resend',
+          'Push + PDF services - VAPID alerts and bounded PDF parsing'
+        ],
+        database: [
+          'Groq Cloud AI - Planner-aware chat, quiz, exam, and paper generation with text, image, and bounded PDF context',
+          'Browser capabilities - Speech recognition, wake phrases, spoken prompts, service-worker alerts, and push where supported',
+          'Persistence & export - MongoDB workspace sync plus jsPDF/html2canvas reports, timetables, mind maps, results, certificates, and JSON backup'
+        ]
+      },
+      pagesAndComponents: [
+        { title: 'Authentication & Learner Profile', description: 'Registration and login create a private study workspace. Learners can store their academic stage, class or degree, curriculum or track, institution details, profile image, and account preferences.' },
+        { title: 'Dashboard (Home)', description: 'A connected overview of overall completion, first pending task, weakest subject, exam readiness, daily momentum, goals, insights, and upcoming work. Completion rewards mark daily wins, full-plan progress, and the 80% exam unlock.' },
+        { title: 'Subjects & Academic Context', description: 'Build a subject library with chapter counts and Easy, Medium, or Hard difficulty. Context carries into planning, materials, quizzes, exams, and assistant explanations.' },
+        { title: 'Smart Planner & Timetable', description: 'Generate a focused schedule from subjects, exam date, and Balanced, High priority, Revision-heavy, or Rapid coverage strategies. Mark tasks complete, recover backlog, rebalance overloaded days, undo adjustments, start a new plan, and export the timetable as PDF.' },
+        { title: 'Goal & Reminder Center', description: 'Create dated goals, scheduled reminders, quick to-dos, daily study targets, and weekly review targets. Browser alerts, sounds, postponement actions, and scheduled 6 PM push nudges keep incomplete work visible.' },
+        { title: 'Analytics & Readiness', description: 'Explore completion trends, XP, levels, badges, topic timelines, the focus map, task distribution, study rhythm, subject performance, weekly velocity, exam-readiness signals, and focused next-step insights.' },
+        { title: 'Notes & Doubt Board', description: 'Capture chapter summaries, unresolved doubts, and left-over topics by subject. Search and filter the board, track note status, and bridge unfinished topics back into planning and revision workflows.' },
+        { title: 'AI Study Companion, Chat History & Voice', description: 'A planner-aware assistant adapts explanations to the learner profile and current task metrics. It preserves chat sessions, accepts images and PDFs, supports wake phrases and navigation commands, and can be opened through the animated sidebar study pet.' },
+        { title: 'Interactive Quizzes & Secure Exam Workspace', description: 'Generate 5- or 10-question topic MCQ sets with learner-stage and subject context. At 80% planner completion, generate a 40-question, 60-minute exam with server timing, autosave, flags, fullscreen monitoring, and server scoring.' },
+        { title: 'Question Papers & Offline Practice', description: 'Create saved, printable AI question papers with configurable subjects, marks, difficulty, language, internal choice, question shuffling, model answers, marking schemes, and answer keys.' },
+        { title: 'Study Materials & Reports', description: 'Receive subject and chapter-aware pathways to videos, articles, references, and targeted searches based on academic context and progress. Generate a multi-page planner intelligence report.' },
+        { title: 'Settings, Appearance & Product Guide', description: 'Configure themes, backgrounds, brightness, glass effects, accent colors, typography, card density, cursor style, sounds, notifications, wake mode, study targets, and profile details.' }
+      ]
+    }
   },
   {
     title: 'Ragas Group',

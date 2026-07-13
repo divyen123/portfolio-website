@@ -2,7 +2,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaGithub, FaRegHandPointer } from 'react-icons/fa';
-import { FiChevronLeft, FiChevronRight, FiExternalLink, FiLayers } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiExternalLink, FiLayers, FiInfo, FiX } from 'react-icons/fi';
 import { projects } from '../data/portfolioData';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
@@ -84,6 +84,7 @@ function Projects() {
   const [subIndex, setSubIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(false);
   const [typedText, setTypedText] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const ragasScrollLockRef = useRef(false);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const { ref: projectsStageRef, inView: projectsStageInView } = useInView({
@@ -563,6 +564,23 @@ function Projects() {
                             </a>
                           </div>
                         ) : null}
+                        {activeProject.detailedOverview ? (
+                          <div className="relative w-11 h-11 shrink-0">
+                            <button 
+                              onClick={() => setShowModal(true)}
+                              className="ripple-button mobile-icon-action group absolute left-0 top-0 !p-0 !min-h-0 !gap-0 h-11 w-11 hover:w-[9.5rem] rounded-full flex flex-row items-center justify-start cursor-pointer z-20 shadow-[0_0_12px_rgba(6,182,212,0.15)] overflow-hidden bg-white/[0.04] border border-white/10 text-white hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-300" 
+                              aria-label="Know More"
+                              style={{ transition: 'width 500ms ease-in-out, transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease' }}
+                            >
+                              <div className="size-11 flex items-center justify-center shrink-0">
+                                <FiInfo className="size-4.5 shrink-0" aria-hidden="true" />
+                              </div>
+                              <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out font-extrabold text-[13px] leading-none group-hover:max-w-[7.5rem] group-hover:opacity-100 group-hover:pr-5">
+                                Know more
+                              </span>
+                            </button>
+                          </div>
+                        ) : null}
                       </motion.div>
                     </div>
                   </>
@@ -599,6 +617,129 @@ function Projects() {
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {showModal && activeProject?.detailedOverview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-md p-4 sm:p-6"
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl bg-[#080808] border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.8)] p-6 sm:p-8 md:p-10 custom-scrollbar text-left"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors z-10"
+                aria-label="Close modal"
+              >
+                <FiX className="size-5 sm:size-6" />
+              </button>
+
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 pr-10 md:pr-12">
+                {activeProject.title} Overview
+              </h2>
+              
+              <div className="space-y-8 sm:space-y-10">
+                {/* Executive Description */}
+                <section>
+                  <h3 className="text-sm font-black text-cyan-300 mb-3 tracking-[0.15em] uppercase">Executive Description</h3>
+                  <p className="text-slate-300 leading-relaxed text-[15px] sm:text-base">
+                    {activeProject.detailedOverview.executiveDescription}
+                  </p>
+                </section>
+
+                {/* Technology Stack */}
+                {activeProject.detailedOverview.technologyStack && (
+                  <section>
+                    <h3 className="text-sm font-black text-cyan-300 mb-4 tracking-[0.15em] uppercase">Technology Stack Specifications</h3>
+                    <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                      {activeProject.detailedOverview.technologyStack.frontend && (
+                        <div className="bg-white/[0.02] p-5 rounded-xl border border-white/5 shadow-inner">
+                          <h4 className="font-bold text-white mb-3 text-[15px]">Frontend Ecosystem</h4>
+                          <ul className="space-y-2.5">
+                            {activeProject.detailedOverview.technologyStack.frontend.map((item, i) => (
+                              <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
+                                <span className="text-cyan-400 mt-1 shrink-0">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {activeProject.detailedOverview.technologyStack.backend && (
+                        <div className="bg-white/[0.02] p-5 rounded-xl border border-white/5 shadow-inner">
+                          <h4 className="font-bold text-white mb-3 text-[15px]">Backend Ecosystem</h4>
+                          <ul className="space-y-2.5">
+                            {activeProject.detailedOverview.technologyStack.backend.map((item, i) => (
+                              <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
+                                <span className="text-cyan-400 mt-1 shrink-0">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {activeProject.detailedOverview.technologyStack.database && (
+                        <div className="bg-white/[0.02] p-5 rounded-xl border border-white/5 shadow-inner sm:col-span-2">
+                          <h4 className="font-bold text-white mb-3 text-[15px]">Database, Media & Integrations</h4>
+                          <ul className="space-y-2.5 grid sm:grid-cols-2 gap-x-4">
+                            {activeProject.detailedOverview.technologyStack.database.map((item, i) => (
+                              <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
+                                <span className="text-cyan-400 mt-1 shrink-0">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                )}
+
+                {/* Pages and Components */}
+                {activeProject.detailedOverview.pagesAndComponents && (
+                  <section>
+                    <h3 className="text-sm font-black text-cyan-300 mb-5 tracking-[0.15em] uppercase">Application Pages & Components</h3>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {activeProject.detailedOverview.pagesAndComponents.map((item, i) => (
+                        <div key={i} className="pl-4 border-l-2 border-cyan-500/40">
+                          <h4 className="font-bold text-white text-[15px] mb-1.5">{item.title}</h4>
+                          <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Security and Architecture */}
+                {activeProject.detailedOverview.securityAndArchitecture && (
+                  <section>
+                    <h3 className="text-sm font-black text-cyan-300 mb-5 tracking-[0.15em] uppercase">Security, Privacy & Data Lifecycle</h3>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {activeProject.detailedOverview.securityAndArchitecture.map((item, i) => (
+                        <div key={i} className="pl-4 border-l-2 border-cyan-500/40">
+                          <h4 className="font-bold text-white text-[15px] mb-1.5">{item.title}</h4>
+                          <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </AnimatedSection>
   );
 }

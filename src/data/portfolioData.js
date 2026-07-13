@@ -15,7 +15,7 @@ import memoryLogin from '../assets/projects/memory-timeline/login.webp';
 import memoryHome from '../assets/projects/memory-timeline/home.webp';
 import memorySettings from '../assets/projects/memory-timeline/settings.webp';
 import memoryAbout from '../assets/projects/memory-timeline/about.webp';
-import memoryOracleCertificate from '../assets/projects/memory-timeline/oracle-certificate.webp';
+import memoryView from '../assets/projects/memory-timeline/memory-view.webp';
 import memoryHiddenImages from '../assets/projects/memory-timeline/hidden-images.webp';
 import prepMatrixLogin from '../assets/projects/prepmatrix-ai/login.webp';
 import prepMatrixDashboard from '../assets/projects/prepmatrix-ai/dashboard.webp';
@@ -154,7 +154,7 @@ export const projects = [
       memoryHome,
       memorySettings,
       memoryAbout,
-      memoryOracleCertificate,
+      memoryView,
       memoryHiddenImages,
     ],
   },

@@ -115,6 +115,34 @@ function Projects() {
     setActiveImage([0, 1]);
     setSubIndex(0);
   }, [activeIndex]);
+
+  useEffect(() => {
+    if (!showModal) return;
+    
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const stopPropagation = (e) => e.stopPropagation();
+    const stopKeyPropagation = (e) => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp'].includes(e.key)) {
+        e.stopPropagation();
+      }
+    };
+
+    document.addEventListener('wheel', stopPropagation, { passive: false });
+    document.addEventListener('touchstart', stopPropagation, { passive: false });
+    document.addEventListener('touchmove', stopPropagation, { passive: false });
+    document.addEventListener('keydown', stopKeyPropagation);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener('wheel', stopPropagation);
+      document.removeEventListener('touchstart', stopPropagation);
+      document.removeEventListener('touchmove', stopPropagation);
+      document.removeEventListener('keydown', stopKeyPropagation);
+    };
+  }, [showModal]);
+
   useEffect(() => {
     const message = 'Click to visit website';
     const timers = [];

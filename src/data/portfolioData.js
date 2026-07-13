@@ -27,6 +27,9 @@ import ragasGroupsMain from '../assets/projects/ragasgroups/ragasgroups_main.png
 import ragasShippingLogo from '../assets/projects/ragasgroups/shipping_logo.webp';
 import ragasAerospaceLogo from '../assets/projects/ragasgroups/aerospace_logo.webp';
 import ragasRaicLogo from '../assets/projects/ragasgroups/raic_logo.webp';
+import medAiLogo from '../assets/projects/medai-health-assistant/medai-logo.svg';
+import memoryTimelineLogo from '../assets/projects/memory-timeline/memory-timeline-logo.svg';
+import prepMatrixLogo from '../assets/projects/prepmatrix-ai/prepmatrix-logo.svg';
 
 export const personalInfo = {
   name: 'R M Divyen',
@@ -136,6 +139,7 @@ export const projects = [
       medAiSettings,
     ],
     detailedOverview: {
+      logo: medAiLogo,
       executiveDescription: 'MedAI is an advanced, AI-powered health intelligence and self-care tracking platform. Designed to bridge the gap between patient symptoms and clinical clarity, it serves as a secure, local-first wellness dashboard. It empowers users to analyze symptoms using AI, monitor daily vitals, manage self-care reminders (with customizable alerts and postponement options), coordinate emergency contacts, and chat interactively with a virtual medical assistant.',
       technologyStack: {
         frontend: [
@@ -193,6 +197,7 @@ export const projects = [
       memoryHiddenImages,
     ],
     detailedOverview: {
+      logo: memoryTimelineLogo,
       executiveDescription: 'Memory Timeline is a full-stack personal archive for preserving, organizing, and revisiting image-based memories in a private visual workspace. Users can create rich multi-image entries with dates, categories, descriptions, favorites, and reminders; explore them in timeline, calendar, or compact tile layouts; search, sort, filter, share individual memories, and export image collections. The application also provides a PIN-gated Hidden Images interface, 30-day trash recovery, profile and account controls, responsive layouts, and extensive per-device appearance, sound, and interaction settings.',
       technologyStack: {
         frontend: [
@@ -265,6 +270,7 @@ export const projects = [
       prepMatrixSettings,
     ],
     detailedOverview: {
+      logo: prepMatrixLogo,
       executiveDescription: 'PrepMatrix AI is an AI-powered study planning, practice, and progress intelligence workspace for students across school, college, and specialized academic tracks. It combines each learner\'s academic profile, subjects, chapter load, difficulty, exam date, and daily completion data to generate an adaptive study path, reveal weak areas, and measure exam readiness. Within one authenticated workspace, learners can manage goals and reminders, capture notes, discover syllabus-aware materials, generate topic quizzes, take secure exams, export reports and question papers, and ask a planner-aware study companion questions through text, voice, image, or PDF inputs.',
       technologyStack: {
         frontend: [

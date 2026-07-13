@@ -663,9 +663,18 @@ function Projects() {
                 <FiX className="size-5 sm:size-6" />
               </button>
 
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 pr-10 md:pr-12">
-                {activeProject.title} Overview
-              </h2>
+              <div className="flex items-center gap-4 mb-6 pr-10 md:pr-12">
+                {activeProject.detailedOverview.logo && (
+                  <img 
+                    src={activeProject.detailedOverview.logo} 
+                    alt="" 
+                    className="size-8 sm:size-10 object-contain" 
+                  />
+                )}
+                <h2 className="text-2xl sm:text-3xl font-black text-white">
+                  {activeProject.title} Overview
+                </h2>
+              </div>
               
               <div className="space-y-8 sm:space-y-10">
                 {/* Executive Description */}

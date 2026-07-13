@@ -5,19 +5,17 @@ import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 
 const paragraphMotion = {
-  hidden: (index) => ({
+  hidden: {
     opacity: 0,
-    x: index % 2 === 0 ? -64 : 64,
-    filter: 'blur(4px)',
-  }),
+    y: 16,
+  },
   visible: (index) => ({
     opacity: 1,
-    x: 0,
-    filter: 'blur(0px)',
+    y: 0,
     transition: {
-      duration: 0.95,
-      delay: index * 0.16,
-      ease: [0.16, 1, 0.3, 1],
+      duration: 0.65,
+      delay: index * 0.12,
+      ease: 'easeOut',
     },
   }),
 };

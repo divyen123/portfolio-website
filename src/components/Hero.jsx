@@ -126,7 +126,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{
             opacity: 1,
-            scale: heroFocusMode ? (isMobile ? 0.84 : 0.7) : (isMobile ? 0.96 : 0.9),
+            scale: heroFocusMode ? (isMobile ? 0.84 : 0.7) : (isMobile ? 1.05 : 1.0),
             x: heroFocusMode ? (isMobile ? 0 : '-74%') : (isMobile ? 48 : 0),
             y: heroFocusMode ? (isMobile ? -108 : -130) : 0,
           }}

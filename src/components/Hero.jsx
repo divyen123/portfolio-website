@@ -25,7 +25,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
   }, [homeInView, introComplete]);
 
   return (
-    <section ref={homeRef} className="hero-mobile-section relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
+    <section ref={homeRef} className="hero-mobile-section relative isolate flex min-h-dvh flex-col overflow-hidden px-4 pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
       <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-[#050505] to-transparent" />
 
       <div className="hero-mobile-grid mx-auto flex flex-col md:grid w-full max-w-6xl grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 md:items-stretch flex-1 pt-6 md:pt-0">

@@ -393,7 +393,7 @@ export default function App() {
   const activeVariants = getTransitionVariants(direction, activeIndex, isMobile);
 
   return (
-    <div className="relative isolate w-screen h-screen overflow-hidden bg-[#050505] text-white">
+    <div className="relative isolate w-dvw h-dvh overflow-hidden bg-[#050505] text-white">
       <SplashCursor
         RAINBOW_MODE={false}
         COLOR="#003847"

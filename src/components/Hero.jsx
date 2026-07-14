@@ -134,7 +134,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
           style={{ transformOrigin: 'bottom center' }}
           aria-label={`${personalInfo.name} profile`}
         >
-          <div className="hero-mobile-portrait relative w-44 h-44 sm:w-56 sm:h-56 md:w-[350px] md:h-[480px] lg:w-[420px] lg:h-[580px] xl:w-[460px] xl:h-[640px] flex items-end justify-center overflow-visible bg-transparent">
+          <div className="hero-mobile-portrait relative w-44 h-44 sm:w-56 sm:h-56 md:w-[350px] md:h-[480px] lg:w-[420px] lg:h-[580px] xl:w-[460px] xl:h-[640px] max-h-[50dvh] md:max-h-[65dvh] flex items-end justify-center overflow-visible bg-transparent">
             <img
               className="w-full h-full object-contain object-bottom select-none pointer-events-none z-10"
               src={personalInfo.image}

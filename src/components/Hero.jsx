@@ -128,7 +128,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
             opacity: 1,
             scale: heroFocusMode ? (isMobile ? 0.84 : 0.7) : (isMobile ? 1.05 : 1.0),
             x: heroFocusMode ? (isMobile ? 0 : '-74%') : (isMobile ? 48 : 0),
-            y: heroFocusMode ? (isMobile ? -108 : -130) : 0,
+            y: heroFocusMode ? (isMobile ? -108 : -130) : (isMobile ? 40 : 0),
           }}
           transition={isMobile ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { duration: 1.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           style={{ transformOrigin: 'bottom center' }}

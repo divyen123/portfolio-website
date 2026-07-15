@@ -144,13 +144,13 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
               fetchPriority="high"
             />
             <AnimatePresence>
-              {(heroFocusMode || isMobile) && (
+              {heroFocusMode && (
                 <motion.div
                   className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[1.7px] origin-center -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-100/65 to-transparent"
-                  style={{ width: isMobile ? (heroFocusMode ? 'calc(100vw / 0.84)' : 'calc(100vw / 1.05)') : 'calc(100vw / 0.7)' }}
-                  initial={{ opacity: 1, scaleX: 0.08, y: (!heroFocusMode && isMobile) ? -15 : 0 }}
-                  animate={{ opacity: 1, scaleX: 1, y: (!heroFocusMode && isMobile) ? -15 : 0 }}
-                  exit={{ opacity: 0, scaleX: 0.08, y: (!heroFocusMode && isMobile) ? -15 : 0 }}
+                  style={{ width: isMobile ? 'calc(100vw / 0.84)' : 'calc(100vw / 0.7)' }}
+                  initial={{ opacity: 1, scaleX: 0.08 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  exit={{ opacity: 0, scaleX: 0.08 }}
                   transition={{ duration: isMobile ? 0.8 : 1.6, delay: isMobile ? 0 : 0.05, ease: [0.16, 1, 0.3, 1] }}
                 />
               )}

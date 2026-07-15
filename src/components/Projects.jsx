@@ -478,7 +478,7 @@ function Projects() {
                         <AnimatePresence mode="wait" custom={imageDirection}>
                           {activeImage ? (
                             <motion.img
-                              className={`absolute inset-0 h-full w-full opacity-90 ${isFoodieGo ? 'object-contain' : 'object-cover'}`}
+                              className={`absolute inset-0 h-full w-full opacity-90 ${isFoodieGo ? 'object-contain' : 'object-cover'} ${projectImages.length > 1 ? 'cursor-grab active:cursor-grabbing' : ''}`}
                               src={activeImage}
                               alt={`${activeProject.title} preview ${imageIndex + 1}`}
                               loading="lazy"
@@ -489,10 +489,22 @@ function Projects() {
                               animate={projectsStageInView ? "center" : "enter"}
                               exit="exit"
                               key={`${activeProject.title}-${imageIndex}`}
+                              drag={projectImages.length > 1 ? "x" : false}
+                              dragConstraints={{ left: 0, right: 0 }}
+                              dragElastic={0.6}
+                              onDragEnd={(e, { offset }) => {
+                                if (projectImages.length > 1) {
+                                  if (offset.x < -40) {
+                                    paginateImage(1);
+                                  } else if (offset.x > 40) {
+                                    paginateImage(-1);
+                                  }
+                                }
+                              }}
                             />
                           ) : null}
                         </AnimatePresence>
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#050505]/14 via-transparent to-[#050505]/54" aria-hidden="true" />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#050505]/14 via-transparent to-[#050505]/54" aria-hidden="true" />
                       </div>
 
                       {projectImages.length > 1 ? (

@@ -25,7 +25,7 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
   }, [homeInView, introComplete]);
 
   return (
-    <section ref={homeRef} className="hero-mobile-section relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
+    <section ref={homeRef} className="hero-mobile-section relative isolate flex min-h-dvh flex-col overflow-hidden px-4 pb-0 pt-16 sm:pt-28 sm:px-6 lg:px-8" id="home">
       <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-[#050505] to-transparent" />
 
       <div className="hero-mobile-grid mx-auto flex flex-col md:grid w-full max-w-6xl grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 md:items-stretch flex-1 pt-6 md:pt-0">
@@ -126,15 +126,15 @@ function Hero({ introComplete = true, heroFocusMode = false }) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{
             opacity: 1,
-            scale: heroFocusMode ? (isMobile ? 0.84 : 0.7) : (isMobile ? 0.96 : 0.9),
+            scale: heroFocusMode ? (isMobile ? 0.84 : 0.7) : (isMobile ? 1.05 : 1.0),
             x: heroFocusMode ? (isMobile ? 0 : '-74%') : (isMobile ? 48 : 0),
-            y: heroFocusMode ? (isMobile ? -108 : -130) : 0,
+            y: heroFocusMode ? (isMobile ? -108 : -130) : (isMobile ? 40 : 0),
           }}
           transition={isMobile ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { duration: 1.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           style={{ transformOrigin: 'bottom center' }}
           aria-label={`${personalInfo.name} profile`}
         >
-          <div className="hero-mobile-portrait relative w-44 h-44 sm:w-56 sm:h-56 md:w-[350px] md:h-[480px] lg:w-[420px] lg:h-[580px] xl:w-[460px] xl:h-[640px] flex items-end justify-center overflow-visible bg-transparent">
+          <div className="hero-mobile-portrait relative w-44 h-44 sm:w-56 sm:h-56 md:w-[350px] md:h-[480px] lg:w-[420px] lg:h-[580px] xl:w-[460px] xl:h-[640px] max-h-[50dvh] md:max-h-[65dvh] flex items-end justify-center overflow-visible bg-transparent">
             <img
               className="w-full h-full object-contain object-bottom select-none pointer-events-none z-10"
               src={personalInfo.image}

@@ -233,7 +233,7 @@ export const projects = [
         { title: 'Calendar & Compact Tile Views', description: 'Switch to month-grouped calendar cards or a dense gallery, and save the preferred default view independently for each device profile.' },
         { title: 'Search, Sort, Filter & Favorites', description: 'Search titles, stories, and categories; sort newest or oldest; filter by category or favorites; and star important memories.' },
         { title: 'Rich Preview, Carousel & Zoom', description: 'Open animated previews with multi-image navigation, swipe gestures, full-screen viewing, zoom and pan, image details, and direct actions.' },
-        { title: 'Reminders', description: 'Set special dates, choose the lead window, review upcoming items, play a selected sound, dismiss for today, snooze until tomorrow, or enable configured email delivery.' },
+        { title: 'Reminders', description: 'Set special dates, choose the lead window, review upcoming items, play a selected sound, dismiss for today, snooze until tomorrow, enable push notifications.' },
         { title: 'Private Sharing & Public View', description: 'Create a time-limited public link for one memory, share through the device or clipboard, and present the owner, date, category, story, and images to recipients.' },
         { title: 'Image Export & Personal Backups', description: 'Export images from all memories, selected visible memories, or category/date/favorite filters; one image downloads directly and multiple images become a ZIP.' },
         { title: 'Hidden Images', description: 'Move items out of the main timeline into a dedicated interface protected by a four-digit UI PIN, then preview, unhide, or permanently delete them.' },

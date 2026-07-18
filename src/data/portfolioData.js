@@ -221,7 +221,7 @@ export const projects = [
         database: [
           'MongoDB Atlas - Stores users, memories, sessions, settings profiles, reminders, and share links',
           'Cloudinary - Authenticated production media storage with AES-256-GCM encryption enabled by default',
-          'Resend or SMTP - Optional reminder delivery with a scheduled due-date scan',
+          'Web Push and VAPID - Per-device opt-in delivery through provider endpoints and a browser service worker',
           'Vercel and Render - Frontend and API deployment with an API health check and environment-based configuration'
         ]
       },

@@ -78,6 +78,36 @@ const preloadImage = (src) => {
   image.src = src;
 };
 
+const renderTextWithLinks = (text) => {
+  if (typeof text !== 'string') return text;
+  const splitRegex = /(https?:\/\/[a-zA-Z0-9./_-]+|[a-zA-Z0-9.-]+\.ragasgroups\.com|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+  const testRegex = /^(?:https?:\/\/[a-zA-Z0-9./_-]+|[a-zA-Z0-9.-]+\.ragasgroups\.com|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+  const parts = text.split(splitRegex);
+  return parts.map((part, i) => {
+    if (part && testRegex.test(part)) {
+      let href = part;
+      if (part.includes('@')) {
+        href = `mailto:${part}`;
+      } else if (!part.startsWith('http')) {
+        href = `https://${part}`;
+      }
+      return (
+        <a 
+          key={i} 
+          href={href} 
+          target="_blank" 
+          rel="noreferrer" 
+          className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors relative z-50"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+};
+
 function Projects() {
   const [[activeIndex, direction], setActiveProject] = useState([0, 1]);
   const [[imageIndex, imageDirection], setActiveImage] = useState([0, 1]);
@@ -392,7 +422,7 @@ function Projects() {
                                           <span>
                                             {highlight}
                                             {activeRagasPage.detailedOverview && idx === activeRagasPage.highlights.length - 1 && (
-                                              <button onClick={() => setShowModal(true)} className="ml-1.5 text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-sm cursor-pointer inline">
+                                              <button onClick={() => setShowModal(true)} className="ml-1.5 text-[13.5px] text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-sm cursor-pointer inline">
                                                 Know more
                                               </button>
                                             )}
@@ -556,7 +586,7 @@ function Projects() {
                               <span>
                                 {highlight}
                                 {activeProject.detailedOverview && index === activeProject.highlights.length - 1 && (
-                                  <button onClick={() => setShowModal(true)} className="ml-1.5 text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-sm cursor-pointer inline">
+                                  <button onClick={() => setShowModal(true)} className="ml-1.5 text-[13.5px] text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-sm cursor-pointer inline">
                                     Know more
                                   </button>
                                 )}
@@ -695,14 +725,14 @@ function Projects() {
                       <img 
                         src={(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.logo} 
                         alt="" 
-                        className="size-8 sm:size-10 object-contain drop-shadow-md" 
+                        className={`object-contain drop-shadow-md ${isRagasGroup && activeRagasPage?.name === 'Ragas Group of Companies' ? 'h-9 sm:h-12 w-auto max-w-[12rem]' : 'size-8 sm:size-10'}`} 
                       />
                     </a>
                   ) : (
                     <img 
                       src={(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.logo} 
                       alt="" 
-                      className="size-8 sm:size-10 object-contain shrink-0" 
+                      className={`object-contain shrink-0 ${isRagasGroup && activeRagasPage?.name === 'Ragas Group of Companies' ? 'h-9 sm:h-12 w-auto max-w-[12rem]' : 'size-8 sm:size-10'}`} 
                     />
                   )
                 )}
@@ -716,7 +746,7 @@ function Projects() {
                 <section>
                   <h3 className="text-sm font-black text-cyan-300 mb-3 tracking-[0.15em] uppercase">Executive Description</h3>
                   <p className="text-slate-300 leading-relaxed text-[15px] sm:text-base whitespace-pre-line">
-                    {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.executiveDescription}
+                    {renderTextWithLinks((isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.executiveDescription)}
                   </p>
                 </section>
 
@@ -732,7 +762,7 @@ function Projects() {
                             {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.frontend.map((item, i) => (
                               <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
                                 <span className="text-cyan-400 mt-1 shrink-0">•</span>
-                                <span>{item}</span>
+                                <span>{renderTextWithLinks(item)}</span>
                               </li>
                             ))}
                           </ul>
@@ -745,7 +775,7 @@ function Projects() {
                             {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.backend.map((item, i) => (
                               <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
                                 <span className="text-cyan-400 mt-1 shrink-0">•</span>
-                                <span>{item}</span>
+                                <span>{renderTextWithLinks(item)}</span>
                               </li>
                             ))}
                           </ul>
@@ -758,7 +788,7 @@ function Projects() {
                             {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.database.map((item, i) => (
                               <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
                                 <span className="text-cyan-400 mt-1 shrink-0">•</span>
-                                <span>{item}</span>
+                                <span>{renderTextWithLinks(item)}</span>
                               </li>
                             ))}
                           </ul>
@@ -776,7 +806,7 @@ function Projects() {
                       {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.pagesAndComponents.map((item, i) => (
                         <div key={i} className="pl-4 border-l-2 border-cyan-500/40">
                           <h4 className="font-bold text-white text-[15px] mb-1.5">{item.title}</h4>
-                          <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                          <p className="text-slate-400 text-sm leading-relaxed">{renderTextWithLinks(item.description)}</p>
                         </div>
                       ))}
                     </div>
@@ -791,7 +821,7 @@ function Projects() {
                       {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.securityAndArchitecture.map((item, i) => (
                         <div key={i} className="pl-4 border-l-2 border-cyan-500/40">
                           <h4 className="font-bold text-white text-[15px] mb-1.5">{item.title}</h4>
-                          <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                          <p className="text-slate-400 text-sm leading-relaxed">{renderTextWithLinks(item.description)}</p>
                         </div>
                       ))}
                     </div>

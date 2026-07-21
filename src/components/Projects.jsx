@@ -386,10 +386,17 @@ function Projects() {
                                 <div className={`mt-5 grid items-center gap-8 ${subIndex === 1 ? 'text-center lg:grid-cols-1' : 'text-left lg:grid-cols-[minmax(0,0.68fr)_minmax(12rem,0.32fr)]'}`}>
                                   <div className={subIndex === 1 ? 'mx-auto min-w-0 max-w-3xl' : 'min-w-0 lg:pl-8'}>
                                     <ul className={`grid gap-2.5 text-[15px] leading-7 text-slate-300 sm:text-base ${subIndex === 1 ? 'mx-auto max-w-3xl text-left' : ''}`}>
-                                      {activeRagasPage.highlights?.map((highlight) => (
+                                      {activeRagasPage.highlights?.map((highlight, idx) => (
                                         <li className={subIndex === 1 ? 'flex gap-3 text-left' : 'flex gap-3'} key={highlight}>
                                           <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300" aria-hidden="true" />
-                                          <span>{highlight}</span>
+                                          <span>
+                                            {highlight}
+                                            {activeRagasPage.detailedOverview && idx === activeRagasPage.highlights.length - 1 && (
+                                              <button onClick={() => setShowModal(true)} className="ml-1.5 text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/40 hover:decoration-cyan-300 transition-colors font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-sm cursor-pointer inline">
+                                                Know more
+                                              </button>
+                                            )}
+                                          </span>
                                         </li>
                                       ))}
                                     </ul>
@@ -650,7 +657,7 @@ function Projects() {
 
       {/* Modal */}
       <AnimatePresence>
-        {showModal && activeProject?.detailedOverview && (
+        {showModal && (isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -676,31 +683,31 @@ function Projects() {
               </button>
 
               <div className="flex items-center gap-4 mb-6 pr-10 md:pr-12">
-                {activeProject.detailedOverview.logo && (
-                  activeProject.liveDemo ? (
+                {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.logo && (
+                  (isRagasGroup ? activeRagasPage?.url : activeProject?.liveDemo) ? (
                     <a 
-                      href={activeProject.liveDemo} 
+                      href={isRagasGroup ? activeRagasPage?.url : activeProject?.liveDemo} 
                       target="_blank" 
                       rel="noreferrer" 
                       className="shrink-0 hover:scale-105 transition-transform" 
-                      aria-label={`Visit ${activeProject.title} application`}
+                      aria-label={`Visit ${isRagasGroup ? activeRagasPage?.name : activeProject?.title} application`}
                     >
                       <img 
-                        src={activeProject.detailedOverview.logo} 
+                        src={(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.logo} 
                         alt="" 
                         className="size-8 sm:size-10 object-contain drop-shadow-md" 
                       />
                     </a>
                   ) : (
                     <img 
-                      src={activeProject.detailedOverview.logo} 
+                      src={(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.logo} 
                       alt="" 
                       className="size-8 sm:size-10 object-contain shrink-0" 
                     />
                   )
                 )}
                 <h2 className="text-2xl sm:text-3xl font-black text-white">
-                  {activeProject.title} Overview
+                  {isRagasGroup ? activeRagasPage?.name : activeProject?.title} Overview
                 </h2>
               </div>
               
@@ -708,21 +715,21 @@ function Projects() {
                 {/* Executive Description */}
                 <section>
                   <h3 className="text-sm font-black text-cyan-300 mb-3 tracking-[0.15em] uppercase">Executive Description</h3>
-                  <p className="text-slate-300 leading-relaxed text-[15px] sm:text-base">
-                    {activeProject.detailedOverview.executiveDescription}
+                  <p className="text-slate-300 leading-relaxed text-[15px] sm:text-base whitespace-pre-line">
+                    {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.executiveDescription}
                   </p>
                 </section>
 
                 {/* Technology Stack */}
-                {activeProject.detailedOverview.technologyStack && (
+                {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack && (
                   <section>
                     <h3 className="text-sm font-black text-cyan-300 mb-4 tracking-[0.15em] uppercase">Technology Stack Specifications</h3>
                     <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-                      {activeProject.detailedOverview.technologyStack.frontend && (
+                      {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.frontend && (
                         <div className="bg-white/[0.02] p-5 rounded-xl border border-white/5 shadow-inner">
                           <h4 className="font-bold text-white mb-3 text-[15px]">Frontend Ecosystem</h4>
                           <ul className="space-y-2.5">
-                            {activeProject.detailedOverview.technologyStack.frontend.map((item, i) => (
+                            {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.frontend.map((item, i) => (
                               <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
                                 <span className="text-cyan-400 mt-1 shrink-0">•</span>
                                 <span>{item}</span>
@@ -731,11 +738,11 @@ function Projects() {
                           </ul>
                         </div>
                       )}
-                      {activeProject.detailedOverview.technologyStack.backend && (
+                      {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.backend && (
                         <div className="bg-white/[0.02] p-5 rounded-xl border border-white/5 shadow-inner">
                           <h4 className="font-bold text-white mb-3 text-[15px]">Backend Ecosystem</h4>
                           <ul className="space-y-2.5">
-                            {activeProject.detailedOverview.technologyStack.backend.map((item, i) => (
+                            {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.backend.map((item, i) => (
                               <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
                                 <span className="text-cyan-400 mt-1 shrink-0">•</span>
                                 <span>{item}</span>
@@ -744,11 +751,11 @@ function Projects() {
                           </ul>
                         </div>
                       )}
-                      {activeProject.detailedOverview.technologyStack.database && (
+                      {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.database && (
                         <div className="bg-white/[0.02] p-5 rounded-xl border border-white/5 shadow-inner sm:col-span-2">
-                          <h4 className="font-bold text-white mb-3 text-[15px]">Database, Media & Integrations</h4>
+                          <h4 className="font-bold text-white mb-3 text-[15px]">Database & Infrastructure</h4>
                           <ul className="space-y-2.5 grid sm:grid-cols-2 gap-x-4">
-                            {activeProject.detailedOverview.technologyStack.database.map((item, i) => (
+                            {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.technologyStack.database.map((item, i) => (
                               <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-snug">
                                 <span className="text-cyan-400 mt-1 shrink-0">•</span>
                                 <span>{item}</span>
@@ -762,11 +769,11 @@ function Projects() {
                 )}
 
                 {/* Pages and Components */}
-                {activeProject.detailedOverview.pagesAndComponents && (
+                {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.pagesAndComponents && (
                   <section>
                     <h3 className="text-sm font-black text-cyan-300 mb-5 tracking-[0.15em] uppercase">Application Pages & Components</h3>
                     <div className="grid sm:grid-cols-2 gap-6">
-                      {activeProject.detailedOverview.pagesAndComponents.map((item, i) => (
+                      {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.pagesAndComponents.map((item, i) => (
                         <div key={i} className="pl-4 border-l-2 border-cyan-500/40">
                           <h4 className="font-bold text-white text-[15px] mb-1.5">{item.title}</h4>
                           <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
@@ -777,11 +784,11 @@ function Projects() {
                 )}
 
                 {/* Security and Architecture */}
-                {activeProject.detailedOverview.securityAndArchitecture && (
+                {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.securityAndArchitecture && (
                   <section>
-                    <h3 className="text-sm font-black text-cyan-300 mb-5 tracking-[0.15em] uppercase">Security, Privacy & Data Lifecycle</h3>
+                    <h3 className="text-sm font-black text-cyan-300 mb-5 tracking-[0.15em] uppercase">Architecture & Implementation</h3>
                     <div className="grid sm:grid-cols-2 gap-6">
-                      {activeProject.detailedOverview.securityAndArchitecture.map((item, i) => (
+                      {(isRagasGroup ? activeRagasPage?.detailedOverview : activeProject?.detailedOverview)?.securityAndArchitecture.map((item, i) => (
                         <div key={i} className="pl-4 border-l-2 border-cyan-500/40">
                           <h4 className="font-bold text-white text-[15px] mb-1.5">{item.title}</h4>
                           <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>

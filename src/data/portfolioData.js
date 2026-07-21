@@ -343,6 +343,38 @@ export const projects = [
           'Added SEO foundations including meta tags, canonical URL, Open Graph, Twitter Cards, JSON-LD schema, robots.txt, and sitemap.xml.',
         ],
         technologies: ['HTML5', 'CSS3', 'JavaScript', 'SEO', 'Responsive UI'],
+        detailedOverview: {
+          logo: ragasGroupsMain,
+          executiveDescription: 'The Ragas Groups Corporate Portal is a high-performance, modern landing page acting as the central digital hub for the global parent organization. It directs users seamlessly to the core business divisions—Ragas Shipping and Ragas Aerospace. Built with a focus on speed, SEO optimization, and interactive aesthetics, the portal features a robust, serverless contact architecture that securely manages client inquiries without compromising performance.',
+          technologyStack: {
+            frontend: [
+              'Semantic HTML5 - Core structure ensuring accessibility and strict SEO compliance.',
+              'Vanilla CSS3 - Custom design token variables for theming, responsive layout using Flexbox and Grid, glassmorphism overlays, and fluid micro-interactions.',
+              'Vanilla JavaScript (ES6+) - Lightweight interactive logic without the overhead of heavy frameworks.',
+              'Google Fonts & FontAwesome - Premium typography (Plus Jakarta Sans) and clean, CDN-based iconography.'
+            ],
+            backend: [
+              'Vercel Edge Network - Hosting platform providing ultra-low latency, automatic scaling, and continuous Git-based deployment.',
+              'Vercel Serverless Functions - Node.js endpoint (api/contact.js) acting as the secure gateway for handling form submissions.',
+              'Resend API - High-deliverability email service used to dispatch inquiries securely without exposing API keys on the client side.'
+            ],
+            database: [
+              'Zoho Mail - Custom domain email hosting for professional corporate communication (e.g., info@ragasgroups.com).',
+              'Custom DNS Routing - Seamless connection of the ragasgroups.com domain to Vercel for web traffic and Zoho for email routing.'
+            ]
+          },
+          pagesAndComponents: [
+            { title: 'Dashboard / Home (index.html)', description: 'Features dynamic media cards with looping background videos (Shipping & Aerospace), engaging hover states, and JSON-LD Structured Schema markup for search engine rich results.' },
+            { title: 'Corporate Inquiry Interface (contact.html)', description: 'A sleek, interactive contact form with real-time validation, directly tied to the serverless email backend.' },
+            { title: 'SEO & Social Optimization Suite', description: 'Includes fully implemented Open Graph (og:) metadata, Twitter cards, a custom robots.txt, and an XML sitemap for maximum indexation and premium social media link previews.' }
+          ],
+          securityAndArchitecture: [
+            { title: 'Domain Purchase & Email Integration', description: 'The custom domain (ragasgroups.com) was acquired, and its DNS records were configured to point A and CNAME records to Vercel for web hosting. Crucially, MX and TXT records were routed to Zoho Mail to handle all inbound corporate emails securely.' },
+            { title: 'Contact Form Workflow', description: 'The frontend JavaScript sends an asynchronous POST request to the Vercel serverless function, which sanitizes the input and communicates securely with the Resend API using server-side environment variables. Resend dispatches the email to the Zoho Mail inbox, dynamically setting the visitor\'s email as the reply-to address.' },
+            { title: 'Premium Visual Language', description: 'Built using high-fidelity styling, featuring custom scrollbars, cohesive dark-mode-inspired color palettes, and deep glassmorphism visual effects.' },
+            { title: 'Lightning Fast Performance', description: 'By bypassing heavy JavaScript frameworks like React or Vue in favor of a pure vanilla tech stack, the portal guarantees instant load times, minimal page sizes, and optimal Google Core Web Vitals scores.' }
+          ]
+        }
       },
       {
         name: 'Ragas Shipping',
@@ -357,6 +389,41 @@ export const projects = [
           'Implemented the frontend with Next.js, React, TypeScript, Tailwind CSS, Motion, Lucide icons, and shadcn/Tailwind utilities.',
         ],
         technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+        detailedOverview: {
+          logo: ragasShippingLogo,
+          executiveDescription: 'The Ragas Shipping Web Platform is a premium, state-of-the-art web application built for Ragas Shipping Pte Ltd (Singapore). Designed to bridge the gap between global clients and the company\'s maritime capabilities, it serves as a modern digital storefront. It empowers users to explore services like Sea Freight, Ship Broking, and Petroleum trading, and facilitates direct communication through an integrated enquiry engine. The platform is engineered with modern web aesthetics, premium animations, and high-performance edge deployment to ensure a world-class user experience.',
+          technologyStack: {
+            frontend: [
+              'Next.js 16 (App Router) - Core framework for server-rendered, component-driven UI and API routes',
+              'React 19 - UI library for building interactive interfaces',
+              'Tailwind CSS v4 & Vanilla CSS - Custom design system implementing sleek glassmorphism themes and curated maritime color palettes',
+              'Motion (Framer Motion) - Premium transitions, viewport-triggered reveals, and physics-based micro-animations',
+              'Lucide React - Clean and consistent iconography',
+              'shadcn/ui - Highly customizable UI component blocks'
+            ],
+            backend: [
+              'Next.js Route Handlers - Serverless backend API layer (/api/enquiry)',
+              'Resend API - Reliable transactional email service routing contact enquiries directly to corporate inboxes',
+              'TypeScript - Strict type-checking ensuring zero build errors and code stability',
+              'pnpm - Fast, disk space efficient package manager'
+            ],
+            database: [
+              'Vercel - Primary deployment platform hosting the application on a global Edge Network with automated CI/CD pipelines',
+              'Zoho Mail - Provider for the primary domain (ragasgroups.com) and enterprise email hosting (e.g., info@ragasgroups.com)',
+              'Custom DNS Routing - Subdomain (shipping.ragasgroups.com) configured in Zoho\'s DNS zone to point to Vercel\'s edge servers'
+            ]
+          },
+          pagesAndComponents: [
+            { title: 'Hero & Navigation', description: 'Features custom-engineered, physics-based staggered letter slide-up and fade-in animations on the main headings. Optimized high-definition background cargo/compass videos with overlays ensure high readability.' },
+            { title: 'Services Grid & Details Modals', description: 'An interactive 4x2 responsive services grid showcasing key capabilities (Sea Freight, Ship Broking, Chartering, Petroleum, etc.). Interactive cards reveal deep-dive overlay modals with custom content or link directly to affiliate platforms.' },
+            { title: 'Trading & Vision Sections', description: 'Trading Section highlights sourcing items and global trading routes. Vision Section outlines the company\'s Vision, Mission, and Future Outlook. Staggered Container Reveals provide elegant, viewport-triggered spring physics entrance transitions.' },
+            { title: 'Integrated Contact Engine', description: 'A functional contact form embedded in the application. It captures user details (Name, Company, Email, Phone, Message) with strict validation, routing validated enquiries directly to the corporate inbox with pre-filled subject lines.' }
+          ],
+          securityAndArchitecture: [
+            { title: 'Domain & Subdomain Configuration', description: 'The primary domain ragasgroups.com was registered and configured through Zoho Mail. A dedicated subdomain, shipping.ragasgroups.com, was created specifically for the shipping branch with DNS records routed directly to Vercel.' },
+            { title: 'Email Integration via Resend', description: 'The platform\'s contact form connects to a custom API route. When a user submits an enquiry, the Next.js server securely processes the payload and uses the Resend API to dispatch an email. Emails are configured to be sent to info@ragasgroups.com with the user\'s details without exposing SMTP credentials on the frontend.' }
+          ]
+        }
       },
       {
         name: 'Ragas Aerospace',
@@ -371,6 +438,42 @@ export const projects = [
           'Included SMTP notifications, login/register flows, role application forms, an admin dashboard, responsive layouts, and bundled media assets.',
         ],
         technologies: ['React', 'FastAPI', 'PostgreSQL', 'JWT Auth', 'Framer Motion'],
+        detailedOverview: {
+          logo: ragasAerospaceLogo,
+          executiveDescription: 'Ragas Aerospace is an advanced Indian defense drone technology platform dedicated to building next-generation autonomous aerial systems for surveillance, security, and mission-critical operations. The platform serves as a central hub to showcase cutting-edge unmanned aerial systems (UAS), company achievements, and team information. It provides an immersive user experience through a cinematic drone scanner HUD, interactive product showcases, and seamless user authentication, all designed to highlight the AI-first, software-defined approach of Ragas Aerospace. The primary domain is registered at www.ragasgroups.com (managed via Zoho Mail), with the main web application deployed on the dedicated subdomain aerospace.ragasgroups.com.',
+          technologyStack: {
+            frontend: [
+              'React 19 - Core framework for component-driven UI',
+              'Tailwind CSS & Radix UI - Custom design system, styling, and accessible primitive components',
+              'Framer Motion - Premium transition and UI micro-animations',
+              'React Router DOM - Client-side SPA routing',
+              'CRA with Craco - Bundler and optimized development server',
+              'Axios & React Query - Data fetching and client-side state management'
+            ],
+            backend: [
+              'Python & FastAPI - High-performance execution runtime and RESTful API controller layer',
+              'Uvicorn - ASGI web server implementation',
+              'PyJWT & bcrypt - Stateless session authorization token handling and secure password hashing',
+              'SMTP Integration - Asynchronous email notification processing for logins and registrations'
+            ],
+            database: [
+              'Supabase (PostgreSQL) - Primary database hosting user accounts, applications, and login activity notifications',
+              'PgBouncer - Transaction-mode connection pooler for robust database scalability',
+              'Auto-Migrations - Dynamic table instantiation directly handled on server startup',
+              'Vercel - Frontend hosting environment providing automated CI/CD builds and custom SPA fallback routing configuration',
+              'Render - Backend cloud deployment utilizing Infrastructure-as-Code for automated environment configuration'
+            ]
+          },
+          pagesAndComponents: [
+            { title: 'Cinematic Hero & Mission Experience', description: 'A full-screen background video landing page featuring smooth gradient overlays and glassmorphism pillar cards designed to immediately engage users in the defense technology theme.' },
+            { title: 'Drone Scanner HUD (Heads-Up Display)', description: 'An advanced visual overlay integrating a blueprint grid, scanning lasers, radar sweeps, and viewfinder elements, faithfully simulating an authentic aerospace targeting interface.' },
+            { title: 'Products Showcase (UAS Fleet)', description: 'Interactive presentation cards detailing the company\'s expansive fleet of UAVs—including Tricopters, Quadcopters, Hexacopters, Octocopters, VTOL, and FPV drones. Users can access full specifications via dynamic click-to-open modals.' },
+            { title: 'Achievements Gallery', description: 'A rich chronological timeline gallery highlighting the company\'s accolades, such as first-place wins at national expos (KRATOS\'25), NIDAR National Innovation Challenge Recognition, and high-profile event participations.' },
+            { title: 'Team & Founders Section', description: 'Premium glassmorphic profile cards presenting the founders and core team members, complete with social links, professional summaries, and high-quality headshots.' },
+            { title: 'Authentication & Notification Panel', description: 'Secure Login and Registration modules with seamless backend integration. The system sends asynchronous email alerts to administrators for tracking user access and application submissions without blocking API responses.' },
+            { title: 'Responsive Mobile UI', description: 'A fully adaptive layout featuring a sleek hamburger navigation menu with full-screen glass overlays, guaranteeing a fluid experience across all mobile and desktop devices.' }
+          ]
+        }
       },
       {
         name: 'RAIC Technology',
@@ -385,6 +488,38 @@ export const projects = [
           'Integrated a FormSubmit contact flow and centralized content data for maintainable updates across the experience.',
         ],
         technologies: ['React', 'Vite', 'Three.js', 'GSAP', 'Tailwind CSS'],
+        detailedOverview: {
+          logo: ragasRaicLogo,
+          executiveDescription: 'RAGAS Aerospace Interactive Portfolio is a cutting-edge web platform showcasing indigenous deep-tech solutions for autonomous aerial intelligence. Designed as both a commercial investor dashboard and a technical portfolio, it visualizes state-of-the-art intelligent systems tailored for defense, security, industrial monitoring, and precision agriculture. The platform empowers users to explore the Real-Time Adaptive Intelligence Core (RAIC), swarm architecture protocols, and business viability analytics through an immersive, cinematic, and interactive web experience.',
+          technologyStack: {
+            frontend: [
+              'React 18 - Core framework for component-driven UI',
+              'Vite - High-performance bundler and optimized development server',
+              'Tailwind CSS - Utility-first styling combined with custom design token variables',
+              'Framer Motion & GSAP - Premium transition layouts and scroll-triggered micro-animations',
+              'Three.js & R3F - WebGL 3D visualizations and interactive 3D assets rendering',
+              'Swiper & Lucide React - Touch-friendly sliders and scalable iconography'
+            ],
+            backend: [
+              'Node.js API - RESTful serverless endpoint layer for processing contact form inquiries',
+              'GitHub CI/CD - Automated build and deployment workflows triggered on main branch updates'
+            ],
+            database: [
+              'Edge Network Hosting - High-availability global CDN handling automated SSL/TLS termination',
+              'Zoho Mail (Domain Registrar) - Primary domain registration, administration, and corporate inbox (www.ragasgroups.com)',
+              'Custom Subdomain Mapping - Dedicated routing for the platform (raic.ragasgroups.com) seamlessly linked to the deployment',
+              'Resend API - Connects the frontend contact interface to Zoho Mail, enabling programmatic email delivery with custom HTML template formatting'
+            ]
+          },
+          pagesAndComponents: [
+            { title: 'Cinematic Logo Intro', description: 'Hands-free splash animation revealing the brand wings logo with ease-in/out scale and breathing ambient glows, transitioning seamlessly via letterbox widescreen panels.' },
+            { title: 'Hero & RAIC Technology', description: 'The primary landing view offering interactive technology insights. Demonstrates decentralized autonomous decision-making and edge computing capabilities.' },
+            { title: 'Drone System & Swarm Architecture', description: 'Real-time visualization components illustrating swarming protocols, dynamic routing topologies, and obstacle avoidance systems.' },
+            { title: 'Applications & Performance', description: 'Technical specification segments highlighting tactical hardware integrations and edge processing units like NVIDIA Jetson and Crossflight V1.1 avionics.' },
+            { title: 'Business Impact Dashboard', description: 'Custom, responsive SVG analytical charts mapping out market segments, projected revenue streams, employment growth trendlines, and conventional efficiency gains.' },
+            { title: 'Contact & Investor Relations', description: 'A robust contact interface integrated with the Resend API to facilitate strategic alignment and investor inquiries, directly communicating with the corporate Zoho inbox.' }
+          ]
+        }
       },
     ],
     technologies: ['HTML5', 'CSS3', 'React.js', 'Figma', 'UI/UX Design'],

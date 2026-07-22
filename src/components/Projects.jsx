@@ -80,15 +80,13 @@ const preloadImage = (src) => {
 
 const renderTextWithLinks = (text) => {
   if (typeof text !== 'string') return text;
-  const splitRegex = /(https?:\/\/[a-zA-Z0-9./_-]+|[a-zA-Z0-9.-]+\.ragasgroups\.com|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
-  const testRegex = /^(?:https?:\/\/[a-zA-Z0-9./_-]+|[a-zA-Z0-9.-]+\.ragasgroups\.com|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+  const splitRegex = /(https?:\/\/[a-zA-Z0-9./_-]+|[a-zA-Z0-9.-]+\.ragasgroups\.com|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+  const testRegex = /^(?:https?:\/\/[a-zA-Z0-9./_-]+|[a-zA-Z0-9.-]+\.ragasgroups\.com|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
   const parts = text.split(splitRegex);
   return parts.map((part, i) => {
     if (part && testRegex.test(part)) {
       let href = part;
-      if (part.includes('@')) {
-        href = `mailto:${part}`;
-      } else if (!part.startsWith('http')) {
+      if (!part.startsWith('http')) {
         href = `https://${part}`;
       }
       return (

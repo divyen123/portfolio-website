@@ -20,7 +20,7 @@ import memoryHiddenImages from '../assets/projects/memory-timeline/hidden-images
 import prepMatrixLogin from '../assets/projects/prepmatrix-ai/login.webp';
 import prepMatrixDashboard from '../assets/projects/prepmatrix-ai/dashboard.webp';
 import prepMatrixAnalytics from '../assets/projects/prepmatrix-ai/analytics.webp';
-import prepMatrixReport from '../assets/projects/prepmatrix-ai/report.webp';
+import prepMatrixWorkspace from '../assets/projects/prepmatrix-ai/workspace.webp';
 import prepMatrixStudyAssistant from '../assets/projects/prepmatrix-ai/study-assistant.webp';
 import prepMatrixSettings from '../assets/projects/prepmatrix-ai/settings.webp';
 import ragasGroupsMain from '../assets/projects/ragasgroups/ragasgroups_main.png';
@@ -250,14 +250,14 @@ export const projects = [
   },
   {
     title: 'PrepMatrix AI',
-    subtitle: 'AI-powered study planner',
+    subtitle: 'AI-powered learning workspace',
     description:
-      'Built an intelligent study planner that auto-generates personalized timetables, tracks chapter-wise progress, and adapts learning strategies using AI-driven smart suggestions and voice assistance.',
+      'Built an AI-powered learning workspace that turns academic profiles, subjects, chapter difficulty, and exam dates into adaptive study plans, then connects practice, revision, and readiness insights across each learner profile.',
     highlights: [
-      'Added an AI chatbot, quiz engine, resource hub, detailed analytics with PDF export, gamified progress tracking, streaks, rewards, and a focus timer.',
-      'Designed a premium glassmorphic UI with dark/light themes, custom accent palettes, and responsive layouts.',
+      'Added PDF-based revision notebooks, mastery reviews, topic quizzes, quiz battles, secure exams, AI question papers, and answer coaching.',
+      'Connected a voice-enabled study companion, CodeMatrix compiler, placement and resume tools, progress analytics, reports, reminders, and personalized learning modes.',
     ],
-    technologies: ['React.js', 'Express.js', 'MongoDB', 'Groq AI', 'Llama', 'Vite'],
+    technologies: ['React', 'Vite', 'Express', 'MongoDB', 'Groq AI', 'Gemini', 'CodeMirror'],
     github: 'https://github.com/divyen123/PrepMatrix_AI',
     liveDemo: 'https://prep-matrix-ai.vercel.app',
     prototype: '',
@@ -265,13 +265,13 @@ export const projects = [
       prepMatrixLogin,
       prepMatrixDashboard,
       prepMatrixAnalytics,
-      prepMatrixReport,
+      prepMatrixWorkspace,
       prepMatrixStudyAssistant,
       prepMatrixSettings,
     ],
     detailedOverview: {
       logo: prepMatrixLogo,
-      executiveDescription: 'PrepMatrix AI is an AI-powered study planning, practice, and progress intelligence workspace for students across school, college, and specialized academic tracks. It combines each learner\'s academic profile, subjects, chapter load, difficulty, exam date, and daily completion data to generate an adaptive study path, reveal weak areas, and measure exam readiness. Within one authenticated workspace, learners can manage goals and reminders, capture notes, discover syllabus-aware materials, generate topic quizzes, take secure exams, export reports and question papers, and ask a planner-aware study companion questions through text, voice, image, or PDF inputs.',
+      executiveDescription: 'PrepMatrix AI is an AI-powered study planning, practice, and progress intelligence workspace for students across school, college, and specialized academic tracks. It combines each learner\'s academic profile, subjects, chapter load, difficulty, exam date, and daily completion data to generate an adaptive study path, reveal weak areas, and measure exam readiness. Learners can keep separate academic profiles; create revision notebooks from study materials and PDFs; practice with quizzes, battles, secure exams, and AI question papers; and use coding, placement, resume, and answer-coaching tools where eligible. A planner-aware companion accepts text, voice, image, and PDF input, while cloud-backed sync, reports, reminders, and personalized learning modes keep each study workspace connected.',
       technologyStack: {
         frontend: [
           'React 19 - Component-driven SPA with lazy routes',
@@ -279,23 +279,28 @@ export const projects = [
           'React Router 7 - Protected study and settings routes',
           'Recharts - Progress, workload, readiness, and trend charts',
           'Lucide + CSS3 - Responsive icons, themes, glass cards, and motion',
-          'Three.js / R3F - Interactive animated study visuals'
+          'Three.js / R3F - Interactive animated study visuals',
+          'CodeMirror - Editing for profile-scoped CodeMatrix drafts'
         ],
         backend: [
           'Node.js + Express 5 - REST APIs, SPA delivery, validation, and orchestration',
           'MongoDB driver - Indexed user, plan, note, quiz, and exam data',
           'PBKDF2 + sessions - Salted hashes, expiry, and scoped API access',
           'Email verification - OTP delivery through Nodemailer or Resend',
-          'Push + PDF services - VAPID alerts and bounded PDF parsing'
+          'Push + PDF services - VAPID alerts and bounded PDF parsing',
+          'MongoDB-backed services - Profile-specific learning, coding, battle, resume, and assessment records'
         ],
         database: [
           'Groq Cloud AI - Planner-aware chat, quiz, exam, and paper generation with text, image, and bounded PDF context',
+          'Gemini - Native-PDF Start Learning requests, with Groq as a fallback',
+          'Browser coding runtimes - Pyodide, QuickJS, sql.js, WebAssembly Clang, and Doppio for supported languages',
           'Browser capabilities - Speech recognition, wake phrases, spoken prompts, service-worker alerts, and push where supported',
           'Persistence & export - MongoDB workspace sync plus jsPDF/html2canvas reports, timetables, mind maps, results, certificates, and JSON backup'
         ]
       },
       pagesAndComponents: [
-        { title: 'Authentication & Learner Profile', description: 'Registration and login create a private study workspace. Learners can store their academic stage, class or degree, curriculum or track, institution details, profile image, and account preferences.' },
+        { title: 'Authentication & Learner Profile', description: 'Registration and login create a private study workspace. Learners can store their academic stage, class or degree, curriculum or track, institution details, profile image, and account preferences; OTP and password checks protect sensitive changes.' },
+        { title: 'Academic Profile Workspaces', description: 'Keep separate academic contexts under one account. Switching profiles scopes subjects, plans, learning records, code drafts, and other study data to the active learner profile.' },
         { title: 'Dashboard (Home)', description: 'A connected overview of overall completion, first pending task, weakest subject, exam readiness, daily momentum, goals, insights, and upcoming work. Completion rewards mark daily wins, full-plan progress, and the 80% exam unlock.' },
         { title: 'Subjects & Academic Context', description: 'Build a subject library with chapter counts and Easy, Medium, or Hard difficulty. Context carries into planning, materials, quizzes, exams, and assistant explanations.' },
         { title: 'Smart Planner & Timetable', description: 'Generate a focused schedule from subjects, exam date, and Balanced, High priority, Revision-heavy, or Rapid coverage strategies. Mark tasks complete, recover backlog, rebalance overloaded days, undo adjustments, start a new plan, and export the timetable as PDF.' },
@@ -303,10 +308,23 @@ export const projects = [
         { title: 'Analytics & Readiness', description: 'Explore completion trends, XP, levels, badges, topic timelines, the focus map, task distribution, study rhythm, subject performance, weekly velocity, exam-readiness signals, and focused next-step insights.' },
         { title: 'Notes & Doubt Board', description: 'Capture chapter summaries, unresolved doubts, and left-over topics by subject. Search and filter the board, track note status, and bridge unfinished topics back into planning and revision workflows.' },
         { title: 'AI Study Companion, Chat History & Voice', description: 'A planner-aware assistant adapts explanations to the learner profile and current task metrics. It preserves chat sessions, accepts images and PDFs, supports wake phrases and navigation commands, and can be opened through the animated sidebar study pet.' },
-        { title: 'Interactive Quizzes & Secure Exam Workspace', description: 'Generate 5- or 10-question topic MCQ sets with learner-stage and subject context. At 80% planner completion, generate a 40-question, 60-minute exam with server timing, autosave, flags, fullscreen monitoring, and server scoring.' },
-        { title: 'Question Papers & Offline Practice', description: 'Create saved, printable AI question papers with configurable subjects, marks, difficulty, language, internal choice, question shuffling, model answers, marking schemes, and answer keys.' },
-        { title: 'Study Materials & Reports', description: 'Receive subject and chapter-aware pathways to videos, articles, references, and targeted searches based on academic context and progress. Generate a multi-page planner intelligence report.' },
-        { title: 'Settings, Appearance & Product Guide', description: 'Configure themes, backgrounds, brightness, glass effects, accent colors, typography, card density, cursor style, sounds, notifications, wake mode, study targets, and profile details.' }
+        { title: 'Interactive Quizzes', description: 'Generate 5- or 10-question topic MCQ sets with learner-stage and subject context. Review scores and attempt history, export an attempt as PDF, and identify topics needing more practice.' },
+        { title: 'Secure Exam Workspace', description: 'At 80% planner completion, generate a 40-question, 60-minute exam with server timing, autosave, flags, fullscreen monitoring, and server scoring. Attempt limits, violation handling, delayed results, and certificates support the exam flow.' },
+        { title: 'Quiz Battles', description: 'Create a private 10-question battle or join a friend with an invite code. Timed attempts autosave answers, and results become available after both learners finish or the battle closes.' },
+        { title: 'Question Papers & Offline Practice', description: 'Create saved, printable AI question papers with configurable subjects, marks, difficulty, language, internal choice, question shuffling, model answers, marking schemes, and answer keys. A focus/break timer supports offline solving.' },
+        { title: 'Answer Coach', description: 'Upload clearly numbered handwritten answer images or a PDF for a saved question paper. Receive provisional step marks, first-error feedback, targeted practice, and rechecks; weak topics can become planner tasks.' },
+        { title: 'Study Materials & Bookmarks', description: 'Find subject and chapter-aware videos, articles, references, and targeted searches based on academic context and progress. Save and search useful links in a personal revision library.' },
+        { title: 'Start Learning Notebooks & Mastery', description: 'Turn study material, including PDFs, into saved revision notebooks with notes, questions, and concept maps. Guided learn, recall, practice, and mastery steps track misconceptions and schedule review.' },
+        { title: 'Learning Insights & Review', description: 'Mastery maps, active recall records, review queues, and subject progress show what is due next. Planner and analytics views connect those signals to daily momentum.' },
+        { title: 'CodeMatrix Compiler', description: 'Write and run Python, JavaScript, SQL, HTML/CSS/JavaScript, C, C++, and Java in eligible learner workspaces. Save profile-scoped drafts, use terminal input, inspect errors and previews, and request optional AI error hints.' },
+        { title: 'Placement Preparation', description: 'Generate role-focused interview preparation from a saved notebook or custom topic brief. Review guidance and plans, save history, and carry relevant coding practice into CodeMatrix.' },
+        { title: 'Resume Builder & Analyzer', description: 'Build and export a styled resume, save versions, and review a draft or uploaded resume against a target role or job description for skill gaps and specific improvements.' },
+        { title: 'Reports, Exports & Worktree Mind Maps', description: 'Generate a planner intelligence report covering profile, completion, subject watchlist, quizzes, bookmarks, study rhythm, and next actions. Export timetables, mind maps, papers, results, and certificates, or back up and restore the workspace as JSON.' },
+        { title: 'Kids Learning Mode', description: 'Younger learners get an age-aware space with adventure maps, short games, daily missions, a pet tutor, and a parent corner. Parent-guided access protects advanced routes.' },
+        { title: 'Nearby Study Spots & Revision Circles', description: 'Find libraries and local study spots, save places, and open directions. Join or host nearby revision circles and connect group study to a plan.' },
+        { title: 'Medical Training Lab', description: 'Eligible health-science learners can generate educational conceptual reasoning modules, practice checks, and training sequences from course context, then save or revisit the work.' },
+        { title: 'AI Credits & Material Consent', description: 'Usage-based AI features show available credits and applicable costs. Start Learning asks for consent before sending uploaded material to AI services for notebook generation.' },
+        { title: 'Settings, Appearance & Product Guide', description: 'Configure themes, backgrounds, brightness, glass effects, accent colors, typography, card density, cursor style, sounds, notifications, wake mode, study targets, and profile details. Data controls support import, export, reset, and verified account deletion.' }
       ]
     }
   },
